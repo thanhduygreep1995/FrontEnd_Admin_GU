@@ -18,7 +18,9 @@ import { SpecificationsEditionComponent } from './specifications-edition/specifi
 import { SpecificationsTableComponent } from './specifications-table/specifications-table.component';
 import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
+import { DataTablesModule } from 'angular-datatables';
 import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -44,6 +46,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    DataTablesModule,
     ReactiveFormsModule
   ],
   providers: [],

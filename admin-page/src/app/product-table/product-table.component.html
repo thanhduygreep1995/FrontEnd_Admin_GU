@@ -30,7 +30,8 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover" >
+                  
                   <thead>
                   <tr>
                     <th>Name</th>
@@ -47,8 +48,8 @@
                     <th>Origin Id</th>
                   </tr>
                   </thead>
-                  <tbody>
-                    <tr>
+                  <!-- <tbody> -->
+                    <!-- <tr>
                       <td>Duy</td>
                       <td>NM555</td>
                       <td>2300</td>
@@ -171,8 +172,8 @@
                     <td>001</td>
                     <td>001</td>
                     <td>001</td>
-                  </tr>
-                  <tfoot>
+                  </tr> -->
+                  <!-- <tfoot>
                     <th>Name</th>
                     <th>Model</th>
                     <th>Price</th>
@@ -187,7 +188,7 @@
                     <th>Category Id</th>
                     <th>Brand Id</th>
                     <th>Origin Id</th>
-                  </tfoot>
+                  </tfoot> -->
                 </table>
               </div>
               <!-- /.card-body -->
