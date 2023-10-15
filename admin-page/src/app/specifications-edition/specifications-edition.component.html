@@ -2,88 +2,104 @@
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
 <section class="content-header">
-<div class="container-fluid">
-    <div class="row mb-2">
-    <div class="col-sm-6">
-        <h1>Specifications Edition</h1>
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Specifications Edition</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Specifications Edition</li>
+                </ol>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active">Specifications Edition</li>
-        </ol>
-    </div>
-    </div>
-</div><!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-<div class="container">
-    <div class="row d-flex justify-content-center">
-    <div class="col-10 ">
-        <!-- style="max-width: 540px;" -->
-        <div class="card " >
-            <div class="row">
-        
-                    <div class="col-12">
-                        <div class="card-body">
-                            
-                            <div class="mb-1">
-                                <label for="Processor" class="form-label">Processor</label>
-                                <input type="text"
-                                    class="form-control mb-2" name="Processor" id="Processor" placeholder="Enter Processor Name">            
-                                
-                                <label for="modelPrice" class="form-label">Graphics Card</label>
-                                <input type="modelPrice" class="form-control mb-2" name="modelPrice" id="modelPrice" placeholder="Your modelPrice">
-    
-                                <label for="Ram" class="form-label">Ram</label>
-                                <input type="text"
-                                    class="form-control mb-2" name="Ram" id="Ram" placeholder="Enter your Ram">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10 " action="myForm">
+                <!-- style="max-width: 540px;" -->
+                <form class="card " [formGroup]="infoSpecification" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group card-body">
 
-                                <label for="Storage" class="form-label">Storage</label>
-                                <input type="text" class="form-control" name="Storage" id="Storage" placeholder="Enter Storage">
+                                <div class="mb-1">
 
-                                <label for="Display" class="form-label">Display</label>
-                                <input type="text" class="form-control mb-2" name="Display" id="Display" placeholder="Enter Display">
-                            
-                                <label for="operatingSystem" class="form-label">Operating System</label>
-                                <input type="text"
-                                    class="form-control mb-2" name="operatingSystem" id="operatingSystem" placeholder="Enter your Category Id">
+                                    <label for="Processor" class="form-label">Processor</label>
+                                    <input formControlName="Processor" type="text" class="form-control mb-2" name="Processor" id="Processor" placeholder="Enter Processor Name">
+                                    <div *ngIf="infoSpecification.controls['Processor'].invalid &&
+                                        infoSpecification.controls['Processor'].touched" class="text-danger"> Processor is required.
+                                    </div>
+                                    <label for="modelPrice" class="form-label">Graphics Card</label>
+                                    <input formControlName="modelPrice" type="modelPrice" class="form-control mb-2" name="modelPrice" id="modelPrice" placeholder="Your modelPrice">
+                                    <div *ngIf="infoSpecification.controls['modelPrice'].invalid &&
+                                    infoSpecification.controls['modelPrice'].touched" class="text-danger"> Graphics card is required.
+                                    </div>
 
-                                <label for="Camera" class="form-label">Camera</label>
-                                <input type="text"
-                                    class="form-control mb-2" name="Camera" id="Camera" placeholder="Enter your Camera">
+                                    <label for="Ram" class="form-label">Ram</label>
+                                    <input formControlName="Ram" type="text" class="form-control mb-2" name="Ram" id="Ram" placeholder="Enter your Ram">
+                                    <div *ngIf="infoSpecification.controls['Ram'].invalid &&
+                                    infoSpecification.controls['Ram'].touched" class="text-danger"> Processor is required.
+                                    </div>
 
-                                <label for="originId" class="form-label">Product</label>
-                                <input type="text"
-                                    class="form-control mb-2" name="originId" id="originId" placeholder="Enter your Origin Id">
+                                    <label for="Storage" class="form-label">Storage</label>
+                                    <input formControlName="Storage" type="text" class="form-control" name="Storage" id="Storage" placeholder="Enter Storage">
+                                    <div *ngIf="infoSpecification.controls['Storage'].invalid &&
+                                        infoSpecification.controls['Storage'].touched" class="text-danger"> Storage is required.
+                                    </div>
+
+                                    <label for="Display" class="form-label">Display</label>
+                                    <input formControlName="Display" type="text" class="form-control mb-2" name="Display" id="Display" placeholder="Enter Display">
+                                    <div *ngIf="infoSpecification.controls['Display'].invalid &&
+                                        infoSpecification.controls['Display'].touched" class="text-danger"> Display is required.
+                                    </div>
+
+                                    <label for="operatingSystem" class="form-label">Operating System</label>
+                                    <input formControlName="operatingSystem" type="text" class="form-control mb-2" name="operatingSystem" id="operatingSystem" placeholder="Enter your Category Id">
+                                    <div *ngIf="infoSpecification.controls['operatingSystem'].invalid &&
+                                        infoSpecification.controls['operatingSystem'].touched" class="text-danger"> Operating System is required.
+                                    </div>
+
+                                    <label for="Camera" class="form-label">Camera</label>
+                                    <input formControlName="Camera" type="text" class="form-control mb-2" name="Camera" id="Camera" placeholder="Enter your Camera">
+                                    <div *ngIf="infoSpecification.controls['Camera'].invalid &&
+                                        infoSpecification.controls['Camera'].touched" class="text-danger"> Camera is required.
+                                    </div>
+
+                                    <label for="originId" class="form-label">Product</label>
+                                    <input formControlName="originId" type="text" class="form-control mb-2" name="originId" id="originId" placeholder="Enter your Origin Id">
+                                    <div *ngIf="infoSpecification.controls['originId'].invalid &&
+                                        infoSpecification.controls['originId'].touched" class="text-danger"> Product is required.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-            </div><hr>
-            <div class="row mx-2 mb-2">
-                <div class="col-12 d-flex flex-wrap justify-content-end">
-                    <button type="button" class="btn btn-primary mx-2">Save</button>
-                    <button type="button" class="btn btn-primary mx-2">Update</button>
-                    <button type="button" class="btn btn-primary mx-2">Delete</button>
-                
+                </form>
+                <hr>
+                <div class="row mx-2 mb-2">
+                    <div class="col-12 d-flex flex-wrap justify-content-end">
+                        <button [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2" name="btn-save">Save</button>
+                        <button [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2">Update</button>
+                        <button [disabled]="ButtonDelete" type="button" class="btn btn-primary mx-2">Delete</button>
+                    </div>
+
+
                 </div>
-                
-                
+
             </div>
 
-                
-
-            
         </div>
-
-    </div>
-    <!-- /.col -->
+        <!-- /.col -->
     </div>
     <!-- /.row -->
-</div>
-<!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 <!-- </div> -->
