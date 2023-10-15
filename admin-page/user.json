@@ -1,0 +1,91 @@
+[{
+        "First Name": "John",
+        "Last Name": "Doe",
+        "Phone Number": "123-456-7890",
+        "Date Of Birth": "1990-05-15",
+        "Email": "johndoe@example.com",
+        "Password": "hashed_password_here",
+        "Role": "admin"
+    },
+    {
+        "First Name": "Jane",
+        "Last Name": "Smith",
+        "Phone Number": "987-654-3210",
+        "Date Of Birth": "1985-10-20",
+        "Email": "janesmith@example.com",
+        "Password": "another_hashed_password",
+        "Role": "admin"
+    },
+    {
+        "First Name": "Alice",
+        "Last Name": "Johnson",
+        "Phone Number": "555-555-5555",
+        "Date Of Birth": "1995-03-01",
+        "Email": "alice@example.com",
+        "Password": "secure_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "Bob",
+        "Last Name": "Brown",
+        "Phone Number": "777-888-9999",
+        "Date Of Birth": "1980-12-10",
+        "Email": "bob@example.com",
+        "Password": "strong_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "Emily",
+        "Last Name": "Williams",
+        "Phone Number": "111-222-3333",
+        "Date Of Birth": "1998-08-25",
+        "Email": "emily@example.com",
+        "Password": "safe_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "Michael",
+        "Last Name": "Clark",
+        "Phone Number": "999-888-7777",
+        "Date Of Birth": "1975-07-05",
+        "Email": "michael@example.com",
+        "Password": "encrypted_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "Sophia",
+        "Last Name": "Lee",
+        "Phone Number": "333-444-5555",
+        "Date Of Birth": "1987-01-30",
+        "Email": "sophia@example.com",
+        "Password": "secret_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "Matthew",
+        "Last Name": "Robinson",
+        "Phone Number": "666-777-8888",
+        "Date Of Birth": "1992-11-15",
+        "Email": "matthew@example.com",
+        "Password": "protected_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "Olivia",
+        "Last Name": "Davis",
+        "Phone Number": "222-333-4444",
+        "Date Of Birth": "1991-09-07",
+        "Email": "olivia@example.com",
+        "Password": "hidden_password",
+        "Role": "user"
+    },
+    {
+        "First Name": "James",
+        "Last Name": "Wilson",
+        "Phone Number": "888-999-1111",
+        "Date Of Birth": "1983-04-18",
+        "Email": "james@example.com",
+        "Password": "confidential_password",
+        "Role": "user"
+    }
+]
