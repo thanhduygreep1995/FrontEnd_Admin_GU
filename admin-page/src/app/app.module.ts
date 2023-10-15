@@ -18,6 +18,7 @@ import { SpecificationsEditionComponent } from './specifications-edition/specifi
 import { SpecificationsTableComponent } from './specifications-table/specifications-table.component';
 import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { OrderDetailTableComponent } from './order-detail-table/order-detail-tab
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
