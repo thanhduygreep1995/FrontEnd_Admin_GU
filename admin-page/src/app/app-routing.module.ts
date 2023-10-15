@@ -13,7 +13,7 @@ import { OrderDetailTableComponent } from './order-detail-table/order-detail-tab
 
 
 const routes: Routes = [
-  { path:'', component:MainContentComponent},
+  { path:'', component:OrderTableComponent},
   { path:'dashboard', component:MainContentComponent},
   { path:'product-edition', component:ProductEditionComponent},
   { path:'product-table', component:ProductTableComponent},
