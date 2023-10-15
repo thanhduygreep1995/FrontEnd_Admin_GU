@@ -57,8 +57,8 @@ export class OrderTableComponent implements OnInit{
      ],
      dom: 'Bfrtip',
      buttons: [
-       'columnsToggle',
-       'colvis',
+      //  'columnsToggle',
+      //  'colvis',
        'copy',
        'print',
        'excel',

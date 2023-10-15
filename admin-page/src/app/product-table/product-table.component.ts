@@ -61,8 +61,8 @@ ngOnInit(): void {
     ],
     dom: 'Bfrtip',
     buttons: [
-      'columnsToggle',
-      'colvis',
+      // 'columnsToggle',
+      // 'colvis',
       'copy',
       'print',
       'excel',

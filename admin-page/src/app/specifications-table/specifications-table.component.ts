@@ -53,8 +53,8 @@ export class SpecificationsTableComponent implements OnInit {
       ],
       dom: 'Bfrtip',
       buttons: [
-        'columnsToggle',
-        'colvis',
+        // 'columnsToggle',
+        // 'colvis',
         'copy',
         'print',
         'excel',
