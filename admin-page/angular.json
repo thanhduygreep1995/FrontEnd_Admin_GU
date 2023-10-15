@@ -28,7 +28,8 @@
               "src/styles.css",
               "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
               "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
-              "node_modules/admin-lte/dist/css/adminlte.min.css"
+              "node_modules/admin-lte/dist/css/adminlte.min.css",
+              "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
               "node_modules/admin-lte/plugins/jquery/jquery.min.js",
@@ -40,7 +41,6 @@
               "node_modules/admin-lte/plugins/jquery-mapael/jquery.mapael.min.js",
               "node_modules/admin-lte/plugins/jquery-mapael/maps/usa_states.min.js",
               "node_modules/admin-lte/plugins/chart.js/Chart.min.js",
-              
               "node_modules/admin-lte/dist/js/pages/dashboard3.js"
             ]
           },
@@ -109,5 +109,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "329983f1-2842-4fff-b8cc-59151ac5af14"
   }
 }
