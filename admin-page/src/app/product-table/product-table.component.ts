@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import 'datatables.net';
 import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../product.servic';
 declare var require: any;
 const jszip: any = require('jszip');
 const pdfMake: any = require('pdfmake/build/pdfmake.js');
@@ -17,9 +18,31 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class ProductTableComponent implements OnInit{
 // Must be declared as "any", not as "DataTables.Settings"
 dtOptions: any = {};
+productForm: any;
+product: any;
 data: any[] = []; // Mảng dữ liệu cho DataTables
+constructor(private fb:FormBuilder, private cs:ProductService){
+  this.productForm=this.fb.group({
+    id:[],
+    Name: [],
+    Model:[],
+    Price: [],
+    stock_quantity:[],
+    create_date:[],
+    update_date:[],
+    Description:[],
+    Discount:[],
+    discount_price:[],
+    status:[]
+  });
 
+}
 ngOnInit(): void {
+
+  this.cs.getAllProduct().subscribe((data)=>{
+    this.product=data;
+    console.log(data);
+  });
   // Chuỗi JSON từ yêu cầu của bạn
   const jsonData = {
     "Name": "John",

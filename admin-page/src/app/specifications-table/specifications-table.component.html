@@ -1,37 +1,43 @@
-  <!-- Content Wrapper. Contains page content -->
-  <!-- <div class="content-wrapper"> -->
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
+<!-- Content Wrapper. Contains page content -->
+<!-- <div class="content-wrapper"> -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Specifications List</h1>
+                <h1>Specifications List</h1>
             </div>
             <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Specifications Lists</li>
-              </ol>
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Specifications Lists</li>
+                </ol>
             </div>
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
-  
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-12">
-  
-  
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Danh Sách User</h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
-                    <!-- <thead>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh Sách User</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table *ngIf="data.length > 0" datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
+
+                            <!-- <form [formGroup]="specificationForm">
+                                Process: <input type="text" name="" id="" formControlName="Process" class="form-control"> Graphics Card: <input type="text" name="" id="" formControlName="graphicsCard" class="form-control"> Ram: <input type="text" name=""
+                                    id="" formControlName="Ram" class="form-control"> Storage: <input type="text" name="" id="" formControlName="Storage" class="form-control"> Display: <input type="text" name="" id="" formControlName="Display" class="form-control">                                Operatings System: <input type="text" name="" id="" formControlName="OperatingsSystem" class="form-control"> Camera: <input type="text" name="" id="" formControlName="Camera" class="form-control">
+                            </form> -->
+                            <!-- <thead>
                     <tr>
                       <th>Processor</th>
                       <th>Graphics Card</th>
@@ -44,7 +50,7 @@
                     </tr>
                     </thead>
                     <tbody> -->
-                    <!-- <tr>
+                            <!-- <tr>
                       <td>Duy</td>
                       <td>Pham</td>
                       <td>0979261979</td>
@@ -66,7 +72,7 @@
                       <td>X</td>
                       <td></td>
                     </tr> -->
-                    <!-- <tfoot>
+                            <!-- <tfoot>
                         <th>Processor</th>
                         <th>Graphics Card</th>
                         <th>Ram</th>
@@ -76,19 +82,19 @@
                         <th>Camera</th>
                         <th>Product</th>
                     </tfoot> -->
-                  </table>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
-              </div>
-              
-              <!-- /.card -->
+
+                <!-- /.card -->
             </div>
             <!-- /.col -->
-          </div>
-          <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    <!-- </div> -->
-    <!-- /.content-wrapper -->
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<!-- </div> -->
+<!-- /.content-wrapper -->
