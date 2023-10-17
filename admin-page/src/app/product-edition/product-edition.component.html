@@ -22,147 +22,66 @@
 <section class="content">
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="col-10">
+            <div class="col-10 " action="myForm">
                 <!-- style="max-width: 540px;" -->
-                <form class="card" [formGroup]="infoProduct" (ngSu bmit)="onSubmit()">
+                <form class="card " [formGroup]="productForm" (ngSubmit)="onSubmit()">
                     <div class="row">
                         <div class="col-12">
-                            <div class="card-body">
+                            <div class="form-group card-body">
                                 <div class="mb-1">
-                                    <label for="id" class="form-label">Id</label>
-                                    <!-- <input formControlName="id" type="number" class="form-control mb-2" name="id" id="id" [(ngModel)]="product.id" placeholder="Enter Id" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['id'].invalid &&
-                                      infoProduct.controls['id'].touched
-                                    " class="text-danger">
-                                        Id is required.
+                                    <div>
+                                        <label for="Name" class="form-label">Tên Sản Phẩm</label>
+                                        <input class="form-control mb-2" formControlName="name" placeholder="Tên sản phẩm">
                                     </div>
+                                    <div>
+                                        <label for="model" class="form-label">Model Sản Phẩm</label>
+                                        <input class="form-control mb-2" formControlName="model" placeholder="Model sản phẩm">
+                                    </div>
+                                    <div>
+                                        <label for="price" class="form-label">Giá Sản Phẩm</label>
+                                        <input class="form-control mb-2" formControlName="price" placeholder="Giá sản phẩm">
+                                    </div>
+                                    <div>
+                                        <label for="stockQuantity" class="form-label">Số Lượng</label>
+                                        <input class="form-control mb-2" formControlName="stockQuantity" placeholder="Số lượng">
+                                    </div>
+                                    <div>
+                                        <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
+                                        <input class="form-control mb-2" formControlName="description" placeholder="Mô Tả sản phẩm">
+                                    </div>
+                                    <div>
+                                        <label for="discount" class="form-label">Giảm giá</label>
+                                        <input class="form-control mb-2" formControlName="discount" placeholder="Giả giá">
+                                    </div>
+                                    <div>
+                                        <label for="discountPrice" class="form-label">số giảm</label>
+                                        <input class="form-control mb-2" formControlName="discountPrice" placeholder="Giá Giảm">
+                                    </div>
+                                    <div>
+                                        <label for="status" class="form-label">Trạng Thái</label>
+                                        <input class="form-control mb-2" formControlName="status" placeholder="Trạng thái">
+                                    </div>
+                                    <!-- ... Các trường khác ... -->
 
-                                    <label for="name" class="form-label">Name</label>
-                                    <!-- <input formControlName="name" type="text" class="form-control mb-2" name="productName" id="name" [(ngModel)]="product.name" placeholder="Enter Product Name" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['productName'].invalid &&
-                                      infoProduct.controls['productName'].touched
-                                    " class="text-danger">
-                                        Product Name is required.
+                                </div>
+                                <hr>
+                                <div class="row mx-2 mb-2">
+                                    <div class="col-12 d-flex flex-wrap justify-content-end">
+                                        <button type="submit" class="btn btn-warning" (click)="onSubmit">Thêm Sản Phẩm</button>
                                     </div>
-                                    <label for="Model" class="form-label">Model</label>
-                                    <!-- <input formControlName="Model" type="number" class="form-control mb-2" name="Model" id="Model" [(ngModel)]="product.Model" placeholder="Enter Id" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['Model'].invalid &&
-                                      infoProduct.controls['Model'].touched
-                                    " class="text-danger">
-                                        Model is required.
-                                    </div>
-                                    <label for="price" class="form-label">Model Price</label>
-                                    <!-- <input formControlName="price" type="text" class="form-control mb-2" name="price" id="price" [(ngModel)]="product.price" placeholder="Your modelPrice" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['modelPrice'].invalid &&
-                                      infoProduct.controls['modelPrice'].touched
-                                    " class="text-danger">
-                                        Model Price is required.
-                                    </div>
-                                    <label for="stock_quantity" class="form-label">Stock Quantity</label>
-                                    <!-- <input formControlName="stock_quantity" type="number" class="form-control mb-2" name="stock_quantity" id="stock_quantity" [(ngModel)]="product.stock_quantity" placeholder="Your stock quantity" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['stock_quantity'].invalid &&
-                                      infoProduct.controls['stock_quantity'].touched
-                                    " class="text-danger">
-                                        Stock quantity is required.
-                                    </div>
-                                    <label for="create_date" class="form-label">Stock Quantity</label>
-                                    <!-- <input formControlName="create_date" type="text" class="form-control mb-2" name="create_date" id="create_date" [(ngModel)]="product.create_date" placeholder="Your create date" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['create_date'].invalid &&
-                                      infoProduct.controls['create_date'].touched
-                                    " class="text-danger">
-                                        Create date is required.
-                                    </div>
-                                    <label for="update_date" class="form-label">Update Date</label>
-                                    <!-- <input formControlName="update_date" type="text" class="form-control mb-2" name="update_date" id="update_date" [(ngModel)]="product.update_date" placeholder="Your update date" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['update_date'].invalid &&
-                                      infoProduct.controls['update_date'].touched
-                                    " class="text-danger">
-                                        Update date is required.
-                                    </div>
-                                    <label for="Description" class="form-label">Description</label>
-                                    <!-- <input formControlName="description" type="text" class="form-control mb-2" name="Description" id="Description" [(ngModel)]="product.Description" placeholder="Enter your Description" /> -->
-                                    <div *ngIf="
-                                        infoProduct.controls['description'].invalid &&
-                                        infoProduct.controls['description'].touched
-                                      " class="text-danger">
-                                        Description is required.
-                                    </div>
-
-                                    <label for="Discount" class="form-label">Discount</label>
-                                    <!-- <input formControlName="discount" type="number" class="form-control" name="Discount" id="Discount" [(ngModel)]="product.Discount" placeholder="Enter Discount" /> -->
-                                    <div *ngIf="
-                                      infoProduct.controls['discount'].invalid &&
-                                      infoProduct.controls['discount'].touched
-                                    " class="text-danger">
-                                        Discount is required.
-                                    </div>
-                                    <label for="discount_price" class="form-label">Discount Price</label>
-                                    <!-- <input formControlName="discount_price" type="number" class="form-control mb-2" name="discountPrice" id="discount_price" [(ngModel)]="product.discount_price" placeholder="Enter Discount Price" /> -->
-                                    <div *ngIf="
-                                        infoProduct.controls['discountPrice'].invalid &&
-                                        infoProduct.controls['discountPrice'].touched
-                                      " class="text-danger">
-                                        Discount is required.
-                                    </div>
-                                    <label for="status" class="form-label">Status</label>
-                                    <!-- <input formControlName="status" type="text" class="form-control mb-2" name="status" id="status" [(ngModel)]="product.status" placeholder="Enter Statue Price" /> -->
-                                    <div *ngIf="
-                                        infoProduct.controls['status'].invalid &&
-                                        infoProduct.controls['status'].touched
-                                      " class="text-danger">
-                                        Status is required.
-                                    </div>
-
-                                    <!-- <label for="categoryId" class="form-label">Category Id</label>
-                                    <input formControlName="categoryId" type="text" class="form-control mb-2" name="categoryId" id="categoryId" [(ngModel)]="product.categoryId" placeholder="Enter your Category Id" />
-                                    <div *ngIf="
-                                            infoProduct.controls['categoryId'].invalid &&
-                                            infoProduct.controls['categoryId'].touched
-                                          " class="text-danger">
-                                        Category is required.
-                                    </div>
-
-                                    <label for="brandId" class="form-label">Brand Id</label>
-                                    <input formControlName="brandId" type="text" class="form-control mb-2" name="brandId" id="brandId" [(ngModel)]="product.brandId" placeholder="Enter your Brand Id" />
-                                    <div *ngIf="
-                                          infoProduct.controls['brandId'].invalid &&
-                                          infoProduct.controls['brandId'].touched
-                                        " class="text-danger">
-                                        Brand is required.
-                                    </div>
-                                    <label for="originId" class="form-label">Origin Id</label>
-                                    <input formControlName="originId" type="text" class="form-control mb-2" name="originId" id="originId" [(ngModel)]="product.originId" placeholder="Enter your Origin Id" />
-                                    <div *ngIf="
-                                            infoProduct.controls['originId'].invalid &&
-                                            infoProduct.controls['originId'].touched
-                                          " class="text-danger">
-                                        Origin is required.
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr />
-                    <div class="row mx-2 mb-2">
-                        <div class="col-12 d-flex flex-wrap justify-content-end">
-                            <!-- <button [disabled]="ButtonSave" type="button" value="add" class="btn btn-primary mx-2" (click)="fnAddProduct()"> Save</button> -->
-                            <button [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2">Update</button>
-                            <button [disabled]="ButtonDelete" type="button" class="btn btn-primary mx-2">Delete</button>
-                        </div>
-                    </div>
                 </form>
+
+
             </div>
-            <!-- /.col -->
+
         </div>
-        <!-- /.row -->
+        <!-- /.col -->
     </div>
+    <!-- /.row -->
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->

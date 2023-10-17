@@ -1,56 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../product';
+import { ProductService } from '../product.servic';
 
 @Component({
   selector: 'app-product-edition',
   templateUrl: './product-edition.component.html',
   styleUrls: ['./product-edition.component.css']
 })
-export class ProductEditionComponent implements OnInit {
+export class ProductEditionComponent{
   // product: Product = new Product();
 
-  infoProduct: FormGroup; 
   ButtonSave: boolean = true;
   ButtonDelete: boolean = true;
   ProductForm: any;
+  productForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.infoProduct = this.formBuilder.group({
-      id:['', Validators.required],
-      name: ['', Validators.required], 
+  constructor(private formBuilder: FormBuilder,private pS: ProductService) {
+      this.productForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      model: ['', Validators.required],
       price: ['', Validators.required],
-      stock_quantity: ['',Validators.required],
-      create_date: ['',Validators.required],
-      update_date: ['',Validators.required],
-      Model: ['', Validators.required], 
-      Description: ['', Validators.required],
-      Discount: ['', Validators.required],
-      discount_price: ['', Validators.required],
-      status: ['', Validators.required]
-      // categoryId: ['', Validators.required],
-      // brandId: ['', Validators.required],
-      // originId: ['', Validators.required]
-    });
-    this.infoProduct.valueChanges.subscribe(() => {
-      this.ButtonSave = this.infoProduct.invalid;
-    });
-
-    this.infoProduct.valueChanges.subscribe(() => {
-      this.ButtonDelete = this.infoProduct.controls['id'].invalid;
+      stockQuantity: ['', Validators.required],
+      description: [''],
+      discount: [''],
+      discountPrice: [''],
+      status: [''],
+      category: this.formBuilder.group({
+        id: [''],
+        name: [''],
+        description: [''],
+        status: ['']
+      })
     });
 
   }
 
-  ngOnInit(): void {
-      
-  }
-  
-  // fnAddProduct(){
-  //  console.log(this.ProductForm);
-  // }
   onSubmit() {
-    // console.log(this.product);
-  }
+    if (this.productForm.valid) {
+      this.pS.saveProduct(this.productForm.value).subscribe(response => {
+        console.log('Product saved successfully:', response);
+        // Xử lý response hoặc điều hướng người dùng sau khi lưu thành công.
+      });
 
-}
+}}}

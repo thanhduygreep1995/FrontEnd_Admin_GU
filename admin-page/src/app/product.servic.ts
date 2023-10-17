@@ -16,9 +16,9 @@ export class ProductService {
    // findSpecByID(id:any){
    //    return this.http.get(this.baseUrl+);
    // }
-   addProduct(product:any): Observable<Object>{
-      return this.http.post('http://localhost:8080/api/v0/products/create', product);
-   }
+   saveProduct(product: Product): Observable<any> {
+      return this.http.post<any>(this.baseUrl+"/create", product);
+    }
    // updateProduct(product:any){
    //    return this.http.put(this.baseUrl,product);
    // }
