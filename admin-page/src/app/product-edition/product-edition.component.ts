@@ -1,26 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-product-edition',
   templateUrl: './product-edition.component.html',
   styleUrls: ['./product-edition.component.css']
 })
-export class ProductEditionComponent {
-  infoProduct: FormGroup;
+export class ProductEditionComponent implements OnInit {
+  // product: Product = new Product();
+
+  infoProduct: FormGroup; 
   ButtonSave: boolean = true;
   ButtonDelete: boolean = true;
+  ProductForm: any;
 
   constructor(private formBuilder: FormBuilder) {
     this.infoProduct = this.formBuilder.group({
-      productName: ['', Validators.required], 
-      modelPrice: ['', Validators.required],
-      description: ['', Validators.required],
-      discount: ['', Validators.required],
-      discountPrice: ['', Validators.required],
-      categoryId: ['', Validators.required],
-      brandId: ['', Validators.required],
-      originId: ['', Validators.required]
+      id:['', Validators.required],
+      name: ['', Validators.required], 
+      price: ['', Validators.required],
+      stock_quantity: ['',Validators.required],
+      create_date: ['',Validators.required],
+      update_date: ['',Validators.required],
+      Model: ['', Validators.required], 
+      Description: ['', Validators.required],
+      Discount: ['', Validators.required],
+      discount_price: ['', Validators.required],
+      status: ['', Validators.required]
+      // categoryId: ['', Validators.required],
+      // brandId: ['', Validators.required],
+      // originId: ['', Validators.required]
     });
     this.infoProduct.valueChanges.subscribe(() => {
       this.ButtonSave = this.infoProduct.invalid;
@@ -31,10 +41,16 @@ export class ProductEditionComponent {
     });
 
   }
-  
 
+  ngOnInit(): void {
+      
+  }
+  
+  // fnAddProduct(){
+  //  console.log(this.ProductForm);
+  // }
   onSubmit() {
-    // Handle form submission
+    // console.log(this.product);
   }
 
 }

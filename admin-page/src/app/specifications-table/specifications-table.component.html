@@ -31,13 +31,43 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table *ngIf="data.length > 0" datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
-
-                            <!-- <form [formGroup]="specificationForm">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Processor</th>
+                                    <th>Graphics Card</th>
+                                    <th>Ram</th>
+                                    <th>Storage</th>
+                                    <th>Display</th>
+                                    <th>Operating System</th>
+                                    <th>Camera</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let s of specification">
+                                    <td>{{s.id}}</td>
+                                    <td>{{s.processor}}</td>
+                                    <td>{{s.graphicsCard}}</td>
+                                    <td>{{s.ram}}</td>
+                                    <td>{{s.storage}}</td>
+                                    <td>{{s.display}}</td>
+                                    <td>{{s.operatingSystem}}</td>
+                                    <td>{{s.camera}}</td>
+                                    <td>
+                                        <!-- <button (click)="" class="btn btn-info">Update</button> -->
+                                        <button (click)="deleteSpec" class="btn btn-warning">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover"> -->
+                        <!-- <form [formGroup]="specificationForm">
                                 Process: <input type="text" name="" id="" formControlName="Process" class="form-control"> Graphics Card: <input type="text" name="" id="" formControlName="graphicsCard" class="form-control"> Ram: <input type="text" name=""
                                     id="" formControlName="Ram" class="form-control"> Storage: <input type="text" name="" id="" formControlName="Storage" class="form-control"> Display: <input type="text" name="" id="" formControlName="Display" class="form-control">                                Operatings System: <input type="text" name="" id="" formControlName="OperatingsSystem" class="form-control"> Camera: <input type="text" name="" id="" formControlName="Camera" class="form-control">
                             </form> -->
-                            <!-- <thead>
+                        <!-- <thead>
                     <tr>
                       <th>Processor</th>
                       <th>Graphics Card</th>
@@ -50,7 +80,7 @@
                     </tr>
                     </thead>
                     <tbody> -->
-                            <!-- <tr>
+                        <!-- <tr>
                       <td>Duy</td>
                       <td>Pham</td>
                       <td>0979261979</td>
@@ -72,7 +102,7 @@
                       <td>X</td>
                       <td></td>
                     </tr> -->
-                            <!-- <tfoot>
+                        <!-- <tfoot>
                         <th>Processor</th>
                         <th>Graphics Card</th>
                         <th>Ram</th>
@@ -82,7 +112,7 @@
                         <th>Camera</th>
                         <th>Product</th>
                     </tfoot> -->
-                        </table>
+                        <!-- </table> -->
                     </div>
                     <!-- /.card-body -->
                 </div>

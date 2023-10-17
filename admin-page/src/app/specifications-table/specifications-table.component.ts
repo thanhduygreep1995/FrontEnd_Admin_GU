@@ -4,7 +4,6 @@ import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpecificationService } from '../specification.service';
-import { NgFor } from '@angular/common';
 
 
 declare var require: any;
@@ -19,7 +18,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 
 export class SpecificationsTableComponent implements OnInit {
-  dtOptions: any = {};
   specificationForm: any;
   specification:any;
   data: any[] = []; // Mảng dữ liệu cho DataTables
@@ -42,11 +40,15 @@ export class SpecificationsTableComponent implements OnInit {
     this.cs.getAllSpecifications().subscribe((data)=>{
       this.specification=data;
       console.log(data);
+    });
+
+
+
 
     
     // Chuỗi JSON từ yêu cầu của bạn
-    const jsonData = this.fb.group
-    // {
+    // const jsonData = this.fb.group
+    // // {
       
     //   // "Processor": "John",
     //   // "Graphics Card": "Doe",
@@ -61,40 +63,47 @@ export class SpecificationsTableComponent implements OnInit {
     // };
 
     // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
-    const dataObject = JSON.parse(JSON.stringify(jsonData));
+    // const dataObject = JSON.parse(JSON.stringify(jsonData));
 
-    // Thêm đối tượng vào mảng dữ liệu
-    this.data.push(dataObject);
+    // // Thêm đối tượng vào mảng dữ liệu
+    // this.data.push(dataObject);
 
-    // Cấu hình DataTables
-    this.dtOptions = {
-      data: this.data, // Sử dụng mảng dữ liệu cho DataTables
-      columns: [
-        { title: 'Processor', data: 'Processor' },
-        { title: 'Graphics Card', data: 'Graphics Card' },
-        { title: 'Ram', data: 'Ram' },
-        { title: 'Storage', data: 'Storage' },
-        { title: 'Display', data: 'Display' },
-        { title: 'Operating System', data: 'Operating System' },
-        { title: 'Camera', data: 'Camera' },
-        { title: 'Product', data: 'Product' }
-      ],
-      dom: 'Bfrtip',
-      buttons: [
-        // 'columnsToggle',
-        // 'colvis',
-        'copy',
-        'print',
-        'excel',
-        // {
-        //   text: 'Some button',
-        //   key: '1',
-        //   action: function (e:any, dt:any, node:any, config:any) {
-        //     alert('Button activated');
-        //   }
-        // }
-      ]
-    };
-  });
+    // // Cấu hình DataTables
+    // this.dtOptions = {
+    //   data: this.data, // Sử dụng mảng dữ liệu cho DataTables
+    //   columns: [
+    //     { title: 'Processor', data: 'Processor' },
+    //     { title: 'Graphics Card', data: 'Graphics Card' },
+    //     { title: 'Ram', data: 'Ram' },
+    //     { title: 'Storage', data: 'Storage' },
+    //     { title: 'Display', data: 'Display' },
+    //     { title: 'Operating System', data: 'Operating System' },
+    //     { title: 'Camera', data: 'Camera' },
+    //     { title: 'Product', data: 'Product' }
+    //   ],
+    //   dom: 'Bfrtip',
+    //   buttons: [
+    //     // 'columnsToggle',
+    //     // 'colvis',
+    //     'copy',
+    //     'print',
+    //     'excel',
+    //     // {
+    //     //   text: 'Some button',
+    //     //   key: '1',
+    //     //   action: function (e:any, dt:any, node:any, config:any) {
+    //     //     alert('Button activated');
+    //     //   }
+    //     // }
+    //   ]
+    // };
+
+  }
+  deleteSpec(id:any)
+  {
+    var id=this.specificationForm.controls.id.value;
+    console.log(id);
+    this.cs.deleteSpec(id).subscribe ((data)=> console.log(data));
   }
 }
+  

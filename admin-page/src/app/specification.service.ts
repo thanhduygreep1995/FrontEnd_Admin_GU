@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
    providedIn: 'root'
 })
 export class SpecificationService {
-   baseUrl="http://localhost:8080/api/specification";
+   baseUrl="http://localhost:8080/api/v0/specification";
    constructor(private http:HttpClient){}
 
    getAllSpecifications(){
@@ -20,7 +20,7 @@ export class SpecificationService {
    updateSpec(specification:any){
       return this.http.put(this.baseUrl,specification);
    }
-   deleteSpec(id:any){
+   deleteSpec(id:number){
       return this.http.delete(this.baseUrl+"/"+id);
    }
 }
