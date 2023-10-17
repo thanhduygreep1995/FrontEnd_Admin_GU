@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-
+import {Spec} from "./specification";
 const headers = new HttpHeaders({
    'Content-Type': 'application/json', // Thiết lập kiểu dữ liệu gửi đi (ở đây là JSON)
    'Authorization': 'Bearer ' // Nếu bạn có sử dụng token xác thực
@@ -25,13 +25,13 @@ export class SpecificationService {
    // findSpecByID(id:any){
    //    return this.http.get(this.baseUrl+);
    // }
-   // addSpec(specifications:any){
-   //    return this.http.post(this.baseUrl+"/list");
-   // }
-   updateSpec(specification:any){
-      return this.http.put(this.baseUrl,specification);
+   saveSpec(specification: Spec){
+      return this.http.post<any>(this.baseUrl+"/create", specification);
    }
-   deleteSpec(id:any){
+   // updateSpec(specification:any){
+   //    return this.http.put(this.baseUrl,specification);
+   // }
+   deleteSpec(id:number): Observable<Object> {
       return this.http.delete(this.baseUrl+"/"+id);
    }
 }

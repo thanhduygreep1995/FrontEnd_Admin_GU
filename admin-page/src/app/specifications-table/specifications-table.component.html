@@ -44,6 +44,7 @@
                                     <th>Display</th>
                                     <th>Operating System</th>
                                     <th>Camera</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +57,9 @@
                                     <td>{{ sp.display }}</td>
                                     <td>{{ sp.operatingSystem }}</td>
                                     <td>{{ sp.camera }}</td>
+                                    <td>
+                                        <button (click)="deleteSpec(sp.id)" class="btn btn-warning">Delete</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SpecificationService } from '../specification.service';
 
 @Component({
   selector: 'app-specifications-edition',
@@ -7,28 +8,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./specifications-edition.component.css']
 })
 export class SpecificationsEditionComponent {
-  infoSpecification: FormGroup;
   ButtonSave: boolean = true;
   ButtonDelete: boolean = true;
+  SpecFrom: any;
+  specForm: FormGroup;
   
-  constructor(private formBuilder: FormBuilder) {
-    this.infoSpecification = this.formBuilder.group({
-      Processor: ['',Validators.required],
-      modelPrice: ['',Validators.required],
-      Ram: ['',Validators.required],
-      Storage: ['',Validators.required],
-      Display: ['',Validators.required],
-      operatingSystem: ['',Validators.required],
-      Camera: ['',Validators.required],
-      originId: ['',Validators.required]
+  constructor(private formBuilder: FormBuilder, private ss: SpecificationService) {
+    this.specForm = this.formBuilder.group({
+      processor: ['', Validators.required],
+      graphicsCard: ['', Validators.required],
+      ram: ['', Validators.required],
+      storage: ['', Validators.required],
+      display: ['', Validators.required],
+      operatingSystem: ['', Validators.required],
+      camera: ['', Validators.required],
+      specification: this.formBuilder.group({
+        id: [''],
+        processor: [''],
+        ram: [''],
+        camera: ['']
+      })
     });
-  this.infoSpecification.valueChanges.subscribe(()=> {
-    this.ButtonSave = this.infoSpecification.invalid;
-  });
-  this.infoSpecification.valueChanges.subscribe(()=> {
-    this.ButtonDelete = this.infoSpecification.controls['Processor'].invalid;
-  });
   }
   onSubmit(){
+    if (this.specForm.valid) {
+      this.ss.saveSpec(this.specForm.value).subscribe(response => {
+        console.log('Spec saved successfully:', response);
+        // Xử lý response hoặc điều hướng người dùng sau khi lưu thành công.
+      });
+
   }
-}
+}}

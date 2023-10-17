@@ -31,35 +31,83 @@
                                 <div class="mb-1">
                                     <div>
                                         <label for="Name" class="form-label">Tên Sản Phẩm</label>
-                                        <input class="form-control mb-2" formControlName="name" placeholder="Tên sản phẩm">
+                                        <input type="text" class="form-control mb-2" formControlName="name" placeholder="Tên sản phẩm">
+                                        <div *ngIf="
+                                                    productForm.controls['name'].invalid &&
+                                                    productForm.controls['name'].touched
+                                                    " class="text-danger">
+                                            Tên sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
                                         <label for="model" class="form-label">Model Sản Phẩm</label>
                                         <input class="form-control mb-2" formControlName="model" placeholder="Model sản phẩm">
+                                        <div *ngIf="
+                                                    productForm.controls['model'].invalid &&
+                                                    productForm.controls['model'].touched
+                                                    " class="text-danger">
+                                            Model sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
                                         <label for="price" class="form-label">Giá Sản Phẩm</label>
                                         <input class="form-control mb-2" formControlName="price" placeholder="Giá sản phẩm">
+                                        <div *ngIf="
+                                                    productForm.controls['price'].invalid &&
+                                                    productForm.controls['price'].touched
+                                                    " class="text-danger">
+                                            Giá sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
                                         <label for="stockQuantity" class="form-label">Số Lượng</label>
                                         <input class="form-control mb-2" formControlName="stockQuantity" placeholder="Số lượng">
+                                        <div *ngIf="
+                                                    productForm.controls['stockQuantity'].invalid &&
+                                                    productForm.controls['stockQuantity'].touched
+                                                    " class="text-danger">
+                                            Tên sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
                                         <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
                                         <input class="form-control mb-2" formControlName="description" placeholder="Mô Tả sản phẩm">
+                                        <div *ngIf="
+                                                    productForm.controls['description'].invalid &&
+                                                    productForm.controls['description'].touched
+                                                    " class="text-danger">
+                                            Mô tả sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
                                         <label for="discount" class="form-label">Giảm giá</label>
-                                        <input class="form-control mb-2" formControlName="discount" placeholder="Giả giá">
+                                        <input class="form-control mb-2" formControlName="discount" placeholder="Giảm giá">
+                                        <div *ngIf="
+                                        productForm.controls['discount'].invalid &&
+                                        productForm.controls['discount'].touched
+                                        " class="text-danger">
+                                            Giảm giá sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
-                                        <label for="discountPrice" class="form-label">số giảm</label>
-                                        <input class="form-control mb-2" formControlName="discountPrice" placeholder="Giá Giảm">
+                                        <label for="discountPrice" class="form-label">Số tiền giảm</label>
+                                        <input class="form-control mb-2" formControlName="discountPrice" placeholder="Giá tiền Giảm">
+                                        <div *ngIf="
+                                        productForm.controls['discountPrice'].invalid &&
+                                        productForm.controls['discountPrice'].touched
+                                        " class="text-danger">
+                                            Giảm giá sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <div>
                                         <label for="status" class="form-label">Trạng Thái</label>
                                         <input class="form-control mb-2" formControlName="status" placeholder="Trạng thái">
+                                        <div *ngIf="
+                                        productForm.controls['status'].invalid &&
+                                        productForm.controls['status'].touched
+                                        " class="text-danger">
+                                            Giảm giá sản phẩm rổng.
+                                        </div>
                                     </div>
                                     <!-- ... Các trường khác ... -->
 
