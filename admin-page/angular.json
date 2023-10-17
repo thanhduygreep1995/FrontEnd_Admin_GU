@@ -34,6 +34,8 @@
               "node_modules/datatables.net-dt/css/jquery.dataTables.css"
             ],
             "scripts": [
+
+              "node_modules/admin-lte/dist/js/pages/dashboard3.js",
               "node_modules/admin-lte/plugins/jquery/jquery.min.js",
               "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
@@ -43,7 +45,7 @@
               "node_modules/admin-lte/plugins/jquery-mapael/jquery.mapael.min.js",
               "node_modules/admin-lte/plugins/jquery-mapael/maps/usa_states.min.js",
               "node_modules/admin-lte/plugins/chart.js/Chart.min.js",
-              "node_modules/admin-lte/dist/js/pages/dashboard3.js",
+              
               "node_modules/jszip/dist/jszip.js",
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
@@ -83,6 +85,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "admin-page:build:production"
