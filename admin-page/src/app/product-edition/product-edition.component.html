@@ -31,7 +31,7 @@
                                 <div class="mb-1">
                                     <div>
                                         <label for="Name" class="form-label">Tên Sản Phẩm</label>
-                                        <input type="text" class="form-control mb-2" formControlName="name" placeholder="Tên sản phẩm">
+                                        <input type="text" class="form-control mb-2" formControlName="name" name="name" id="name" placeholder="Tên sản phẩm">
                                         <div *ngIf="
                                                     productForm.controls['name'].invalid &&
                                                     productForm.controls['name'].touched
@@ -71,7 +71,7 @@
                                     </div>
                                     <div>
                                         <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
-                                        <input class="form-control mb-2" formControlName="description" placeholder="Mô Tả sản phẩm">
+                                        <input class="form-control mb-2" formControlName="description" name="description" id="description" placeholder="Mô Tả sản phẩm">
                                         <div *ngIf="
                                                     productForm.controls['description'].invalid &&
                                                     productForm.controls['description'].touched

@@ -22,11 +22,11 @@ export class ProductEditionComponent{
       model: ['', Validators.required],
       price: ['', Validators.required],
       stockQuantity: ['', Validators.required],
-      description: [''],
-      discount: [''],
-      discountPrice: [''],
-      status: [''],
-      category: this.formBuilder.group({
+      description: ['', Validators.required],
+      discount: ['', Validators.required],
+      discountPrice: ['', Validators.required],
+      status: ['', Validators.required],
+      product: this.formBuilder.group({
         id: [''],
         name: [''],
         description: [''],
