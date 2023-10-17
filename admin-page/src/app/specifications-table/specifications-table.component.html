@@ -27,14 +27,16 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Danh Sách User</h3>
+                        <h3 class="card-title">Danh Sách Specifications</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered table-striped table-hover">
+
+                        <table datatable *ngIf="specification && specification.length > 0" [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
+                            <!-- Các cột dữ liệu ở đây -->
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>ID</th>
                                     <th>Processor</th>
                                     <th>Graphics Card</th>
                                     <th>Ram</th>
@@ -42,77 +44,21 @@
                                     <th>Display</th>
                                     <th>Operating System</th>
                                     <th>Camera</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let s of specification">
-                                    <td>{{s.id}}</td>
-                                    <td>{{s.processor}}</td>
-                                    <td>{{s.graphicsCard}}</td>
-                                    <td>{{s.ram}}</td>
-                                    <td>{{s.storage}}</td>
-                                    <td>{{s.display}}</td>
-                                    <td>{{s.operatingSystem}}</td>
-                                    <td>{{s.camera}}</td>
-                                    <td>
-                                        <!-- <button (click)="" class="btn btn-info">Update</button> -->
-                                        <button (click)="deleteSpec" class="btn btn-warning">Delete</button>
-                                    </td>
+                                <tr *ngFor="let sp of specification">
+                                    <td>{{ sp.id }}</td>
+                                    <td>{{ sp.processor }}</td>
+                                    <td>{{ sp.graphicsCard }}</td>
+                                    <td>{{ sp.ram }}</td>
+                                    <td>{{ sp.storage }}</td>
+                                    <td>{{ sp.display }}</td>
+                                    <td>{{ sp.operatingSystem }}</td>
+                                    <td>{{ sp.camera }}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover"> -->
-                        <!-- <form [formGroup]="specificationForm">
-                                Process: <input type="text" name="" id="" formControlName="Process" class="form-control"> Graphics Card: <input type="text" name="" id="" formControlName="graphicsCard" class="form-control"> Ram: <input type="text" name=""
-                                    id="" formControlName="Ram" class="form-control"> Storage: <input type="text" name="" id="" formControlName="Storage" class="form-control"> Display: <input type="text" name="" id="" formControlName="Display" class="form-control">                                Operatings System: <input type="text" name="" id="" formControlName="OperatingsSystem" class="form-control"> Camera: <input type="text" name="" id="" formControlName="Camera" class="form-control">
-                            </form> -->
-                        <!-- <thead>
-                    <tr>
-                      <th>Processor</th>
-                      <th>Graphics Card</th>
-                      <th>Ram</th>
-                      <th>Storage</th>
-                      <th>Display</th>
-                      <th>Operating System</th>
-                      <th>Camera</th>
-                      <th>Product</th>
-                    </tr>
-                    </thead>
-                    <tbody> -->
-                        <!-- <tr>
-                      <td>Duy</td>
-                      <td>Pham</td>
-                      <td>0979261979</td>
-                      <td> 4</td>
-                      
-                      <td>thanhduygreep1995@gmail.com</td>
-                      <td>Admin</td>
-                      <td>X</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>Duy</td>
-                      <td>Pham</td>
-                      <td>0979261979</td>
-                      <td> 4</td>
-                      
-                      <td>thanhduygreep1995@gmail.com</td>
-                      <td>Admin</td>
-                      <td>X</td>
-                      <td></td>
-                    </tr> -->
-                        <!-- <tfoot>
-                        <th>Processor</th>
-                        <th>Graphics Card</th>
-                        <th>Ram</th>
-                        <th>Storage</th>
-                        <th>Display</th>
-                        <th>Operating System</th>
-                        <th>Camera</th>
-                        <th>Product</th>
-                    </tfoot> -->
-                        <!-- </table> -->
                     </div>
                     <!-- /.card-body -->
                 </div>
