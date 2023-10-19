@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import 'datatables.net';
 import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
+import { FormBuilder } from '@angular/forms';
+import { ProductService } from '../service/category/product.servic';
+import { Router } from '@angular/router';
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -18,62 +21,81 @@ export class ProductTableComponent implements OnInit{
 // Must be declared as "any", not as "DataTables.Settings"
 dtOptions: any = {};
 data: any[] = []; // Mảng dữ liệu cho DataTables
+products: any;
+productForm: any;
 
-ngOnInit(): void {
-  // Chuỗi JSON từ yêu cầu của bạn
-  const jsonData = {
-    "Name": "John",
-    "Model": "Doe02",
-    "Price": "2533",
-    "Create Date": "1990-05-15",
-    "Update Date": "1990-05-15",
-    "Description": "hashed_password_here",
-    "Discount": "admin",
-    "Discount Price": "50",
-    "Status": "active",
-    "Category Id": "1",
-    "Brand Id": "1",
-    "Origin Id": "1"
-  };
+constructor(
+    private formBuilder: FormBuilder,
+    private pS: ProductService,
+    private router: Router
+  ) {
+    this.productForm = this.formBuilder.group({
+      id: [''],
+      name: [''],  
+      model: [''],
+      price: [''],
+      stock_quantity: [''],
+      description: [''],
+      discount: [''],
+      discount_price: [''],
+      status: [''],
+    });
+  }
 
-  // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
-  const dataObject = JSON.parse(JSON.stringify(jsonData));
+  ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      dom: 'Bfrtip', // Hiển thị các nút: buttons, filter, length change, ... (Xem thêm tài liệu DataTables để biết thêm thông tin)
+      buttons: [
+        'copy',
+        'print',
+        'excel',
+        {
+          extend: 'csvHtml5',
+          text: 'CSV',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 6, 7], // Chỉ định các cột bạn muốn xuất trong file CSV
+          },
+        },
+      ],
+    };
 
-  // Thêm đối tượng vào mảng dữ liệu
-  this.data.push(dataObject);
+    this.pS.getAllProduct().subscribe((data) => {
+      console.log(data);
+      this.products = data;
+    });
+  }
+  onUpdate(id: number): void {
+    this.router.navigate(['/product-edition', id]);
+  }
 
-  // Cấu hình DataTables
-  this.dtOptions = {
-    data: this.data, // Sử dụng mảng dữ liệu cho DataTables
-    columns: [
-      { title: 'Name', data: 'Name' },
-      { title: 'Model', data: 'Model' },
-      { title: 'Price', data: 'Price' },
-      { title: 'Create Date', data: 'Create Date' },
-      { title: 'Update Date', data: 'Update Date' },
-      { title: 'Description', data: 'Description' },
-      { title: 'Discount', data: 'Discount' },
-      { title: 'Discount Price', data: 'Discount Price' },
-      { title: 'Status', data: 'Status' },
-      { title: 'Catogory Id', data: 'Category Id' },
-      { title: 'Brand Id', data: 'Brand Id' },
-      { title: 'Origin Id', data: 'Origin Id' },
-    ],
-    dom: 'Bfrtip',
-    buttons: [
-      // 'columnsToggle',
-      // 'colvis',
-      'copy',
-      'print',
-      'excel',
-      // {
-      //   text: 'Some button',
-      //   key: '1',
-      //   action: function (e:any, dt:any, node:any, config:any) {
-      //     alert('Button activated');
-      //   }
-      // }
-    ]
-  };
-}
+  fnDeleteProduct(id: any) {
+    this.pS.deleteProduct(id).subscribe(
+      () => {
+        console.log('Danh mục đã được xóa thành công');
+        this.products = []; // Xóa dữ liệu cũ
+        console.log('Successfully Delete poduct!');
+        alert('Successfully Delete product!');
+        // Thực hiện các thao tác khác sau khi xóa thành công
+        this.refreshTable(); // Làm mới bảng
+      },
+      (error) => {
+        console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+      }
+    );
+  }
+
+  refreshTable() {
+    // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
+    this.pS.getAllProduct().subscribe(
+      (newData) => {
+        this.products = newData;
+        console.log('Dữ liệu mới đã được cập nhật:', this.products);
+      },
+      (error) => {
+        console.error('Lỗi khi lấy dữ liệu mới:', error);
+      }
+    );
+    }
 }

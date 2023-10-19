@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'specifications-table', component: SpecificationsTableComponent },
   { path: 'orders-table', component: OrderTableComponent },
   { path: 'orders-detail-table', component: OrderDetailTableComponent },
+  { path: 'product-edition/:id', component: ProductEditionComponent },
 ];
 
 @NgModule({

@@ -1,207 +1,83 @@
-  <!-- Content Wrapper. Contains page content -->
-  <!-- <div class="content-wrapper"> -->
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
+<!-- Content Wrapper. Contains page content -->
+<!-- <div class="content-wrapper"> -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Product List</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Product List</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Danh Sách Sản Phẩm</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover" >
-                  
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Model</th>
-                    <th>Price</th>
-                    <th>Create Date</th>
-                    <th>Update Date</th>
-                    <th>Description</th>
-                    <th>Discount</th>
-                    <th>Discount Price</th>
-                    <th>Status</th>
-                    <th>Category Id</th>
-                    <th>Brand Id</th>
-                    <th>Origin Id</th>
-                  </tr>
-                  </thead>
-                  <!-- <tbody> -->
-                    <!-- <tr>
-                      <td>Duy</td>
-                      <td>NM555</td>
-                      <td>2300</td>
-                      <td> 15/1/2013</td>
-                      
-                      <td>15/1/2013</td>
-                      <td>No Description</td>
-                      <td>0</td>
-                      <td>0</td>
-  
-                      <td>No Active</td>
-                      <td>001</td>
-                      <td>001</td>
-                      <td>001</td>
-                    </tr>
-                  <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr>
-                  <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr>                  <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr>                  <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr>                  <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr>                  <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr>
-                                    <tr>
-                    <td>Duy</td>
-                    <td>NM555</td>
-                    <td>2300</td>
-                    <td> 15/1/2013</td>
-                    
-                    <td>15/1/2013</td>
-                    <td>No Description</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                    <td>No Active</td>
-                    <td>001</td>
-                    <td>001</td>
-                    <td>001</td>
-                  </tr> -->
-                  <!-- <tfoot>
-                    <th>Name</th>
-                    <th>Model</th>
-                    <th>Price</th>
-                    <th>Create Date</th>
-
-                    <th>Update Date</th>
-                    <th>Description</th>
-                    <th>Discount</th>
-                    <th>Discount Price</th>
-
-                    <th>Status</th>
-                    <th>Category Id</th>
-                    <th>Brand Id</th>
-                    <th>Origin Id</th>
-                  </tfoot> -->
-                </table>
-              </div>
-              <!-- /.card-body -->
+            <div class="col-sm-6">
+                <h1>Product List</h1>
             </div>
-            
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Product List</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh Sách Sản Phẩm</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table datatable *ngIf="products && products.length > 0" [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Model</th>
+                                    <th>Price</th>
+                                    <th>Stock Quantity</th>
+                                    <th>Description</th>
+                                    <th>Discount</th>
+                                    <th>Discount Price</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of products">
+                                    <td>{{ p.id }}</td>
+                                    <td>{{ p.name }}</td>
+                                    <td>{{ p.model }}</td>
+                                    <td>{{ p.price }}</td>
+                                    <td>{{ p.stock_quantity }}</td>
+                                    <td>{{ p.description }}</td>
+                                    <td>{{ p.discount }}</td>
+                                    <td>{{ p.discount_price }}</td>
+                                    <td>{{ p.status }}</td>
+                                    <td>
+                                        <button class="btn btn-info" (click)="onUpdate(p.id)">
+                                            Update
+                                       </button>
+                                        <button class="btn btn-danger" (click)="fnDeleteProduct(p.id)">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
         </div>
         <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  <!-- </div> -->
-  <!-- /.content-wrapper -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<!-- </div> -->
+<!-- /.content-wrapper -->
