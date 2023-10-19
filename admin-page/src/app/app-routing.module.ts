@@ -11,23 +11,23 @@ import { SpecificationsTableComponent } from './specifications-table/specificati
 import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
 
-
 const routes: Routes = [
-  { path:'', component:OrderTableComponent},
-  { path:'dashboard', component:MainContentComponent},
-  { path:'product-edition', component:ProductEditionComponent},
-  { path:'product-table', component:ProductTableComponent},
-  { path:'user-table', component:UserTableComponent},
-  { path:'category-table', component:CategoryTableComponent},
-  { path:'category-edition', component:CategoryEditionComponent},
-  { path:'specifications-edition', component:SpecificationsEditionComponent},
-  { path:'specifications-table', component:SpecificationsTableComponent},
-  { path:'orders-table', component:OrderTableComponent},
-  { path:'orders-detail-table', component:OrderDetailTableComponent},
+  { path: '', component: OrderTableComponent },
+  { path: 'dashboard', component: MainContentComponent },
+  { path: 'product-edition', component: ProductEditionComponent },
+  { path: 'product-table', component: ProductTableComponent },
+  { path: 'user-table', component: UserTableComponent },
+  { path: 'category-table', component: CategoryTableComponent },
+  { path: 'category-edition', component: CategoryEditionComponent },
+  { path: 'category-edition/:id', component: CategoryEditionComponent },
+  { path: 'specifications-edition', component: SpecificationsEditionComponent },
+  { path: 'specifications-table', component: SpecificationsTableComponent },
+  { path: 'orders-table', component: OrderTableComponent },
+  { path: 'orders-detail-table', component: OrderDetailTableComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

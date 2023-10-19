@@ -12,7 +12,6 @@ import { ControlSidebarComponent } from './control-sidebar/control-sidebar.compo
 import { ProductTableComponent } from './product-table/product-table.component';
 import { ProductEditionComponent } from './product-edition/product-edition.component';
 import { UserTableComponent } from './user-table/user-table.component';
-import { CategoryTableComponent } from './category-table/category-table.component';
 import { CategoryEditionComponent } from './category-edition/category-edition.component';
 import { SpecificationsEditionComponent } from './specifications-edition/specifications-edition.component';
 import { SpecificationsTableComponent } from './specifications-table/specifications-table.component';
@@ -20,8 +19,8 @@ import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
 import { DataTablesModule } from 'angular-datatables';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { CategoryTableComponent } from './category-table/category-table.component';
 
 @NgModule({
   declarations: [
@@ -35,21 +34,21 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProductTableComponent,
     ProductEditionComponent,
     UserTableComponent,
-    CategoryTableComponent,
     CategoryEditionComponent,
+    CategoryTableComponent,
     SpecificationsEditionComponent,
     SpecificationsTableComponent,
     OrderTableComponent,
     OrderDetailTableComponent,
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DataTablesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
