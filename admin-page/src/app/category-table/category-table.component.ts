@@ -1,7 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import 'datatables.net';
 import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
+import { CategoryService } from '../service/category/category.service';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -12,54 +15,80 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-category-table',
   templateUrl: './category-table.component.html',
-  styleUrls: ['./category-table.component.css']
+  styleUrls: ['./category-table.component.css'],
 })
 export class CategoryTableComponent implements OnInit {
   // Must be declared as "any", not as "DataTables.Settings"
+  categories: any;
+  infoCategory: any;
   dtOptions: any = {};
   data: any[] = []; // Mảng dữ liệu cho DataTables
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private cate: CategoryService,
+    private router: Router
+  ) {
+    this.infoCategory = this.formBuilder.group({
+      id: [''],
+      name: [''],
+      description: [''],
+      status: [''],
+    });
+  }
+
   ngOnInit(): void {
-    // Chuỗi JSON từ yêu cầu của bạn
-    const jsonData = {
-      "Id": "1",
-      "Name": "Doe",
-      "Description": "No Description",
-      "Status": "No Available",
-      "Title": "No Title"
-    };
-
-    // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
-    const dataObject = JSON.parse(JSON.stringify(jsonData));
-
-    // Thêm đối tượng vào mảng dữ liệu
-    this.data.push(dataObject);
-
-    // Cấu hình DataTables
     this.dtOptions = {
-      data: this.data, // Sử dụng mảng dữ liệu cho DataTables
-      columns: [
-        { title: 'Id', data: 'Id' },
-        { title: 'Name', data: 'Name' },
-        { title: 'Description', data: 'Description' },
-        { title: 'Status', data: 'Status' },
-        { title: 'Title', data: 'Title' }
-      ],
-      dom: 'Bfrtip',
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      dom: 'Bfrtip', // Hiển thị các nút: buttons, filter, length change, ... (Xem thêm tài liệu DataTables để biết thêm thông tin)
       buttons: [
-        // 'columnsToggle',
-        // 'colvis',
         'copy',
         'print',
         'excel',
-        // {
-        //   text: 'Some button',
-        //   key: '1',
-        //   action: function (e:any, dt:any, node:any, config:any) {
-        //     alert('Button activated');
-        //   }
-        // }
-      ]
+        {
+          extend: 'csvHtml5',
+          text: 'CSV',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 6, 7], // Chỉ định các cột bạn muốn xuất trong file CSV
+          },
+        },
+      ],
     };
+
+    this.cate.getAllCategories().subscribe((data) => {
+      console.log(data);
+      this.categories = data;
+    });
+  }
+  onUpdate(id: number): void {
+    this.router.navigate(['/category-edition', id]);
+  }
+
+  fnDeleteCategory(id: any) {
+    this.cate.deleteCategory(id).subscribe(
+      () => {
+        console.log('Danh mục đã được xóa thành công');
+        this.categories = []; // Xóa dữ liệu cũ
+        // Thực hiện các thao tác khác sau khi xóa thành công
+        this.refreshTable(); // Làm mới bảng
+      },
+      (error) => {
+        console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+      }
+    );
+  }
+
+  refreshTable() {
+    // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
+    this.cate.getAllCategories().subscribe(
+      (newData) => {
+        this.categories = newData;
+        console.log('Dữ liệu mới đã được cập nhật:', this.categories);
+      },
+      (error) => {
+        console.error('Lỗi khi lấy dữ liệu mới:', error);
+      }
+    );
   }
 }

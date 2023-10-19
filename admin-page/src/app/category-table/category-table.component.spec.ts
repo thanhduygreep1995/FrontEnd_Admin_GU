@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoryTableComponent } from './category-table.component';
+import { CategoryTableComponent } from './CategoryTableComponent';
 
 describe('CategoryTableComponent', () => {
   let component: CategoryTableComponent;
@@ -8,7 +8,7 @@ describe('CategoryTableComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CategoryTableComponent]
+      declarations: [CategoryTableComponent],
     });
     fixture = TestBed.createComponent(CategoryTableComponent);
     component = fixture.componentInstance;

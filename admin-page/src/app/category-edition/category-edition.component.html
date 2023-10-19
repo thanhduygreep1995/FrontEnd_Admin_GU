@@ -29,59 +29,50 @@
             <div class="col-12">
               <div class="card-body">
                 <div class="mb-1">
-                  <label for="categoryId" class="form-label">Id</label>
+                  <label for="id" class="form-label">Id</label>
                   <input
-                    formControlName="categoryId"
+                    readonly
+                    formControlName="id"
                     type="text"
                     class="form-control mb-2"
-                    name="categoryId"
-                    id="categoryId"
+                    name="id"
+                    id="id"
                     placeholder="Enter Category Id"
                   />
-                  <div
-                    *ngIf="
-                      infoCategory.controls['categoryId'].invalid &&
-                      infoCategory.controls['categoryId'].touched
-                    "
-                    class="text-danger"
-                  >
-                    Category Id is required.
-                  </div>
-
-                  <label for="categoryName" class="form-label">Name</label>
+                  <label for="name" class="form-label">Name</label>
                   <input
-                    formControlName="categoryName"
+                    formControlName="name"
                     type="text"
                     class="form-control mb-2"
-                    name="categoryName"
-                    id="categoryName"
+                    name="name"
+                    id="name"
                     placeholder="Category Name"
                   />
                   <div
                     *ngIf="
-                      infoCategory.controls['categoryName'].invalid &&
-                      infoCategory.controls['categoryName'].touched
+                      infoCategory.controls['name'].invalid &&
+                      infoCategory.controls['name'].touched
                     "
                     class="text-danger"
                   >
                     Category Name is required.
                   </div>
 
-                  <label for="categoryDescription" class="form-label"
+                  <label for="description" class="form-label"
                     >Description</label
                   >
                   <input
-                    formControlName="categoryDescription"
+                    formControlName="description"
                     type="text"
                     class="form-control mb-2"
-                    name="categoryDescription"
-                    id="categoryDescription"
+                    name="description"
+                    id="description"
                     placeholder="Enter your Description"
                   />
                   <div
                     *ngIf="
-                      infoCategory.controls['categoryDescription'].invalid &&
-                      infoCategory.controls['categoryDescription'].touched
+                      infoCategory.controls['description'].invalid &&
+                      infoCategory.controls['description'].touched
                     "
                     class="text-danger"
                   >
@@ -89,14 +80,13 @@
                   </div>
 
                   <label for="categoryStatus" class="form-label">Status</label>
-                  <select class="form-control select2" style="width: 100%">
-                    <option selected="selected">Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
+                  <select
+                    formControlName="status"
+                    class="form-control select2"
+                    style="width: 100%"
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
                   </select>
                 </div>
               </div>
@@ -106,6 +96,7 @@
           <div class="row mx-2 mb-2">
             <div class="col-12 d-flex flex-wrap justify-content-end">
               <button
+                (click)="fnAddCategory()"
                 [disabled]="ButtonSave"
                 type="button"
                 class="btn btn-primary mx-2"
@@ -113,13 +104,15 @@
                 Save
               </button>
               <button
-                [disabled]="ButtonSave"
+                (click)="fnUpdateCategory()"
+                [disabled]="ButtonUpdate"
                 type="button"
                 class="btn btn-primary mx-2"
               >
                 Update
               </button>
               <button
+                (click)="fnDeleteCategory()"
                 [disabled]="ButtonDelete"
                 type="button"
                 class="btn btn-primary mx-2"
