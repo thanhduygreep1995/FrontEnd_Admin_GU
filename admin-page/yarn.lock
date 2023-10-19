@@ -1437,6 +1437,11 @@
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@popperjs/core@^2.11.8":
+  version "2.11.8"
+  resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
 "@schematics/angular@16.2.6":
   version "16.2.6"
   resolved "https://registry.npmjs.org/@schematics/angular/-/angular-16.2.6.tgz"
@@ -1628,7 +1633,7 @@
   resolved "https://registry.npmjs.org/@types/jasmine/-/jasmine-4.3.6.tgz"
   integrity sha512-3N0FpQTeiWjm+Oo1WUYWguUS7E6JLceiGTriFrG8k5PU7zRLJCzLcWURU3wjMbZGS//a2/LgjsnO3QxIlwxt9g==
 
-"@types/jquery@*":
+"@types/jquery@*", "@types/jquery@^3.5.22":
   version "3.5.22"
   resolved "https://registry.npmjs.org/@types/jquery/-/jquery-3.5.22.tgz"
   integrity sha512-ISQFeUK5GwRftLK4PVvKTWEVCxZ2BpaqBz0TWkIq5w4vGojxZP9+XkqgcPjxoqmPeew+HLyWthCBvK7GdF5NYA==
@@ -2356,10 +2361,15 @@ bootstrap-switch@3.3.4:
   resolved "https://registry.npmjs.org/bootstrap-switch/-/bootstrap-switch-3.3.4.tgz"
   integrity sha512-7YQo+Ir6gCUqC36FFp1Zvec5dRF/+obq+1drMtdIMi9Xc84Kx63Evi0kdcp4HfiGsZpiz6IskyYDNlSKcxsL7w==
 
-bootstrap@^3.1.1, bootstrap@^4.6.1, bootstrap@^4.6.2, bootstrap@>=4.0:
+bootstrap@^3.1.1, bootstrap@^4.6.1, bootstrap@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.2.tgz"
   integrity sha512-51Bbp/Uxr9aTuy6ca/8FbFloBUJZLHwnhTcnjIeRn2suQWsWzcuJhGjKDB5eppVte/8oCdOL3VuwxvZDUggwGQ==
+
+bootstrap@>=4.0:
+  version "5.3.2"
+  resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.2.tgz"
+  integrity sha512-D32nmNWiQHo94BKHLmOrdjlL05q1c8oxbtBphQFb9Z5to6eGRDCm0QgeaZ4zFBHzfg2++rqa2JkqCcxDy0sH0g==
 
 bootstrap4-duallistbox@^4.0.2:
   version "4.0.2"
@@ -3020,7 +3030,7 @@ datatables.net-colreorder@>=1.6.2:
     datatables.net ">=1.13.4"
     jquery ">=1.7"
 
-datatables.net-dt@>=1.13.4:
+datatables.net-dt@^1.13.6, datatables.net-dt@>=1.13.4:
   version "1.13.6"
   resolved "https://registry.npmjs.org/datatables.net-dt/-/datatables.net-dt-1.13.6.tgz"
   integrity sha512-0fBsUi8k5e+x5e+xA/Eb5stFr2PIkHgDnbhZs8ZDLvzzL975lCm6sqBAcsTsXKvF7yuBvaDTVBTF4wOMw7PrYw==
@@ -3198,7 +3208,7 @@ datatables.net-select@>=1.6.2:
     datatables.net ">=1.13.4"
     jquery ">=1.7"
 
-datatables.net@^1.11.4, datatables.net@>=1.13.4:
+datatables.net@^1.11.4, datatables.net@^1.13.6, datatables.net@>=1.13.4:
   version "1.13.6"
   resolved "https://registry.npmjs.org/datatables.net/-/datatables.net-1.13.6.tgz"
   integrity sha512-rHNcnW+yEP9me82/KmRcid5eKrqPqW3+I/p1TwqCW3c/7GRYYkDyF6aJQOQ9DNS/pw+nyr4BVpjyJ3yoZXiFPg==
@@ -4799,7 +4809,7 @@ jquery-validation@^1.19.3:
   resolved "https://registry.npmjs.org/jquery-validation/-/jquery-validation-1.20.0.tgz"
   integrity sha512-c8tg4ltIIP6L7l0bZ79sRzOJYquyjS48kQZ6iv8MJ2r0OYztxtkWYKTReZyU2/zVFYiINB29i0Z/IRNNuJQN1g==
 
-"jquery@^1.7 || ^2.0 || ^3.1", "jquery@^3.0 || ^2.0 || ^1.0", jquery@^3.4.0, jquery@^3.6.0, jquery@>=1.10, jquery@>=1.12.0, jquery@>=1.7, jquery@>=1.8, "jquery@>=1.8.0 <4.0.0", jquery@>=1.9.0, jquery@>=2.2, "jquery@1.9.1 - 3":
+"jquery@^1.7 || ^2.0 || ^3.1", "jquery@^3.0 || ^2.0 || ^1.0", jquery@^3.4.0, jquery@^3.6.0, jquery@^3.7.1, jquery@>=1.10, jquery@>=1.12.0, jquery@>=1.7, jquery@>=1.8, "jquery@>=1.8.0 <4.0.0", jquery@>=1.9.0, jquery@>=2.2, "jquery@1.9.1 - 3":
   version "3.7.1"
   resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
   integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==

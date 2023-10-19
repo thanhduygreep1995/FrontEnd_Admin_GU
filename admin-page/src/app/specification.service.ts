@@ -10,17 +10,17 @@ const headers = new HttpHeaders({
 @Injectable({
    providedIn: 'root'
 })
+
+
 export class SpecificationService {
-   baseUrl="http://localhost:8080/api/v0/specification";
-
-
+   baseUrl="http://localhost:8080/api/v0/specifications";
    constructor(private http:HttpClient){}
    // getData(): Observable<any[]> {
    //    return this.http.get<any[]>(`${this.baseUrl}/list`);
    //  }
    getAllSpecifications(): Observable<any[]>{
-      return this.http.get<any[]>(this.baseUrl, { headers: headers })
-      
+      return this.http.get<any[]>(this.baseUrl + "/list", { headers: headers })
+    
    }
    // findSpecByID(id:any){
    //    return this.http.get(this.baseUrl+);

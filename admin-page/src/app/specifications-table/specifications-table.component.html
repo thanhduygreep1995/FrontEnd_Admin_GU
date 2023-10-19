@@ -30,11 +30,14 @@
                         <h3 class="card-title">Danh Sách Specifications</h3>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
-
-                        <table datatable *ngIf="specification && specification.length > 0" [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
+                    <div class="card-body">                  
+                          <table datatable 
+                          *ngIf="specification && specification.length > 0"  
+                          [dtOptions]="dtOptions" 
+                          class="table table-bordered table-striped row-border hover">
                             <!-- Các cột dữ liệu ở đây -->
                             <thead>
+
                                 <tr>
                                     <th>ID</th>
                                     <th>Processor</th>
@@ -66,7 +69,19 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                            <tfoot>
+                              <tr>
+                                <th>ID</th>
+                                <th>Processor</th>
+                                <th>Graphics Card</th>
+                                <th>Ram</th>
+                                <th>Storage</th>
+                                <th>Display</th>
+                                <th>Operating System</th>
+                                <th>Camera</th>
+                              </tr>
+                            </tfoot>
+                          </table>
                     </div>
                     <!-- /.card-body -->
                 </div>
