@@ -65,7 +65,7 @@
                                     <td>{{product.discount_price}}</td>
                                     <td>{{product.status}}</td>
                                     <td>
-                                        <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Update</button>
+                                        <button class="btn btn-info" (click)="onUpdate(product.id)">Update</button>
                                     </td>
                                     <td>
                                         <button (click)="deleteProduct(product.id)" class="btn btn-warning">Delete</button>

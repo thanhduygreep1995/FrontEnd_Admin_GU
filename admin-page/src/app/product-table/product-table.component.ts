@@ -41,4 +41,8 @@ export class ProductTableComponent implements OnInit{
       this.router.navigate(['/']);
     });
   }
+
+  onUpdate(id: number): void {
+    this.router.navigate(['/product-edition', id]);
   }
+}

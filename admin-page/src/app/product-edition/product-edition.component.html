@@ -24,14 +24,17 @@
         <div class="row d-flex justify-content-center">
             <div class="col-10 " action="myForm">
                 <!-- style="max-width: 540px;" -->
-                <form class="card " [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <form class="card" [formGroup]="productForm">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group card-body">
                                 <div class="mb-1">
                                     <div>
+                                        <input readonly type="text" class="form-control mb-2" formControlName="id" name="id" id="id">
+                                    </div>
+                                    <div>
                                         <label for="Name" class="form-label">Tên Sản Phẩm</label>
-                                        <input type="text" class="form-control mb-2" formControlName="name" name="name" id="name" placeholder="Tên sản phẩm">
+                                        <input type="text" class="form-control mb-2" formControlName="name" name="name" id="name" placeholder="vd: Iphone 15 pro max">
                                         <div *ngIf="
                                                     productForm.controls['name'].invalid &&
                                                     productForm.controls['name'].touched
@@ -41,7 +44,7 @@
                                     </div>
                                     <div>
                                         <label for="model" class="form-label">Model Sản Phẩm</label>
-                                        <input class="form-control mb-2" formControlName="model" placeholder="Model sản phẩm">
+                                        <input class="form-control mb-2" formControlName="model" placeholder="vd: VNA or LLA">
                                         <div *ngIf="
                                                     productForm.controls['model'].invalid &&
                                                     productForm.controls['model'].touched
@@ -51,7 +54,7 @@
                                     </div>
                                     <div>
                                         <label for="price" class="form-label">Giá Sản Phẩm</label>
-                                        <input class="form-control mb-2" formControlName="price" placeholder="Giá sản phẩm">
+                                        <input class="form-control mb-2" formControlName="price" placeholder="vd: 45000000">
                                         <div *ngIf="
                                                     productForm.controls['price'].invalid &&
                                                     productForm.controls['price'].touched
@@ -61,7 +64,7 @@
                                     </div>
                                     <div>
                                         <label for="stockQuantity" class="form-label">Số Lượng</label>
-                                        <input class="form-control mb-2" formControlName="stockQuantity" placeholder="Số lượng">
+                                        <input class="form-control mb-2" formControlName="stockQuantity" placeholder="vd: 123">
                                         <div *ngIf="
                                                     productForm.controls['stockQuantity'].invalid &&
                                                     productForm.controls['stockQuantity'].touched
@@ -71,7 +74,7 @@
                                     </div>
                                     <div>
                                         <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
-                                        <input class="form-control mb-2" formControlName="description" name="description" id="description" placeholder="Mô Tả sản phẩm">
+                                        <input class="form-control mb-2" formControlName="description" name="description" id="description" placeholder="vd: Chính hãng của Apple">
                                         <div *ngIf="
                                                     productForm.controls['description'].invalid &&
                                                     productForm.controls['description'].touched
@@ -81,7 +84,7 @@
                                     </div>
                                     <div>
                                         <label for="discount" class="form-label">Giảm giá</label>
-                                        <input class="form-control mb-2" formControlName="discount" placeholder="Giảm giá">
+                                        <input class="form-control mb-2" formControlName="discount" placeholder="vd: Ưu đãi hot tháng 10 ">
                                         <div *ngIf="
                                         productForm.controls['discount'].invalid &&
                                         productForm.controls['discount'].touched
@@ -91,41 +94,37 @@
                                     </div>
                                     <div>
                                         <label for="discountPrice" class="form-label">Số tiền giảm</label>
-                                        <input class="form-control mb-2" formControlName="discountPrice" placeholder="Giá tiền Giảm">
+                                        <input class="form-control mb-2" formControlName="discountPrice" placeholder="vd: 2500000">
                                         <div *ngIf="
                                         productForm.controls['discountPrice'].invalid &&
                                         productForm.controls['discountPrice'].touched
                                         " class="text-danger">
-                                            Giảm giá sản phẩm rổng.
+                                            Số tiền giảm giá rổng.
                                         </div>
                                     </div>
-                                    <div>
-                                        <label for="status" class="form-label">Trạng Thái</label>
-                                        <input class="form-control mb-2" formControlName="status" placeholder="Trạng thái">
-                                        <div *ngIf="
-                                        productForm.controls['status'].invalid &&
-                                        productForm.controls['status'].touched
-                                        " class="text-danger">
-                                            Giảm giá sản phẩm rổng.
-                                        </div>
-                                    </div>
+                                    <label for="categoryStatus" class="form-label">Status</label>
+                                    <select formControlName="status" class="form-control select2" style="width: 100%">
+                                            <option value="ACTIVE">ACTIVE</option>
+                                            <option value="INACTIVE">INACTIVE</option>
+                                        </select>
                                     <!-- ... Các trường khác ... -->
 
                                 </div>
                                 <hr>
                                 <div class="row mx-2 mb-2">
                                     <div class="col-12 d-flex flex-wrap justify-content-end">
-                                        <button type="submit" class="btn btn-warning" (click)="onSubmit">Thêm Sản Phẩm</button>
+                                        <button (click)="fnAddProduct()" [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2">
+                                        Save
+                                      </button>
+                                        <hr>
+                                        <button (click)="fnUpdateProduct()" [disabled]="ButtonUpdate" type="button" class="btn btn-primary mx-2">Update</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
-
-
             </div>
-
         </div>
         <!-- /.col -->
     </div>
