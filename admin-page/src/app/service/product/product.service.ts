@@ -15,11 +15,11 @@ export class ProductService {
   }
 
   createProduct(product: any): Observable<any> {
-    const url = `${this.baseUrl+"/create"}`;
+    const url = `${this.baseUrl + '/create'}`;
     return this.http.post(url, product, { responseType: 'text' });
   }
 
-  updateProduct(id: number, product: any): Observable<any> {
+  updateProduct(id: any, product: any): Observable<any> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.put(url, product, { responseType: 'text' });
   }
@@ -29,9 +29,9 @@ export class ProductService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
-  getActiveProduct() {
-    return this.http.get(this.baseUrl + '/active');
-  }
+  // getActiveProduct() {
+  //   return this.http.get(this.baseUrl + '/active');
+  // }
 
   getProductById(id: any) {
     return this.http.get(this.baseUrl + '/' + id);

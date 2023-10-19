@@ -3,41 +3,42 @@ import 'datatables.net';
 import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import { FormBuilder } from '@angular/forms';
-import { ProductService } from '../service/category/product.servic';
+
 import { Router } from '@angular/router';
+import { ProductService } from '../service/product/product.service';
 
 declare var require: any;
 const jszip: any = require('jszip');
 const pdfMake: any = require('pdfmake/build/pdfmake.js');
 const pdfFonts: any = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
-  styleUrls: ['./product-table.component.css']
+  styleUrls: ['./product-table.component.css'],
 })
+export class ProductTableComponent implements OnInit {
+  // Must be declared as "any", not as "DataTables.Settings"
+  products: any;
+  productForm: any;
+  dtOptions: any = {};
+  data: any[] = []; // Mảng dữ liệu cho DataTables
 
-export class ProductTableComponent implements OnInit{
-// Must be declared as "any", not as "DataTables.Settings"
-dtOptions: any = {};
-data: any[] = []; // Mảng dữ liệu cho DataTables
-products: any;
-productForm: any;
-
-constructor(
+  constructor(
     private formBuilder: FormBuilder,
     private pS: ProductService,
     private router: Router
   ) {
     this.productForm = this.formBuilder.group({
       id: [''],
-      name: [''],  
+      name: [''],
       model: [''],
       price: [''],
-      stock_quantity: [''],
+      stockQuantity: [''],
       description: [''],
-      discount: [''],
-      discount_price: [''],
+      discountPercentage: [''],
+      discountPrice: [''],
       status: [''],
     });
   }
@@ -75,7 +76,6 @@ constructor(
       () => {
         console.log('Danh mục đã được xóa thành công');
         this.products = []; // Xóa dữ liệu cũ
-        console.log('Successfully Delete poduct!');
         alert('Successfully Delete product!');
         // Thực hiện các thao tác khác sau khi xóa thành công
         this.refreshTable(); // Làm mới bảng
@@ -97,5 +97,5 @@ constructor(
         console.error('Lỗi khi lấy dữ liệu mới:', error);
       }
     );
-    }
+  }
 }
