@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import 'datatables.net';
-import 'datatables.net-buttons/js/dataTables.buttons.js';
-import 'datatables.net-buttons/js/buttons.html5.js';
-import { CategoryService } from '../service/category/category.service';
+import { BrandService } from '../service/brand/brand.service';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -13,30 +10,26 @@ const pdfFonts: any = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-category-table',
-  templateUrl: './category-table.component.html',
-  styleUrls: ['./category-table.component.css'],
+  selector: 'app-brand-table',
+  templateUrl: './brand-table.component.html',
+  styleUrls: ['./brand-table.component.css'],
 })
-export class CategoryTableComponent implements OnInit {
-  // Must be declared as "any", not as "DataTables.Settings"
-  categories: any;
-  infoCategory: any;
+export class BrandTableComponent implements OnInit {
+  brands: any;
+  infoBrand: any;
   dtOptions: any = {};
   data: any[] = []; // Mảng dữ liệu cho DataTables
 
   constructor(
     private formBuilder: FormBuilder,
-    private cate: CategoryService,
+    private bS: BrandService,
     private router: Router
   ) {
-    this.infoCategory = this.formBuilder.group({
+    this.infoBrand = this.formBuilder.group({
       id: [''],
       name: [''],
-      description: [''],
-      status: [''],
     });
   }
-
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -76,20 +69,21 @@ export class CategoryTableComponent implements OnInit {
       ],
     };
 
-    this.cate.getAllCategories().subscribe((data) => {
+    this.bS.getAllBrands().subscribe((data) => {
       console.log(data);
-      this.categories = data;
+      this.brands = data;
     });
   }
+
   onUpdate(id: number): void {
-    this.router.navigate(['/category-edition', id]);
+    this.router.navigate(['/brand-edition', id]);
   }
 
-  fnDeleteCategory(id: any) {
-    this.cate.deleteCategory(id).subscribe(
+  fnDeleteBrand(id: any) {
+    this.bS.deleteBrand(id).subscribe(
       () => {
         console.log('Danh mục đã được xóa thành công');
-        this.categories = []; // Xóa dữ liệu cũ
+        this.brands = []; // Xóa dữ liệu cũ
         // Thực hiện các thao tác khác sau khi xóa thành công
         this.refreshTable(); // Làm mới bảng
       },
@@ -101,10 +95,10 @@ export class CategoryTableComponent implements OnInit {
 
   refreshTable() {
     // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
-    this.cate.getAllCategories().subscribe(
+    this.bS.getAllBrands().subscribe(
       (newData) => {
-        this.categories = newData;
-        console.log('Dữ liệu mới đã được cập nhật:', this.categories);
+        this.brands = newData;
+        console.log('Dữ liệu mới đã được cập nhật:', this.brands);
       },
       (error) => {
         console.error('Lỗi khi lấy dữ liệu mới:', error);
