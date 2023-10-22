@@ -21,6 +21,9 @@ import { DataTablesModule } from 'angular-datatables';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryTableComponent } from './category-table/category-table.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CategoryEditionModule } from './category-edition/category-edition.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,6 @@ import { CategoryTableComponent } from './category-table/category-table.componen
     ProductTableComponent,
     ProductEditionComponent,
     UserTableComponent,
-    CategoryEditionComponent,
     CategoryTableComponent,
     SpecificationsEditionComponent,
     SpecificationsTableComponent,
@@ -47,6 +49,9 @@ import { CategoryTableComponent } from './category-table/category-table.componen
     DataTablesModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CategoryEditionModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

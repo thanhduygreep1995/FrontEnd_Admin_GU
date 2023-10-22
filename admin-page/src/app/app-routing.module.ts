@@ -18,12 +18,13 @@ const routes: Routes = [
   { path: 'product-table', component: ProductTableComponent },
   { path: 'user-table', component: UserTableComponent },
   { path: 'category-table', component: CategoryTableComponent },
-  { path: 'category-edition', component: CategoryEditionComponent },
+  
   { path: 'category-edition/:id', component: CategoryEditionComponent },
   { path: 'specifications-edition', component: SpecificationsEditionComponent },
   { path: 'specifications-table', component: SpecificationsTableComponent },
   { path: 'orders-table', component: OrderTableComponent },
   { path: 'orders-detail-table', component: OrderDetailTableComponent },
+  { path: 'category-edition-loading', loadChildren:() => import('./category-edition/category-edition.module').then(m => m.CategoryEditionModule)},
 ];
 
 @NgModule({

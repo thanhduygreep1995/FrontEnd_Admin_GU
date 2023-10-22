@@ -5,6 +5,7 @@ import 'datatables.net-buttons/js/buttons.html5.js';
 import { CategoryService } from '../service/category/category.service';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { style, animate, trigger, state, transition } from '@angular/animations';
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -16,6 +17,23 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   selector: 'app-category-table',
   templateUrl: './category-table.component.html',
   styleUrls: ['./category-table.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('in', style({ opacity: 0 })),
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate(300)
+      ]),
+      state('out', style({ opacity: 0 })),
+      transition('* => void', [
+        animate(300, style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })), // Ẩn khi khởi tạo
+      transition('void => *', animate('300ms')), // Hiển thị trong 200ms khi được thêm vào DOM
+    ]),
+  ]
 })
 export class CategoryTableComponent implements OnInit {
   // Must be declared as "any", not as "DataTables.Settings"
@@ -23,6 +41,12 @@ export class CategoryTableComponent implements OnInit {
   infoCategory: any;
   dtOptions: any = {};
   data: any[] = []; // Mảng dữ liệu cho DataTables
+  isSpinning: boolean = false;
+  isSuccessDel: boolean = false;
+  isFailureDel: boolean = false;
+  progressTimerOut: number = 1200;
+  messageTimerIn: number = 1500;
+  messageTimerOut: number = 5000;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,47 +67,88 @@ export class CategoryTableComponent implements OnInit {
       pageLength: 10,
       dom: 'Bfrtip', // Hiển thị các nút: buttons, filter, length change, ... (Xem thêm tài liệu DataTables để biết thêm thông tin)
       buttons: [
-        'copy',
-        'print',
-        'excel',
+        {
+          extend: 'colvis',
+          className: 'btn-primary',
+          columns: ':not(:last-child)',
+        },
+        
+        {
+          extend: 'copy',
+          exportOptions: {
+            columns: ':not(:last-child)' // Ẩn cột cuối cùng
+          }
+        },
+        {
+          extend: 'print',
+          exportOptions: {
+            columns: ':not(:last-child)' // Ẩn cột cuối cùng
+          }
+        },
+        {
+          extend: 'excel',
+          exportOptions: {
+            columns: ':not(:last-child)' // Ẩn cột cuối cùng
+          }
+        },
         {
           extend: 'csvHtml5',
-          text: 'CSV',
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5, 6, 7], // Chỉ định các cột bạn muốn xuất trong file CSV
-          },
-        },
+            columns: ':not(:last-child)' // Ẩn cột cuối cùng
+          }
+        }
       ],
     };
-
-    this.cate.getAllCategories().subscribe((data) => {
-      console.log(data);
-      this.categories = data;
-    });
+    this.refreshTable();
   }
   onUpdate(id: number): void {
     this.router.navigate(['/category-edition', id]);
   }
 
   fnDeleteCategory(id: any) {
+    this.isSpinning = true;
+    setTimeout(() => {
+      this.isSuccessDel = true;
+    }, this.messageTimerIn);
     this.cate.deleteCategory(id).subscribe(
       () => {
-        console.log('Danh mục đã được xóa thành công');
-        this.categories = []; // Xóa dữ liệu cũ
         // Thực hiện các thao tác khác sau khi xóa thành công
-        this.refreshTable(); // Làm mới bảng
+        setTimeout(() => {
+          this.isSpinning = false;
+          // Xóa dữ liệu cũ
+          this.categories = []; 
+          // Làm mới bảng
+          this.refreshTable();  
+          console.log('Danh mục đã được xóa thành công');
+        },this.progressTimerOut);
+
+        setTimeout(() => {
+          this.isSuccessDel = false;
+        },this.messageTimerOut);  
+
       },
       (error) => {
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Danh mục đã được xóa thành công');
+        },this.progressTimerOut);
+
+        setTimeout(() => {
+          this.isFailureDel = true;
+        }, this.messageTimerIn);
         console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
       }
     );
+    setTimeout(() => {
+      this.isFailureDel = false;
+    }, this.messageTimerOut);
   }
 
   refreshTable() {
     // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
     this.cate.getAllCategories().subscribe(
       (newData) => {
-        this.categories = newData;
+        this.categories = newData.map((category, index) => ({ ...category, index: ++index }));
         console.log('Dữ liệu mới đã được cập nhật:', this.categories);
       },
       (error) => {

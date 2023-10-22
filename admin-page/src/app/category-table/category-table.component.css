@@ -1,0 +1,7 @@
+.custom-spinner {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 150%; /* Chiều rộng lớn hơn màn hình 20% */
+    height: 150%; /* Chiều cao lớn hơn màn hình 20% */
+}

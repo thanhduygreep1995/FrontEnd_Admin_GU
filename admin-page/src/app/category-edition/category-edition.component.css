@@ -1,0 +1,21 @@
+.custom-spinner {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 150%; /* Chiều rộng lớn hơn màn hình 20% */
+    height: 150%; /* Chiều cao lớn hơn màn hình 20% */
+    /* animation: fadeInOut 0.2s; */
+}
+
+@keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  

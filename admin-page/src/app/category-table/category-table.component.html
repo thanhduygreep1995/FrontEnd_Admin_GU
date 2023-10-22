@@ -1,7 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section *ngIf="!isSpinning" [@fadeIn]="!isSpinning" class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
@@ -17,15 +17,18 @@
   </div>
   <!-- /.container-fluid -->
 </section>
-
+<mat-spinner class="custom-spinner" *ngIf="isSpinning" [@fadeInOut]="isSpinning" mode="indeterminate">Loading</mat-spinner>
 <!-- Main content -->
-<section class="content">
+<section *ngIf="!isSpinning" [@fadeIn]="!isSpinning" class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Danh Sách Category</h3>
+          <div *ngIf="isSuccessDel" [@fadeInOut]="isSuccessDel" class="alert alert-success" role="alert">
+            Delete Success
+          </div>
+          <div *ngIf="isFailureDel" [@fadeInOut]="isFailureDel" class="alert alert-danger" role="alert">
+            Delete Failure
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -38,7 +41,7 @@
               <!-- Các cột dữ liệu ở đây -->
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>No</th>
                   <th>Name</th>
                   <th>Description</th>
                   <th>Status</th>
@@ -47,23 +50,56 @@
               </thead>
               <tbody>
                 <tr *ngFor="let c of categories">
-                  <td>{{ c.id }}</td>
+                  <!-- <td>{{ c.id }}</td> -->
+                  <td>{{ c.index }}</td>
                   <td>{{ c.name }}</td>
                   <td>{{ c.description }}</td>
                   <td>{{ c.status }}</td>
                   <td>
-                    <button class="btn btn-info" (click)="onUpdate(c.id)">
+                    <button class="btn btn-info mx-2" (click)="onUpdate(c.id)">
                       Update
                     </button>
-                    <button
+                    <!-- <button
                       class="btn btn-danger"
                       (click)="fnDeleteCategory(c.id)"
                     >
                       Delete
+                    </button> -->
+                    <button type="button" class="btn btn-danger mx-2" data-toggle="modal" data-target="#staticBackdropDel">
+                      Delete
                     </button>
+                     <!-- Modal -->
+                     <div class="modal fade" id="staticBackdropDel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h2 class="modal-title" id="staticBackdropLabel"><b>Delete Category</b></h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Bạn muốn xóa lại thông tin phụ kiện này {{c.name}}
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" (click)="fnDeleteCategory(c.id)" data-dismiss="modal" class="btn btn-danger">Confirm</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>No</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <!-- /.card-body -->

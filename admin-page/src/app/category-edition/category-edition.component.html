@@ -1,7 +1,12 @@
+<!-- <nz-spin [nzSpinning]="isSpinning" nzTip="Loading..." > -->
+<!-- <div *ngIf="isSpinning"> -->
+  
+<!-- </div> -->
+
 <!-- Content Wrapper. Contains page content -->
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section *ngIf="!isSpinning" [@fadeIn]="!isSpinning" class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
@@ -17,9 +22,30 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+<!-- <mat-spinner *ngIf="isSpinning" mode="indeterminate"></mat-spinner> -->
 
+  <mat-spinner class="custom-spinner spinner-element" *ngIf="isSpinning" [@fadeInOut]="isSpinning" mode="indeterminate">Loading</mat-spinner>
+  <div *ngIf="isSuccessIn" [@fadeInOut]="isSuccessIn" class="alert alert-success" role="alert">
+    Create Success
+  </div>
+  <div *ngIf="isSuccessUp" [@fadeInOut]="isSuccessUp" class="alert alert-success" role="alert">
+    Update Success
+  </div>
+  <div *ngIf="isSuccessDel" [@fadeInOut]="isSuccessDel" class="alert alert-success" role="alert">
+    Delete Success
+  </div>
+
+  <div *ngIf="isFailureIn" [@fadeInOut]="isFailureIn" class="alert alert-danger" role="alert">
+    Create Failure
+  </div>
+  <div *ngIf="isFailureUp" [@fadeInOut]="isFailureUp" class="alert alert-danger" role="alert">
+    Update Failure
+  </div>
+  <div *ngIf="isFailureDel" [@fadeInOut]="isFailureDel" class="alert alert-danger" role="alert">
+    Delete Failure
+  </div>
 <!-- Main content -->
-<section class="content">
+<section *ngIf="!isSpinning" [@fadeIn]="!isSpinning" class="content">
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-10">
@@ -29,8 +55,9 @@
             <div class="col-12">
               <div class="card-body">
                 <div class="mb-1">
-                  <label for="id" class="form-label">Id</label>
+                  <label for="id" hidden class="form-label">Id</label>
                   <input
+                  hidden
                     readonly
                     formControlName="id"
                     type="text"
@@ -103,22 +130,62 @@
               >
                 Save
               </button>
-              <button
-                (click)="fnUpdateCategory()"
-                [disabled]="ButtonUpdate"
-                type="button"
-                class="btn btn-primary mx-2"
-              >
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" [disabled]="ButtonUpdate" data-target="#staticBackdropUp">
                 Update
               </button>
-              <button
+
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdropUp" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h2 class="modal-title" id="staticBackdropLabel"><b>Update Category</b></h2>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Bạn muốn cập nhật lại thông tin phụ kiện này {{infoCategory.value.name}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" (click)="fnUpdateCategory()" data-dismiss="modal" class="btn btn-primary">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <button
                 (click)="fnDeleteCategory()"
                 [disabled]="ButtonDelete"
                 type="button"
                 class="btn btn-primary mx-2"
               >
                 Delete
+              </button> -->
+              <button type="button" class="btn btn-primary mx-2" [disabled]="ButtonDelete" data-toggle="modal" [disabled]="ButtonDelete" data-target="#staticBackdropDel">
+                Delete
               </button>
+               <!-- Modal -->
+               <div class="modal fade" id="staticBackdropDel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h2 class="modal-title" id="staticBackdropLabel"><b>Delete Category</b></h2>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Bạn muốn xóa lại thông tin phụ kiện này {{infoCategory.value.name}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" (click)="fnDeleteCategory()" data-dismiss="modal" class="btn btn-danger">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -132,3 +199,4 @@
 <!-- /.content -->
 <!-- </div> -->
 <!-- /.content-wrapper -->
+<!-- </nz-spin> -->

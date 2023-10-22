@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../service/category/category.service';
 import { ActivatedRoute } from '@angular/router';
+import { style, animate, trigger, state, transition } from '@angular/animations';
 
 interface CategoryResponse {
   id: any;
@@ -13,6 +14,23 @@ interface CategoryResponse {
   selector: 'app-category-edition',
   templateUrl: './category-edition.component.html',
   styleUrls: ['./category-edition.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('in', style({ opacity: 0 })),
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate(300)
+      ]),
+      state('out', style({ opacity: 0 })),
+      transition('* => void', [
+        animate(300, style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })), // Ẩn khi khởi tạo
+      transition('void => *', animate('300ms')), // Hiển thị trong 200ms khi được thêm vào DOM
+    ]),
+  ]
 })
 export class CategoryEditionComponent implements OnInit {
   id: any;
@@ -22,10 +40,23 @@ export class CategoryEditionComponent implements OnInit {
   ButtonUpdate: boolean = true;
   ButtonDelete: boolean = true;
 
+  isSpinning: boolean = false;
+  isSuccessIn: boolean = false;
+  isSuccessUp: boolean = false;
+  isSuccessDel: boolean = false;
+
+  isFailureIn: boolean = false;
+  isFailureUp: boolean = false;
+  isFailureDel: boolean = false;
+  
+  progressTimerOut: number = 1200;
+  messageTimerIn: number = 1500;
+  messageTimerOut: number = 5000;
+
   constructor(
     private formBuilder: FormBuilder,
     private cate: CategoryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.infoCategory = this.formBuilder.group({
       id: ['', Validators.required],
@@ -78,17 +109,37 @@ export class CategoryEditionComponent implements OnInit {
       description: this.infoCategory.value.description,
       status: this.infoCategory.value.status,
     };
-
+    this.isSpinning = true;
+    setTimeout(() => {
+      this.isSuccessIn = true;
+    }, this.messageTimerIn);
     this.cate.createCategory(categoryInfo).subscribe(
       (response) => {
-        console.log('Successfully Create category!');
-        this.infoCategory.reset();
-        alert('Successfully');
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Successfully Create category!');
+          this.infoCategory.reset();
+        }, this.progressTimerOut);
+        setTimeout(() => {
+          this.isSuccessIn = false;
+        },this.messageTimerOut)
+        
       },
       (error) => {
-        console.error('Failed to Create category:', error);
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.error('Failed to Create category:', error);
+        }, this.progressTimerOut);
+
+        setTimeout(() => {
+          this.isFailureIn = true;
+        }, this.messageTimerIn);
+        
       }
     );
+    setTimeout(() => {
+      this.isFailureIn = false;
+    }, this.messageTimerOut);
   }
 
   fnUpdateCategory() {
@@ -97,29 +148,70 @@ export class CategoryEditionComponent implements OnInit {
       description: this.infoCategory.value.description,
       status: this.infoCategory.value.status,
     };
-
+    this.isSpinning = true;
+    
+    setTimeout(() => {
+      this.isSuccessUp = true;
+    }, this.messageTimerIn);
     this.cate.updateCategory(this.id, categoryInfo).subscribe(
       (response) => {
-        console.log('Successfully updated category!');
-        alert('Successfully updated category!');
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Successfully updated category!');
+          this.infoCategory.reset();
+        }, this.progressTimerOut);
+        setTimeout(() => {
+          this.isSuccessUp = false;
+        },this.messageTimerOut);       
       },
       (error) => {
-        console.error('Failed to update category:', error);
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.error('Failed to update category:', error);
+        }, this.progressTimerOut);
+
+        setTimeout(() => {
+          this.isFailureUp = true;
+        }, this.messageTimerIn);
       }
     );
+    setTimeout(() => {
+      this.isFailureUp = false;
+    }, this.messageTimerOut);
   }
 
   fnDeleteCategory() {
     var id = this.infoCategory.controls['id'].value;
+    this.isSpinning = true;
+    setTimeout(() => {
+      this.isSuccessDel = true;
+    }, this.messageTimerIn);
     this.cate.deleteCategory(id).subscribe(
       () => {
-        console.log('Danh mục đã được xóa thành công');
-        alert('Done');
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Danh mục đã được xóa thành công');
+        },this.progressTimerOut);
+
+        setTimeout(() => {
+          this.isSuccessDel = false;
+        },this.messageTimerOut);  
       },
       (error) => {
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Danh mục đã được xóa thành công');
+        },this.progressTimerOut);
+       
+        setTimeout(() => {
+          this.isFailureDel = true;
+        }, this.messageTimerIn);
         console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
       }
     );
+    setTimeout(() => {
+      this.isFailureDel = false;
+    }, this.messageTimerOut);
   }
 
   onSubmit() {
