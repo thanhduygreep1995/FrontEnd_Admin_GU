@@ -47,6 +47,8 @@ export class CategoryTableComponent implements OnInit {
   progressTimerOut: number = 1200;
   messageTimerIn: number = 1500;
   messageTimerOut: number = 5000;
+  deleteCategoryId: any;
+  getCategoryName: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -104,13 +106,17 @@ export class CategoryTableComponent implements OnInit {
   onUpdate(id: number): void {
     this.router.navigate(['/category-edition', id]);
   }
-
-  fnDeleteCategory(id: any) {
+  setDeleteCategoryId(id: any , name:any): void {
+    this.deleteCategoryId = id;
+    this.getCategoryName = name;
+    console.log("setDeleteCategoryId" + this.deleteCategoryId);
+  }
+  fnDeleteCategory() {
     this.isSpinning = true;
     setTimeout(() => {
       this.isSuccessDel = true;
     }, this.messageTimerIn);
-    this.cate.deleteCategory(id).subscribe(
+    this.cate.deleteCategory(this.deleteCategoryId).subscribe(
       () => {
         // Thực hiện các thao tác khác sau khi xóa thành công
         setTimeout(() => {

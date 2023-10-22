@@ -65,7 +65,7 @@
                     >
                       Delete
                     </button> -->
-                    <button type="button" class="btn btn-danger mx-2" data-toggle="modal" data-target="#staticBackdropDel">
+                    <button type="button" (click)="setDeleteCategoryId(c.id, c.name)" class="btn btn-danger mx-2" data-toggle="modal" data-target="#staticBackdropDel">
                       Delete
                     </button>
                      <!-- Modal -->
@@ -79,11 +79,11 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            Bạn muốn xóa lại thông tin phụ kiện này {{c.name}}
+                            Bạn muốn xóa lại thông tin phụ kiện này {{getCategoryName}}
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" (click)="fnDeleteCategory(c.id)" data-dismiss="modal" class="btn btn-danger">Confirm</button>
+                            <button type="button" (click)="fnDeleteCategory()" data-dismiss="modal" class="btn btn-danger">Confirm</button>
                           </div>
                         </div>
                       </div>
