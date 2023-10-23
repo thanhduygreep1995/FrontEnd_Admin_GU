@@ -113,12 +113,12 @@ export class CategoryTableComponent implements OnInit {
   }
   fnDeleteCategory() {
     this.isSpinning = true;
-    setTimeout(() => {
-      this.isSuccessDel = true;
-    }, this.messageTimerIn);
+    
     this.cate.deleteCategory(this.deleteCategoryId).subscribe(
       () => {
         // Thực hiện các thao tác khác sau khi xóa thành công
+        setTimeout(() => this.isSuccessDel = true, this.messageTimerIn);
+
         setTimeout(() => {
           this.isSpinning = false;
           // Xóa dữ liệu cũ
@@ -128,26 +128,18 @@ export class CategoryTableComponent implements OnInit {
           console.log('Danh mục đã được xóa thành công');
         },this.progressTimerOut);
 
-        setTimeout(() => {
-          this.isSuccessDel = false;
-        },this.messageTimerOut);  
+        setTimeout(() => this.isSuccessDel = false,this.messageTimerOut);  
 
       },
       (error) => {
-        setTimeout(() => {
-          this.isSpinning = false;
-          console.log('Danh mục đã được xóa thành công');
-        },this.progressTimerOut);
+        setTimeout(() => this.isSpinning = false,this.progressTimerOut);
 
-        setTimeout(() => {
-          this.isFailureDel = true;
-        }, this.messageTimerIn);
+        setTimeout(() => this.isFailureDel = true, this.messageTimerIn);
         console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+        setTimeout(() => this.isFailureDel = false, this.messageTimerOut);
       }
     );
-    setTimeout(() => {
-      this.isFailureDel = false;
-    }, this.messageTimerOut);
+
   }
 
   refreshTable() {

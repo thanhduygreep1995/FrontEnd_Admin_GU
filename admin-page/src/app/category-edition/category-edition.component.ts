@@ -98,9 +98,7 @@ export class CategoryEditionComponent implements OnInit {
     });
 
     // selected status Active
-    this.infoCategory.patchValue({
-      status: 'ACTIVE', // hoặc 'INACTIVE'
-    });
+    this.defaultComboBox();
   }
 
   fnAddCategory() {
@@ -110,36 +108,27 @@ export class CategoryEditionComponent implements OnInit {
       status: this.infoCategory.value.status,
     };
     this.isSpinning = true;
-    setTimeout(() => {
-      this.isSuccessIn = true;
-    }, this.messageTimerIn);
+    
     this.cate.createCategory(categoryInfo).subscribe(
       (response) => {
+        setTimeout(() => this.isSuccessIn = true, this.messageTimerIn);
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully Create category!');
           this.infoCategory.reset();
+          this.defaultComboBox();
         }, this.progressTimerOut);
-        setTimeout(() => {
-          this.isSuccessIn = false;
-        },this.messageTimerOut)
+
+        setTimeout(() => this.isSuccessIn = false,this.messageTimerOut)
         
       },
       (error) => {
-        setTimeout(() => {
-          this.isSpinning = false;
-          console.error('Failed to Create category:', error);
-        }, this.progressTimerOut);
-
-        setTimeout(() => {
-          this.isFailureIn = true;
-        }, this.messageTimerIn);
-        
+        setTimeout(() => this.isSpinning = false, this.progressTimerOut);
+        console.error('Failed to Create category:', error);
+        setTimeout(() => this.isFailureIn = true, this.messageTimerIn);
+        setTimeout(() => this.isFailureIn = false, this.messageTimerOut);
       }
     );
-    setTimeout(() => {
-      this.isFailureIn = false;
-    }, this.messageTimerOut);
   }
 
   fnUpdateCategory() {
@@ -149,69 +138,62 @@ export class CategoryEditionComponent implements OnInit {
       status: this.infoCategory.value.status,
     };
     this.isSpinning = true;
-    
-    setTimeout(() => {
-      this.isSuccessUp = true;
-    }, this.messageTimerIn);
+
     this.cate.updateCategory(this.id, categoryInfo).subscribe(
       (response) => {
+        setTimeout(() => this.isSuccessUp = true, this.messageTimerIn);
+
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully updated category!');
           this.infoCategory.reset();
+          this.defaultComboBox();
         }, this.progressTimerOut);
-        setTimeout(() => {
-          this.isSuccessUp = false;
-        },this.messageTimerOut);       
+        setTimeout(() => this.isSuccessUp = false,this.messageTimerOut);       
       },
       (error) => {
-        setTimeout(() => {
-          this.isSpinning = false;
-          console.error('Failed to update category:', error);
-        }, this.progressTimerOut);
+        setTimeout(() => this.isSpinning = false, this.progressTimerOut);     
+        console.error('Failed to update category:', error);
+        setTimeout(() => this.isFailureUp = true, this.messageTimerIn);
 
-        setTimeout(() => {
-          this.isFailureUp = true;
-        }, this.messageTimerIn);
+        setTimeout(() => this.isFailureUp = false, this.messageTimerOut);
       }
     );
-    setTimeout(() => {
-      this.isFailureUp = false;
-    }, this.messageTimerOut);
+  }
+
+  defaultComboBox() {
+    // selected status Active
+    this.infoCategory.patchValue({
+      status: 'ACTIVE', // hoặc 'INACTIVE'
+    });
   }
 
   fnDeleteCategory() {
     var id = this.infoCategory.controls['id'].value;
     this.isSpinning = true;
-    setTimeout(() => {
-      this.isSuccessDel = true;
-    }, this.messageTimerIn);
     this.cate.deleteCategory(id).subscribe(
-      () => {
-        setTimeout(() => {
-          this.isSpinning = false;
-          console.log('Danh mục đã được xóa thành công');
-        },this.progressTimerOut);
+      () => {     
+        setTimeout(() => this.isSuccessDel = true, this.messageTimerIn);
 
         setTimeout(() => {
-          this.isSuccessDel = false;
-        },this.messageTimerOut);  
-      },
-      (error) => {
-        setTimeout(() => {
           this.isSpinning = false;
           console.log('Danh mục đã được xóa thành công');
+          this.infoCategory.reset();
+          this.defaultComboBox();
         },this.progressTimerOut);
-       
-        setTimeout(() => {
-          this.isFailureDel = true;
-        }, this.messageTimerIn);
+
+        setTimeout(() => this.isSuccessDel = false,this.messageTimerOut);  
+      },
+      (error) => {   
+        setTimeout(() => this.isSpinning = false,this.progressTimerOut);
+
+        setTimeout(() => this.isFailureDel = true, this.messageTimerIn);
         console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+
+        setTimeout(() => this.isFailureDel = false, this.messageTimerOut);
       }
     );
-    setTimeout(() => {
-      this.isFailureDel = false;
-    }, this.messageTimerOut);
+
   }
 
   onSubmit() {
