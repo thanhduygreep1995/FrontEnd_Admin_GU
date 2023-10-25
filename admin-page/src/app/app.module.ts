@@ -18,7 +18,7 @@ import { SpecificationsTableComponent } from './specifications-table/specificati
 import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
 import { DataTablesModule } from 'angular-datatables';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryTableComponent } from './category-table/category-table.component';
 
@@ -47,6 +47,7 @@ import { CategoryTableComponent } from './category-table/category-table.componen
     DataTablesModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

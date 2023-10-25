@@ -122,7 +122,7 @@ export class CategoryEditionComponent implements OnInit {
     );
   }
 
-  onSubmit() {
-    // Xử lý dữ liệu khi form được submit
-  }
+      onSubmit() {
+        // Xử lý dữ liệu khi form được submit
+      }
 }

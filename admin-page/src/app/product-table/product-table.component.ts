@@ -3,9 +3,11 @@ import 'datatables.net';
 import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import { FormBuilder } from '@angular/forms';
-
+import { brandService } from '../service/brand/brand.service';
+import { originService } from '../service/origin/origin.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../service/product/product.service';
+import { CategoryService } from '../service/category/category.service';
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -24,11 +26,16 @@ export class ProductTableComponent implements OnInit {
   productForm: any;
   dtOptions: any = {};
   data: any[] = []; // Mảng dữ liệu cho DataTables
-
+  brands: any;
+  origins:any;
+  categories: any;
   constructor(
     private formBuilder: FormBuilder,
     private pS: ProductService,
-    private router: Router
+    private router: Router,
+    private bS: brandService,
+    private oS: originService,
+    private cS: CategoryService
   ) {
     this.productForm = this.formBuilder.group({
       id: [''],
@@ -40,6 +47,9 @@ export class ProductTableComponent implements OnInit {
       discountPercentage: [''],
       discountPrice: [''],
       status: [''],
+      origin: [''],
+      brand: [''],
+      category: [''],
     });
   }
 
@@ -56,7 +66,7 @@ export class ProductTableComponent implements OnInit {
           extend: 'csvHtml5',
           text: 'CSV',
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5, 6, 7], // Chỉ định các cột bạn muốn xuất trong file CSV
+            columns: [0, 1, 2, 3, 4, 5, 6, 7,8,9,10], // Chỉ định các cột bạn muốn xuất trong file CSV
           },
         },
       ],
@@ -64,7 +74,17 @@ export class ProductTableComponent implements OnInit {
 
     this.pS.getAllProduct().subscribe((data) => {
       console.log(data);
-      this.products = data;
+      this.products = data.map((product, index) =>({...product, index: index + 1}));
+    });
+
+    this.bS.getBrands().subscribe((data) => {
+      this.brands = data;
+    });
+    this.oS.getOrigins().subscribe((data) => {
+      this.origins = data;
+    });
+    this.cS.getAllCategories().subscribe((data) => {
+      this.categories = data;
     });
   }
   onUpdate(id: number): void {
