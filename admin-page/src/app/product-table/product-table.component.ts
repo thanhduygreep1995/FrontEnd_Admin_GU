@@ -3,8 +3,8 @@ import 'datatables.net';
 import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import { FormBuilder } from '@angular/forms';
-import { brandService } from '../service/brand/brand.service';
-import { originService } from '../service/origin/origin.service';
+import { BrandService } from '../service/brand/brand.service';
+import { OriginService } from '../service/origin/origin.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../service/product/product.service';
 import { CategoryService } from '../service/category/category.service';
@@ -33,8 +33,8 @@ export class ProductTableComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pS: ProductService,
     private router: Router,
-    private bS: brandService,
-    private oS: originService,
+    private bS: BrandService,
+    private oS: OriginService,
     private cS: CategoryService
   ) {
     this.productForm = this.formBuilder.group({
@@ -77,10 +77,10 @@ export class ProductTableComponent implements OnInit {
       this.products = data.map((product, index) =>({...product, index: index + 1}));
     });
 
-    this.bS.getBrands().subscribe((data) => {
+    this.bS.getAllBrands().subscribe((data) => {
       this.brands = data;
     });
-    this.oS.getOrigins().subscribe((data) => {
+    this.oS.getAllOrigins().subscribe((data) => {
       this.origins = data;
     });
     this.cS.getAllCategories().subscribe((data) => {

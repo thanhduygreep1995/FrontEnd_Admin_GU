@@ -10,6 +10,10 @@ import { SpecificationsEditionComponent } from './specifications-edition/specifi
 import { SpecificationsTableComponent } from './specifications-table/specifications-table.component';
 import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
+import { BrandTableComponent } from './brand-table/brand-table.component';
+import { BrandEditionComponent } from './brand-edition/brand-edition.component';
+import { OriginEditionComponent } from './origin-edition/origin-edition.component';
+import { OriginTableComponent } from './origin-table/origin-table.component';
 
 const routes: Routes = [
   { path: '', component: OrderTableComponent },
@@ -26,6 +30,12 @@ const routes: Routes = [
   { path: 'orders-detail-table', component: OrderDetailTableComponent },
   { path: 'product-edition/:id', component: ProductEditionComponent },
   { path: 'specifications-edition/:id', component: SpecificationsEditionComponent },
+  { path: 'brand-edition/:id', component: BrandEditionComponent },
+  { path: 'brand-edition', component: BrandEditionComponent },
+  { path: 'brand-table', component: BrandTableComponent },
+  { path: 'origin-edition/:id', component: OriginEditionComponent },
+  { path: 'origin-edition', component: OriginEditionComponent },
+  { path: 'origin-table', component: OriginTableComponent },
 ];
 
 @NgModule({

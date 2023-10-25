@@ -21,6 +21,10 @@ import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryTableComponent } from './category-table/category-table.component';
+import { BrandEditionComponent } from './brand-edition/brand-edition.component';
+import { BrandTableComponent } from './brand-table/brand-table.component';
+import { OriginEditionComponent } from './origin-edition/origin-edition.component';
+import { OriginTableComponent } from './origin-table/origin-table.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,10 @@ import { CategoryTableComponent } from './category-table/category-table.componen
     SpecificationsTableComponent,
     OrderTableComponent,
     OrderDetailTableComponent,
+    BrandEditionComponent,
+    BrandTableComponent,
+    OriginEditionComponent,
+    OriginTableComponent,
   ],
   imports: [
     BrowserModule,

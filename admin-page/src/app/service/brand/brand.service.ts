@@ -1,21 +1,35 @@
-import { Injectable } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class brandService {
-  private apiUrl = 'http://localhost:8080/api/v0/brands'; // Thay thế URL_API_BRAND bằng URL thực tế của API Brand
+export class BrandService {
+  private baseUrl = 'http://localhost:8080/api/v0/brands';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getBrands(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAllBrands(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl);
+  }
+  createBrand(brand: any): Observable<any> {
+    const url = `${this.baseUrl}`;
+    return this.http.post(url, brand, { responseType: 'text' });
   }
 
-    getBrandById(brandId: number): Observable<any> {
-    const url = `${this.apiUrl}/${brandId}`;
-    return this.http.get(url);
+  updateBrand(id: number, brand: any): Observable<any> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.put(url, brand, { responseType: 'text' });
+  }
+
+  deleteBrand(id: any): Observable<any> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+  getBrandById(id: any) {
+    return this.http.get(this.baseUrl + '/' + id);
   }
 }
+

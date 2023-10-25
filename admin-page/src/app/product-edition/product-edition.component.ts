@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../service/product/product.service';
-import { originService } from '../service/origin/origin.service';
-import { brandService } from '../service/brand/brand.service';
+import { OriginService } from '../service/origin/origin.service';
+import { BrandService } from '../service/brand/brand.service';
 import { HttpClient } from '@angular/common/http';
 import { CategoryService } from '../service/category/category.service';
 
@@ -45,8 +45,8 @@ export class ProductEditionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pS: ProductService,
     private route: ActivatedRoute,
-    private oS: originService,
-    private bS: brandService,
+    private oS: OriginService,
+    private bS: BrandService,
     private cS: CategoryService
     ) 
   {
@@ -107,11 +107,11 @@ export class ProductEditionComponent implements OnInit {
         // Xử lý trường hợp không tìm thấy `id`, ví dụ chuyển hướng người dùng đến trang khác hoặc hiển thị thông báo lỗi
       }
     });
-    this.oS.getOrigins().subscribe((data) => {
+    this.oS.getAllOrigins().subscribe((data) => {
       this.Origin = data;
     });
 
-    this.bS.getBrands().subscribe((data) => {
+    this.bS.getAllBrands().subscribe((data) => {
       this.brands = data;
     });
     this.cS.getAllCategories().subscribe((data) => {

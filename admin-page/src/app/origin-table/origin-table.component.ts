@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import 'datatables.net';
-import 'datatables.net-buttons/js/dataTables.buttons.js';
-import 'datatables.net-buttons/js/buttons.html5.js';
-import { CategoryService } from '../service/category/category.service';
 import { FormBuilder } from '@angular/forms';
+import { OriginService } from '../service/origin/origin.service';
 import { Router } from '@angular/router';
 
 declare var require: any;
@@ -13,27 +10,24 @@ const pdfFonts: any = require('pdfmake/build/vfs_fonts.js');
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-category-table',
-  templateUrl: './category-table.component.html',
-  styleUrls: ['./category-table.component.css'],
+  selector: 'app-origin-table',
+  templateUrl: './origin-table.component.html',
+  styleUrls: ['./origin-table.component.css'],
 })
-export class CategoryTableComponent implements OnInit {
-  // Must be declared as "any", not as "DataTables.Settings"
-  categories: any;
-  infoCategory: any;
+export class OriginTableComponent implements OnInit {
+  origins: any;
+  infoOrigin: any;
   dtOptions: any = {};
   data: any[] = []; // Mảng dữ liệu cho DataTables
 
   constructor(
     private formBuilder: FormBuilder,
-    private cate: CategoryService,
+    private oS: OriginService,
     private router: Router
   ) {
-    this.infoCategory = this.formBuilder.group({
+    this.infoOrigin = this.formBuilder.group({
       id: [''],
-      name: [''],
-      description: [''],
-      status: [''],
+      country: [''],
     });
   }
 
@@ -76,20 +70,20 @@ export class CategoryTableComponent implements OnInit {
       ],
     };
 
-    this.cate.getAllCategories().subscribe((data) => {
+    this.oS.getAllOrigins().subscribe((data) => {
       console.log(data);
-      this.categories = data;
+      this.origins = data;
     });
   }
   onUpdate(id: number): void {
-    this.router.navigate(['/category-edition', id]);
+    this.router.navigate(['/origin-edition', id]);
   }
 
-  fnDeleteCategory(id: any) {
-    this.cate.deleteCategory(id).subscribe(
+  fnDeleteOrigin(id: any) {
+    this.oS.deleteOrigin(id).subscribe(
       () => {
         console.log('Danh mục đã được xóa thành công');
-        this.categories = []; // Xóa dữ liệu cũ
+        this.origins = []; // Xóa dữ liệu cũ
         // Thực hiện các thao tác khác sau khi xóa thành công
         this.refreshTable(); // Làm mới bảng
       },
@@ -101,10 +95,10 @@ export class CategoryTableComponent implements OnInit {
 
   refreshTable() {
     // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
-    this.cate.getAllCategories().subscribe(
+    this.oS.getAllOrigins().subscribe(
       (newData) => {
-        this.categories = newData;
-        console.log('Dữ liệu mới đã được cập nhật:', this.categories);
+        this.origins = newData;
+        console.log('Dữ liệu mới đã được cập nhật:', this.origins);
       },
       (error) => {
         console.error('Lỗi khi lấy dữ liệu mới:', error);
