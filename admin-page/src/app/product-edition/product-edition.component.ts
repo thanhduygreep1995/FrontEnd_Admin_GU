@@ -100,11 +100,9 @@ export class ProductEditionComponent implements OnInit {
           },
           (error) => {
             console.log(error);
-            // Xử lý lỗi, ví dụ hiển thị thông báo lỗi cho người dùng
           }
         );
       } else {
-        // Xử lý trường hợp không tìm thấy `id`, ví dụ chuyển hướng người dùng đến trang khác hoặc hiển thị thông báo lỗi
       }
     });
     this.oS.getAllOrigins().subscribe((data) => {

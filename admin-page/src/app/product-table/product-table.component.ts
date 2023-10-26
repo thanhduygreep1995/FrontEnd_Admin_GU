@@ -36,7 +36,8 @@ export class ProductTableComponent implements OnInit {
     private bS: BrandService,
     private oS: OriginService,
     private cS: CategoryService
-  ) {
+  ) 
+  {
     this.productForm = this.formBuilder.group({
       id: [''],
       name: [''],

@@ -29,7 +29,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table datatable *ngIf="products && products.length > 0" [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
+                        <table datatable [dtOptions]="dtOptions" *ngIf="products && products.length > 0" class="table table-bordered table-striped row-border hover">
                             <thead>
                                 <tr>
                                     <th hidden>Id</th>
