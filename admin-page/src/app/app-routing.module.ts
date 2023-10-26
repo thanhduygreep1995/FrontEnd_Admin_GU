@@ -28,6 +28,8 @@ const routes: Routes = [
   { path: 'specifications-table', component: SpecificationsTableComponent },
   { path: 'orders-table', component: OrderTableComponent },
   { path: 'orders-detail-table', component: OrderDetailTableComponent },
+  { path: 'product-edition/:id', component: ProductEditionComponent },
+  { path: 'specifications-edition/:id', component: SpecificationsEditionComponent },
   { path: 'brand-edition/:id', component: BrandEditionComponent },
   { path: 'brand-edition', component: BrandEditionComponent },
   { path: 'brand-table', component: BrandTableComponent },

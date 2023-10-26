@@ -18,7 +18,7 @@ import { SpecificationsTableComponent } from './specifications-table/specificati
 import { OrderTableComponent } from './order-table/order-table.component';
 import { OrderDetailTableComponent } from './order-detail-table/order-detail-table.component';
 import { DataTablesModule } from 'angular-datatables';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoryTableComponent } from './category-table/category-table.component';
 import { BrandEditionComponent } from './brand-edition/brand-edition.component';
@@ -55,6 +55,7 @@ import { OriginTableComponent } from './origin-table/origin-table.component';
     DataTablesModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
