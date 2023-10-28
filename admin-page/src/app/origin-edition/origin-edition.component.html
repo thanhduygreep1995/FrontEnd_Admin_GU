@@ -1,7 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" *ngIf="!isSpinning" [@fadeInOut]="!isSpinning">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
@@ -17,9 +17,12 @@
   </div>
   <!-- /.container-fluid -->
 </section>
-
+<div *ngIf="isSpinning" [@fadeInOut]="isSpinning" class="half-circle-spinner">
+  <div class="circle circle-1"></div>
+  <div class="circle circle-2"></div>
+</div>
 <!-- Main content -->
-<section class="content">
+<section class="content" *ngIf="!isSpinning" [@fadeInOut]="!isSpinning">
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-10">

@@ -25,6 +25,10 @@ import { BrandEditionComponent } from './brand-edition/brand-edition.component';
 import { BrandTableComponent } from './brand-table/brand-table.component';
 import { OriginEditionComponent } from './origin-edition/origin-edition.component';
 import { OriginTableComponent } from './origin-table/origin-table.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import 'datatables.net-buttons/js/buttons.colVis.js';
+import 'datatables.net-buttons/js/buttons.html5.js';
+import 'datatables.net-buttons/js/buttons.print.js';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,7 @@ import { OriginTableComponent } from './origin-table/origin-table.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

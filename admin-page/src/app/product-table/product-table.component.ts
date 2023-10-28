@@ -8,6 +8,17 @@ import { OriginService } from '../service/origin/origin.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../service/product/product.service';
 import { CategoryService } from '../service/category/category.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import Swal from 'sweetalert2';
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-danger mx-3',
+    cancelButton: 'btn btn-success',
+  },
+  buttonsStyling: false,
+  timer: 2000
+});
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -19,6 +30,23 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('in', style({ opacity: 0 })),
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate(300)
+      ]),
+      state('out', style({ opacity: 0 })),
+      transition('* => void', [
+        animate(300, style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })), // Ẩn khi khởi tạo
+      transition('void => *', animate('300ms')), // Hiển thị trong 200ms khi được thêm vào DOM
+    ]),
+  ]
 })
 export class ProductTableComponent implements OnInit {
   // Must be declared as "any", not as "DataTables.Settings"
@@ -29,6 +57,9 @@ export class ProductTableComponent implements OnInit {
   brands: any;
   origins:any;
   categories: any;
+  isSpinning: boolean = false;
+  progressTimerOut: number = 1200;
+
   constructor(
     private formBuilder: FormBuilder,
     private pS: ProductService,
@@ -60,14 +91,34 @@ export class ProductTableComponent implements OnInit {
       pageLength: 10,
       dom: 'Bfrtip', // Hiển thị các nút: buttons, filter, length change, ... (Xem thêm tài liệu DataTables để biết thêm thông tin)
       buttons: [
-        'copy',
-        'print',
-        'excel',
+        {
+          extend: 'colvis',
+          className: 'btn-primary',
+          columns: ':not(:last-child)',
+        },
+
+        {
+          extend: 'copy',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
+        {
+          extend: 'print',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
+        {
+          extend: 'excel',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
         {
           extend: 'csvHtml5',
-          text: 'CSV',
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5, 6, 7,8,9,10], // Chỉ định các cột bạn muốn xuất trong file CSV
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
       ],
@@ -88,11 +139,74 @@ export class ProductTableComponent implements OnInit {
       this.categories = data;
     });
   }
+
   onUpdate(id: number): void {
     this.router.navigate(['/product-edition', id]);
   }
 
   fnDeleteProduct(id: any) {
+    const productToDelete = this.products.find((product: {id: any;}) => product.id == id);
+    if (productToDelete) {
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Gửi yêu cầu xóa đến backend
+          this.pS.deleteProduct(id).subscribe(() => {
+            this.isSpinning = true;
+            setTimeout(() => {
+              this.isSpinning = false;
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Your data has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+                timer: 2000
+              })
+              console.log('Danh mục đã được xóa thành công');
+            },this.progressTimerOut);
+            this.refreshTable();
+          }, (error) => {
+            this.isSpinning = false;
+            Swal.fire({
+              title: 'Error',
+              text: 'Something went wrong. Please try again!',
+              icon: 'error',
+              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+              timer: 2000
+            });
+            console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          this.isSpinning = true;
+          
+          setTimeout(() => {
+            this.isSpinning = false;
+            Swal.fire({
+              title: 'Cancelled!',
+              text: 'Your data is safe :)',
+              icon: 'success',
+              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+              timer: 2000
+            });
+          },this.progressTimerOut);
+        }
+      });
+    } else {
+      // Hiển thị thông báo lỗi khi id không tồn tại trong danh sách
+      swalWithBootstrapButtons.fire(
+        'Error',
+        'Product with the specified ID does not exist!',
+        'error'
+      );
+      setTimeout(() => this.isSpinning = false,this.progressTimerOut);
+    } 
     this.pS.deleteProduct(id).subscribe(
       () => {
         console.log('Danh mục đã được xóa thành công');

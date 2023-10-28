@@ -2,6 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../service/category/category.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-danger mx-3',
+    cancelButton: 'btn btn-success',
+  },
+  buttonsStyling: false,
+})
 
 interface CategoryResponse {
   id: any;
@@ -13,14 +24,33 @@ interface CategoryResponse {
   selector: 'app-category-edition',
   templateUrl: './category-edition.component.html',
   styleUrls: ['./category-edition.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('in', style({ opacity: 0 })),
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate(300)
+      ]),
+      state('out', style({ opacity: 0 })),
+      transition('* => void', [
+        animate(300, style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })), // Ẩn khi khởi tạo
+      transition('void => *', animate('300ms')), // Hiển thị trong 200ms khi được thêm vào DOM
+    ]),
+  ]
 })
 export class CategoryEditionComponent implements OnInit {
   id: any;
   infoCategory: FormGroup;
-  // categories: any;
   ButtonSave: boolean = true;
   ButtonUpdate: boolean = true;
   ButtonDelete: boolean = true;
+  categories: any;
+  isSpinning: boolean = false;
+  progressTimerOut: number = 1200;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,6 +97,11 @@ export class CategoryEditionComponent implements OnInit {
     });
 
     // selected status Active
+    this.defaultComboBox();
+    this.refreshTable();
+  }
+
+  defaultComboBox(){
     this.infoCategory.patchValue({
       status: 'ACTIVE', // hoặc 'INACTIVE'
     });
@@ -78,15 +113,35 @@ export class CategoryEditionComponent implements OnInit {
       description: this.infoCategory.value.description,
       status: this.infoCategory.value.status,
     };
-
+    this.isSpinning = true;
     this.cate.createCategory(categoryInfo).subscribe(
       (response) => {
-        console.log('Successfully Create category!');
-        this.infoCategory.reset();
-        alert('Successfully');
+
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Successfully Create category!');
+          this.infoCategory.reset();
+          this.defaultComboBox();
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully Create category!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }, this.progressTimerOut);
+
       },
       (error) => {
-        console.error('Failed to Create category:', error);
+
+        setTimeout(() => {
+          this.isSpinning = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Your work has not been saved',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }, this.progressTimerOut);
       }
     );
   }
@@ -97,31 +152,119 @@ export class CategoryEditionComponent implements OnInit {
       description: this.infoCategory.value.description,
       status: this.infoCategory.value.status,
     };
-
+    this.isSpinning = true;
     this.cate.updateCategory(this.id, categoryInfo).subscribe(
       (response) => {
-        console.log('Successfully updated category!');
-        alert('Successfully updated category!');
+
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Successfully updated category!');
+          this.infoCategory.reset();
+          this.defaultComboBox();
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully updated category!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }, this.progressTimerOut);
       },
       (error) => {
-        console.error('Failed to update category:', error);
+        setTimeout(() => {
+          this.isSpinning = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Your work has not been updated',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }, this.progressTimerOut);
       }
     );
   }
 
   fnDeleteCategory() {
-    var id = this.infoCategory.controls['id'].value;
-    this.cate.deleteCategory(id).subscribe(
-      () => {
-        console.log('Danh mục đã được xóa thành công');
-        alert('Done');
+    var id = this.infoCategory.controls['id'].value
+    const categoryToDelete = this.categories.find((category: { id: any; }) => category.id == id);
+    this.isSpinning = true;
+    if (categoryToDelete) {
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Gửi yêu cầu xóa đến backend
+          this.cate.deleteCategory(id).subscribe(() => {
+            console.log('Danh mục đã được xóa thành công');
+            setTimeout(() => {
+              this.isSpinning = false;
+              console.log('Danh mục đã được xóa thành công');
+              this.infoCategory.reset();
+              this.defaultComboBox();
+              this.refreshTable();
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Your data has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+                timer: 2000
+              })
+            },this.progressTimerOut);
+          }, (error) => {
+            this.isSpinning = false;
+            Swal.fire({
+              title: 'Error',
+              text: 'Something went wrong. Please try again!',
+              icon: 'error',
+              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+              timer: 2000
+            });
+            console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+          setTimeout(() => {
+            this.isSpinning = false;
+            Swal.fire({
+              title: 'Cancelled!',
+              text: 'Your data is safe :)',
+              icon: 'success',
+              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+              timer: 2000
+            });
+          },this.progressTimerOut);
+        }
+      });
+    } else {
+      // Hiển thị thông báo lỗi khi id không tồn tại trong danh sách
+      this.isSpinning = false;
+      Swal.fire({
+        title: 'Error',
+        text: 'Category with the specified ID does not exist!',
+        icon: 'error',
+        confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
+        timer: 2000
+      });
+      setTimeout(() => this.isSpinning = false,this.progressTimerOut);
+    } 
+  }
+  refreshTable() {
+      // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
+    this.cate.getAllCategories().subscribe(
+      (newData) => {
+        this.categories = newData;
+        console.log('Dữ liệu mới đã được cập nhật:', this.categories);
       },
       (error) => {
-        console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+        console.error('Lỗi khi lấy dữ liệu mới:', error);
       }
     );
   }
-
       onSubmit() {
         // Xử lý dữ liệu khi form được submit
       }
