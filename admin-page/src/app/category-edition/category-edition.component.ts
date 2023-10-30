@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../service/category/category.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -55,6 +57,8 @@ export class CategoryEditionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cate: CategoryService,
+    private router: Router,
+    public buttonService: ButtonService,
     private route: ActivatedRoute
   ) {
     this.infoCategory = this.formBuilder.group({
@@ -120,6 +124,7 @@ export class CategoryEditionComponent implements OnInit {
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully Create category!');
+          this.router.navigate(['/category-table']);
           this.infoCategory.reset();
           this.defaultComboBox();
           Swal.fire({
@@ -159,6 +164,7 @@ export class CategoryEditionComponent implements OnInit {
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully updated category!');
+          window.location.reload();
           this.infoCategory.reset();
           this.defaultComboBox();
           Swal.fire({
@@ -183,76 +189,6 @@ export class CategoryEditionComponent implements OnInit {
     );
   }
 
-  fnDeleteCategory() {
-    var id = this.infoCategory.controls['id'].value
-    const categoryToDelete = this.categories.find((category: { id: any; }) => category.id == id);
-    this.isSpinning = true;
-    if (categoryToDelete) {
-      swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Gửi yêu cầu xóa đến backend
-          this.cate.deleteCategory(id).subscribe(() => {
-            console.log('Danh mục đã được xóa thành công');
-            setTimeout(() => {
-              this.isSpinning = false;
-              console.log('Danh mục đã được xóa thành công');
-              this.infoCategory.reset();
-              this.defaultComboBox();
-              this.refreshTable();
-              Swal.fire({
-                title: 'Deleted!',
-                text: 'Your data has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-                timer: 2000
-              })
-            },this.progressTimerOut);
-          }, (error) => {
-            this.isSpinning = false;
-            Swal.fire({
-              title: 'Error',
-              text: 'Something went wrong. Please try again!',
-              icon: 'error',
-              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-              timer: 2000
-            });
-            console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
-          });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-
-          setTimeout(() => {
-            this.isSpinning = false;
-            Swal.fire({
-              title: 'Cancelled!',
-              text: 'Your data is safe :)',
-              icon: 'success',
-              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-              timer: 2000
-            });
-          },this.progressTimerOut);
-        }
-      });
-    } else {
-      // Hiển thị thông báo lỗi khi id không tồn tại trong danh sách
-      this.isSpinning = false;
-      Swal.fire({
-        title: 'Error',
-        text: 'Category with the specified ID does not exist!',
-        icon: 'error',
-        confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-        timer: 2000
-      });
-      setTimeout(() => this.isSpinning = false,this.progressTimerOut);
-    } 
-  }
   refreshTable() {
       // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
     this.cate.getAllCategories().subscribe(

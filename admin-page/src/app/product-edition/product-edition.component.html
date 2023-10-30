@@ -153,13 +153,10 @@
                         <div class="row mx-2 mb-2">
                             <div class="col-12 d-flex flex-wrap justify-content-end">
                                 <button (click)="fnAddProduct()" [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2">
-                                      Save
+                                      Add
                                   </button>
-                                <button (click)="fnUpdateProduct()" type=" button " class="btn btn-primary mx-2 ">
+                                <button *ngIf="buttonService.getShowButton2()" (click)="fnUpdateProduct()" type=" button " class="btn btn-primary mx-2 ">
                                   Update
-                              </button>
-                                <button [disabled]="ButtonDelete " type="button " class="btn btn-primary mx-2 ">
-                                  Delete
                               </button>
                             </div>
                         </div>

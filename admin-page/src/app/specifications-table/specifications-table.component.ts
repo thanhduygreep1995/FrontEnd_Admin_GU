@@ -7,6 +7,7 @@ import { SpecService } from '../service/specification/Spec.service';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
+import { ButtonService } from '../service/button/buttonservice';
 
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -53,11 +54,13 @@ export class SpecificationsTableComponent implements OnInit {
   data: any[] = []; // Mảng dữ liệu cho DataTables
   isSpinning: boolean = false;
   progressTimerOut: number = 1200;
-
+  showButton3: boolean = false;
+  ButtonSave: boolean = true;
   constructor(
     private formBuilder: FormBuilder,
     private ss: SpecService,
-    private router: Router
+    private router: Router,
+    public buttonService: ButtonService
   ) {
     this.SpecForm = this.formBuilder.group({
       id: [''],
@@ -116,12 +119,12 @@ export class SpecificationsTableComponent implements OnInit {
     });
   }
   onUpdate(id: number): void {
-    this.router.navigate(['/specifications-edition', id]);
+    this.router.navigate(['/specifications-edition', id])
+    this.buttonService.setShowButton3(true)
   }
 
   fnDeleteProduct(id: any) {
     const specificationToDelete = this.specs.find((Spec: { id: any; }) => Spec.id == id);
-    this.isSpinning = true;
     if (specificationToDelete) {
       swalWithBootstrapButtons.fire({
         title: 'Are you sure?',
@@ -135,10 +138,12 @@ export class SpecificationsTableComponent implements OnInit {
         if (result.isConfirmed) {
           // Gửi yêu cầu xóa đến backend
           this.ss.deleteSpec(id).subscribe(() => {
+            this.isSpinning = true;
             console.log('Danh mục đã được xóa thành công');
             setTimeout(() => {
               this.isSpinning = false;
               console.log('Danh mục đã được xóa thành công');
+              window.location.reload();
               this.SpecForm.reset();
               this.refreshTable();
               Swal.fire({
@@ -161,7 +166,7 @@ export class SpecificationsTableComponent implements OnInit {
             console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-
+          this.isSpinning = true;
           setTimeout(() => {
             this.isSpinning = false;
             Swal.fire({
@@ -176,14 +181,11 @@ export class SpecificationsTableComponent implements OnInit {
       });
     } else {
       // Hiển thị thông báo lỗi khi id không tồn tại trong danh sách
-      this.isSpinning = false;
-      Swal.fire({
-        title: 'Error',
-        text: 'Specification with the specified ID does not exist!',
-        icon: 'error',
-        confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-        timer: 2000
-      });
+      swalWithBootstrapButtons.fire(
+        'Error',
+        'Specification with the specified ID does not exist!',
+        'error'
+      );
       setTimeout(() => this.isSpinning = false,this.progressTimerOut);
     } 
   }

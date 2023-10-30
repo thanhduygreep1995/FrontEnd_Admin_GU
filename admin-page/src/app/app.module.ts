@@ -29,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'datatables.net-buttons/js/buttons.colVis.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import 'datatables.net-buttons/js/buttons.print.js';
+import { ButtonService } from './service/button/buttonservice';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import 'datatables.net-buttons/js/buttons.print.js';
     FormsModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [ButtonService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

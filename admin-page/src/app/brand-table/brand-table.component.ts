@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -53,7 +54,8 @@ export class BrandTableComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private bS: BrandService,
-    private router: Router
+    private router: Router,
+    public buttonService: ButtonService
   ) {
     this.infoBrand = this.formBuilder.group({
       id: [''],
@@ -107,6 +109,7 @@ export class BrandTableComponent implements OnInit {
 
   onUpdate(id: number): void {
     this.router.navigate(['/brand-edition', id]);
+    this.buttonService.setShowButton5(true)
   }
 
   fnDeleteBrand(id: any) {

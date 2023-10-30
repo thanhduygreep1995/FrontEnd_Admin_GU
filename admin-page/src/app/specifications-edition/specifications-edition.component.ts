@@ -4,6 +4,8 @@ import { SpecService } from '../service/specification/Spec.service';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { ButtonService } from '../service/button/buttonservice';
 
 interface SpecResponse {
   id: any;
@@ -60,10 +62,11 @@ export class SpecificationsEditionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private ss: SpecService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    public buttonService: ButtonService
   ) {
     this.specForm = this.formBuilder.group({
-      id: ['', Validators.required],
       processor: ['', Validators.required],
       graphicsCard: ['', Validators.required],
       ram: ['', Validators.required],
@@ -73,13 +76,11 @@ export class SpecificationsEditionComponent implements OnInit {
       camera: ['', Validators.required],
     });
     this.specForm.valueChanges.subscribe(() => {
+      
       const nameControl = this.specForm.controls['processor'].invalid;
       const descriptionControl =
         this.specForm.controls['graphicsCard'].invalid;
       this.ButtonSave = nameControl || descriptionControl;
-    });
-    this.specForm.valueChanges.subscribe(() => {
-      this.ButtonDelete = this.specForm.controls['id'].invalid;
     });
     this.specForm.valueChanges.subscribe(() => {
       this.ButtonUpdate = this.specForm.invalid;
@@ -122,6 +123,7 @@ export class SpecificationsEditionComponent implements OnInit {
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully Create Specification!');
+          this.router.navigate(['/specifications-table']);
           this.specForm.reset();
           Swal.fire({
             icon: 'success',
@@ -163,6 +165,7 @@ export class SpecificationsEditionComponent implements OnInit {
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully updated specification!');
+          window.location.reload();
           this.specForm.reset();
           Swal.fire({
             icon: 'success',
@@ -185,99 +188,5 @@ export class SpecificationsEditionComponent implements OnInit {
         console.error('Failed to update specification:', error);
       }
     );
-  }
-
-  fnDeleteSpec() {
-    var id = this.specForm.controls['id'].value;
-    const specificationToDelete = this.Specs.find((Spec: { id: any; }) => Spec.id == id);
-    this.isSpinning = true;
-    if (specificationToDelete) {
-      swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Gửi yêu cầu xóa đến backend
-          this.ss.deleteSpec(id).subscribe(() => {
-            console.log('Danh mục đã được xóa thành công');
-            setTimeout(() => {
-              this.isSpinning = false;
-              console.log('Danh mục đã được xóa thành công');
-              this.specForm.reset();
-              this.refreshTable();
-              Swal.fire({
-                title: 'Deleted!',
-                text: 'Your data has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-                timer: 2000
-              })
-            },this.progressTimerOut);
-          }, (error) => {
-            this.isSpinning = false;
-            Swal.fire({
-              title: 'Error',
-              text: 'Something went wrong. Please try again!',
-              icon: 'error',
-              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-              timer: 2000
-            });
-            console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
-          });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-
-          setTimeout(() => {
-            this.isSpinning = false;
-            Swal.fire({
-              title: 'Cancelled!',
-              text: 'Your data is safe :)',
-              icon: 'success',
-              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-              timer: 2000
-            });
-          },this.progressTimerOut);
-        }
-      });
-    } else {
-      // Hiển thị thông báo lỗi khi id không tồn tại trong danh sách
-      this.isSpinning = false;
-      Swal.fire({
-        title: 'Error',
-        text: 'Category with the specified ID does not exist!',
-        icon: 'error',
-        confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-        timer: 2000
-      });
-      setTimeout(() => this.isSpinning = false,this.progressTimerOut);
-    } 
-    this.ss.deleteSpec(id).subscribe(
-      () => {
-        console.log('Danh mục đã được xóa thành công');
-        alert('Done');
-      },
-      (error) => {
-        console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
-      }
-    );
-  }
-  refreshTable() {
-    // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
-  this.ss.getAllSpec().subscribe(
-    (newData) => {
-      this.Specs = newData;
-      console.log('Dữ liệu mới đã được cập nhật:', this.Specs);
-    },
-    (error) => {
-      console.error('Lỗi khi lấy dữ liệu mới:', error);
-    }
-    );
-  }
-  onSubmit() {
-    // Xử lý dữ liệu khi form được submit
   }
 }

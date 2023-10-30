@@ -7,7 +7,9 @@ import { BrandService } from '../service/brand/brand.service';
 import { HttpClient } from '@angular/common/http';
 import { CategoryService } from '../service/category/category.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -76,9 +78,11 @@ export class ProductEditionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pS: ProductService,
     private route: ActivatedRoute,
+    private router: Router,
     private oS: OriginService,
     private bS: BrandService,
-    private cS: CategoryService
+    private cS: CategoryService,
+    public buttonService: ButtonService
     ) 
   {
     this.productForm = this.formBuilder.group({
@@ -190,7 +194,7 @@ export class ProductEditionComponent implements OnInit {
   this.pS.createProduct(productinfo).subscribe(
     (response) => {
       console.log('Successfully Create Product!');
-      
+      this.router.navigate(['/product-table']);
       setTimeout(() => {
         this.isSpinning = false;
         console.log('Successfully Create Product!');
@@ -202,7 +206,9 @@ export class ProductEditionComponent implements OnInit {
           showConfirmButton: false,
           timer: 2000
         })
-      }, this.progressTimerOut);
+      }, this.progressTimerOut)
+
+      ;
     },
     (error) => {
       setTimeout(() => {
@@ -235,10 +241,11 @@ fnUpdateProduct() {
   this.isSpinning = true;
   this.pS.updateProduct(this.id, productinfo).subscribe(
     (response) => {
-      console.log('Successfully updated poduct!');
+      console.log('Successfully updated poduct!'),
       setTimeout(() => {
         this.isSpinning = false;
         console.log('Successfully updated product!');
+        window.location.reload();
         this.productForm.reset();
         this.defaultStatus();
         Swal.fire({
@@ -247,7 +254,8 @@ fnUpdateProduct() {
           showConfirmButton: false,
           timer: 2000
         })
-      }, this.progressTimerOut);
+      }, this.progressTimerOut)
+
     },
     (error) => {
       console.error('Failed to update product:', error);

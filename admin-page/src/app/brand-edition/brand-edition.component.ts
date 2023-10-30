@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BrandService } from '../service/brand/brand.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 interface BrandResponse {
   id: any;
@@ -53,7 +54,9 @@ export class BrandEditionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private bS: BrandService,
-    private route: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute,
+    public buttonService: ButtonService
   ) {
     this.infoBrand = this.formBuilder.group({
       id: ['', Validators.required],
@@ -94,6 +97,7 @@ export class BrandEditionComponent implements OnInit {
     this.bS.createBrand(brandInfo).subscribe(
       (response) => {
         console.log('Successfully Create Brand!');  
+        this.router.navigate(['/brand-table']);
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully Create Brand!');
@@ -132,6 +136,7 @@ export class BrandEditionComponent implements OnInit {
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully updated brand!');
+          window.location.reload();
           this.infoBrand.reset();
           Swal.fire({
             icon: 'success',
@@ -154,75 +159,6 @@ export class BrandEditionComponent implements OnInit {
         console.error('Failed to update Brand:', error);
       }
     );
-  }
-
-  fnDeleteBrand(id: any) {
-    const brandToDelete = this.brands.find((brand: { id: any; }) => brand.id == id);
-    this.isSpinning = true;
-    if (brandToDelete) {
-      swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Gửi yêu cầu xóa đến backend
-          this.bS.deleteBrand(id).subscribe(() => {
-            console.log('Danh mục đã được xóa thành công');
-            setTimeout(() => {
-              this.isSpinning = false;
-              console.log('Danh mục đã được xóa thành công');
-              this.infoBrand.reset();
-              this.refreshTable();
-              Swal.fire({
-                title: 'Deleted!',
-                text: 'Your data has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-                timer: 2000
-              })
-            },this.progressTimerOut);
-          }, (error) => {
-            this.isSpinning = false;
-            Swal.fire({
-              title: 'Error',
-              text: 'Something went wrong. Please try again!',
-              icon: 'error',
-              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-              timer: 2000
-            });
-            console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
-          });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-
-          setTimeout(() => {
-            this.isSpinning = false;
-            Swal.fire({
-              title: 'Cancelled!',
-              text: 'Your data is safe :)',
-              icon: 'success',
-              confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-              timer: 2000
-            });
-          },this.progressTimerOut);
-        }
-      });
-    } else {
-      // Hiển thị thông báo lỗi khi id không tồn tại trong danh sách
-      this.isSpinning = false;
-      Swal.fire({
-        title: 'Error',
-        text: 'Brand with the specified ID does not exist!',
-        icon: 'error',
-        confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
-        timer: 2000
-      });
-      setTimeout(() => this.isSpinning = false,this.progressTimerOut);
-    } 
   }
 
   refreshTable() {

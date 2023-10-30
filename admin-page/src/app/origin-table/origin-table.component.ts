@@ -4,6 +4,7 @@ import { OriginService } from '../service/origin/origin.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 declare var require: any;
 const jszip: any = require('jszip');
@@ -53,7 +54,8 @@ export class OriginTableComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private oS: OriginService,
-    private router: Router
+    private router: Router,
+    public buttonService: ButtonService
   ) {
     this.infoOrigin = this.formBuilder.group({
       id: [''],
@@ -107,6 +109,7 @@ export class OriginTableComponent implements OnInit {
   }
   onUpdate(id: number): void {
     this.router.navigate(['/origin-edition', id]);
+    this.buttonService.setShowButton6(true)
   }
 
   fnDeleteOrigin(id: any) {

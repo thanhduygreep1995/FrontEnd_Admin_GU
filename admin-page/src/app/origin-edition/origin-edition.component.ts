@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OriginService } from '../service/origin/origin.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 interface OriginResponse {
   id: any;
@@ -53,7 +54,10 @@ export class OriginEditionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private oS: OriginService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    public buttonService: ButtonService
+
   ) {
     this.infoOrigin = this.formBuilder.group({
       id: ['', Validators.required],
@@ -97,6 +101,7 @@ export class OriginEditionComponent implements OnInit {
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully Create Origin!');
+          this.router.navigate(['/origin-table']);
           this.infoOrigin.reset();
           Swal.fire({
             icon: 'success',
@@ -129,10 +134,10 @@ export class OriginEditionComponent implements OnInit {
     this.oS.updateOrigin(this.id, originInfo).subscribe(
       (response) => {
         console.log('Successfully updated Origin!');
-        console.log('Successfully updated Origin!');
         setTimeout(() => {
           this.isSpinning = false;
           console.log('Successfully updated Origin!');
+          window.location.reload();
           this.infoOrigin.reset();
           Swal.fire({
             icon: 'success',

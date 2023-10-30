@@ -9,6 +9,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import Swal from 'sweetalert2';
 import 'datatables.net';
 import 'datatables.net-buttons';
+import { ButtonService } from '../service/button/buttonservice';
 // import * as $ from 'jquery';
 
 declare var require: any;
@@ -75,6 +76,7 @@ export class CategoryTableComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cate: CategoryService,
+    public buttonService: ButtonService,
     private router: Router
   ) {
     this.infoCategory = this.formBuilder.group({
@@ -146,7 +148,8 @@ export class CategoryTableComponent implements OnInit {
     this.refreshTable();
   }
   onUpdate(id: number): void {
-    this.router.navigate(['/category-edition', id]);
+    this.router.navigate(['/category-edition', id])
+    this.buttonService.setShowButton4(true);
   }
 
   fnDeleteCategory(id: any) {
@@ -175,6 +178,7 @@ export class CategoryTableComponent implements OnInit {
                 timer: 2000
               })
               console.log('Danh mục đã được xóa thành công');
+              window.location.reload();
             },this.progressTimerOut);
             this.refreshTable();
           }, (error) => {

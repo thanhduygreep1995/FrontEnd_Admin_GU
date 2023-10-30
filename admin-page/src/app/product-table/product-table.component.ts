@@ -10,6 +10,7 @@ import { ProductService } from '../service/product/product.service';
 import { CategoryService } from '../service/category/category.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
+import { ButtonService } from '../service/button/buttonservice';
 
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -66,7 +67,8 @@ export class ProductTableComponent implements OnInit {
     private router: Router,
     private bS: BrandService,
     private oS: OriginService,
-    private cS: CategoryService
+    private cS: CategoryService,
+    public buttonService: ButtonService
   ) 
   {
     this.productForm = this.formBuilder.group({
@@ -142,6 +144,7 @@ export class ProductTableComponent implements OnInit {
 
   onUpdate(id: number): void {
     this.router.navigate(['/product-edition', id]);
+    this.buttonService.setShowButton2(true)
   }
 
   fnDeleteProduct(id: any) {
@@ -169,7 +172,8 @@ export class ProductTableComponent implements OnInit {
                 confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
                 timer: 2000
               })
-              console.log('Danh mục đã được xóa thành công');
+              console.log('Sản phẩm đã được xóa thành công');
+              window.location.reload();
             },this.progressTimerOut);
             this.refreshTable();
           }, (error) => {
@@ -181,11 +185,10 @@ export class ProductTableComponent implements OnInit {
               confirmButtonColor: '#007BFF', // Màu khác bạn muốn sử dụng
               timer: 2000
             });
-            console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+            console.error('Đã xảy ra lỗi khi xóa Sản phẩm:', error);
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           this.isSpinning = true;
-          
           setTimeout(() => {
             this.isSpinning = false;
             Swal.fire({
@@ -207,18 +210,6 @@ export class ProductTableComponent implements OnInit {
       );
       setTimeout(() => this.isSpinning = false,this.progressTimerOut);
     } 
-    this.pS.deleteProduct(id).subscribe(
-      () => {
-        console.log('Danh mục đã được xóa thành công');
-        this.products = []; // Xóa dữ liệu cũ
-        alert('Successfully Delete product!');
-        // Thực hiện các thao tác khác sau khi xóa thành công
-        this.refreshTable(); // Làm mới bảng
-      },
-      (error) => {
-        console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
-      }
-    );
   }
 
   refreshTable() {
