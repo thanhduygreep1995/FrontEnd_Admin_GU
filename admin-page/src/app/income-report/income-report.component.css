@@ -1,0 +1,12 @@
+@media print {
+  /* Ẩn các dòng bạn muốn gộp khi in */
+  tr.print-hide {
+    display: table-row !important;
+  }
+}
+.d-none {
+  display: none;
+}
+#to {
+  margin-left: 500px; /* Điều chỉnh giá trị margin-left tùy ý */
+}

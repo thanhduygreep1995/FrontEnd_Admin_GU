@@ -13,7 +13,7 @@ export class ReportService {
   getDefaultIncomeReport(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl + '/default-list');
   }
-  getAllOrderDetails(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + '/byTime');
+  getIncomeReportByDay(from: String, to: String): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + "/byTime?from="+ from + "&to=" + to);
   }
 }
