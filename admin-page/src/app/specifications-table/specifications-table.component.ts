@@ -88,24 +88,28 @@ export class SpecificationsTableComponent implements OnInit {
 
         {
           extend: 'copy',
+          title: 'Admin - Specification',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'print',
+          title: 'Admin - Specification',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'excel',
+          title: 'Admin - Specification',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'csvHtml5',
+          title: 'Admin - Specification',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },

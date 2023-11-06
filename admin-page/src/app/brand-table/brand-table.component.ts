@@ -76,24 +76,28 @@ export class BrandTableComponent implements OnInit {
 
         {
           extend: 'copy',
+          title: 'Admin - Brand',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'print',
+          title: 'Admin - Brand',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'excel',
+          title: 'Admin - Brand',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'csvHtml5',
+          title: 'Admin - Brand',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },

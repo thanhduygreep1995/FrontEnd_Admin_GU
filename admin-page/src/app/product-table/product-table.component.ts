@@ -101,24 +101,28 @@ export class ProductTableComponent implements OnInit {
 
         {
           extend: 'copy',
+          title: 'Admin - Product',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'print',
+          title: 'Admin - Product',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'excel',
+          title: 'Admin - Product',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'csvHtml5',
+          title: 'Admin - Product',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },

@@ -52,8 +52,9 @@ import { ButtonService } from './service/button/buttonservice';
     BrandEditionComponent,
     BrandTableComponent,
     OriginEditionComponent,
-    OriginTableComponent,
+    OriginTableComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,

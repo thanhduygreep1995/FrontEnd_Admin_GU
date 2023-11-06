@@ -1,80 +1,58 @@
-  <!-- Content Wrapper. Contains page content -->
-  <!-- <div class="content-wrapper"> -->
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
+<!-- Content Wrapper. Contains page content -->
+<!-- <div class="content-wrapper"> -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Order Details List</h1>
+                <h1>Order Details List</h1>
             </div>
             <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Order Details List</li>
-              </ol>
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Order Details List</li>
+                </ol>
             </div>
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
-  
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-  
-  
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Danh Sách Order Details</h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover" >
-                    <!-- <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Quantity</th>
-                      <th>Total</th>
-                      <th>Order Id</th>
-                      <th>Product Id</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>4</td>
-                      <td>1</td>
-                    </tr>
-                    <tfoot>
-                        <th>Id</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Order Id</th>
-                        <th>Product Id</th>
-                    </tfoot> -->
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              
-              <!-- /.card -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    <!-- </div> -->
-    <!-- /.content-wrapper -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh Sách Order Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" *ngIf="orderdetails && orderdetails.length > 0" class="table table-bordered table-striped row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>No</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
+                                    <th>Order Note</th>
+                                    <th>Product Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let d of orderdetails">
+                                    <td>{{ d.id }}</td>
+                                    <td>{{ d.index }}</td>
+                                    <td>{{ d.quantity }}</td>
+                                    <td>{{ d.totalPrice }}</td>
+                                    <td>{{ d.order.note }}</td>
+                                    <td>{{ d.product.name }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

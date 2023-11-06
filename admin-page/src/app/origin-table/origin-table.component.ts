@@ -77,24 +77,28 @@ export class OriginTableComponent implements OnInit {
 
         {
           extend: 'copy',
+          title: 'Admin - Origin',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'print',
+          title: 'Admin - Origin',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'excel',
+          title: 'Admin - Origin',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'csvHtml5',
+          title: 'Admin - Origin',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
