@@ -30,6 +30,12 @@ import 'datatables.net-buttons/js/buttons.colVis.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import 'datatables.net-buttons/js/buttons.print.js';
 import { ButtonService } from './service/button/buttonservice';
+import { IncomeReportComponent } from './income-report/income-report.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +58,8 @@ import { ButtonService } from './service/button/buttonservice';
     BrandEditionComponent,
     BrandTableComponent,
     OriginEditionComponent,
-    OriginTableComponent
+    OriginTableComponent,
+    IncomeReportComponent
   ],
 
   imports: [
@@ -63,6 +70,10 @@ import { ButtonService } from './service/button/buttonservice';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    CommonModule
   ],
   providers: [ButtonService],
   bootstrap: [AppComponent],
