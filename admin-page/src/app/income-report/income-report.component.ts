@@ -1,5 +1,5 @@
 import { ReportService } from './../service/report/report.service';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DataTableDirective } from 'angular-datatables';
@@ -9,6 +9,7 @@ import 'datatables.net-bs4';
 import 'datatables.net-select-bs4';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+declare var Chart: any;
 
 
 const Toast = Swal.mixin({
@@ -35,7 +36,9 @@ const Toast = Swal.mixin({
   ]
 })
 export class IncomeReportComponent implements OnInit {
+  @ViewChild('myCanvas') myCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild(DataTableDirective, { static: false })
+
   dtElement!: DataTableDirective;
   IncomeReports: any[] = [];
   infoIncomeReport: any;
@@ -45,7 +48,9 @@ export class IncomeReportComponent implements OnInit {
   fromDate: any;
   toDate: any;
   tfoot: any[] = [];
-  private exportedData: any[] = [];
+  chartDate: any[] = [];
+  chartRevenue: any[] = [];
+  lineChart: any;
 
 
   constructor(private formBuilder: FormBuilder, 
@@ -53,7 +58,6 @@ export class IncomeReportComponent implements OnInit {
     ) {
       this.dtOptions = this.getDTOptions();
   }
-
 
   ngOnInit(): void {
     this.dtOptions = this.getDTOptions();
@@ -127,6 +131,8 @@ export class IncomeReportComponent implements OnInit {
                 console.log('From Date:', this.fromDate);
                 console.log('To Date:', this.toDate);
                 // Chuyển đổi hàm API thành Observable
+                this.chartDate = [];
+                this.chartRevenue = [];
                 this.getIncomeReportByDate();
               }
             });
@@ -136,6 +142,8 @@ export class IncomeReportComponent implements OnInit {
           text: 'Reset',
           className: 'btn-default',
           action: (e: any, dt: any, node: any, config: any) =>{
+            this.chartDate = [];
+            this.chartRevenue = [];
             this.getDefaultIncomeReport();
             Toast.fire({
               icon: 'success',
@@ -274,12 +282,18 @@ export class IncomeReportComponent implements OnInit {
   getDefaultIncomeReport(): any {
     this.report.getDefaultIncomeReport().subscribe(report => {    
         console.log(report);
+       
         if (report != null && Array.isArray(report) && report.length > 0) {
+          // Thêm dữ liệu mới vào mảng chartDate và chartRevenue
+          this.chartDate.splice(0, this.chartDate.length);
+          this.chartRevenue.splice(0, this.chartRevenue.length);
           this.IncomeReports = report;
-          this.exportedData = report;
           for (let b of this.IncomeReports) {
             b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            this.chartDate.push(b.date);
+            this.chartRevenue.push(b.revenue);
           };
+          this.drawChart();
         }   
     },(error) => {
       console.error(error);
@@ -323,23 +337,56 @@ export class IncomeReportComponent implements OnInit {
     return tableData;
   }
 
+  drawChart(): void {
+    const ctx = document.getElementById('lineChart') as HTMLCanvasElement;
+    if (this.lineChart) {
+      this.lineChart.destroy(); // Hủy biểu đồ cũ nếu đã được vẽ trước đó
+    }
+    console.log('Chart Dates:', this.chartDate);
+    console.log('Chart Revenue:', this.chartRevenue);
+    this.lineChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: this.chartDate,
+        datasets: [{
+          label: 'Revenue',
+          data: this.chartRevenue,
+          borderColor: '#FD3D57',
+          backgroundColor:'#FD3D57',
+          tension: 0.1,
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+
   getIncomeReportByDate(): any {
     return this.report.getIncomeReportByDay(this.fromDate, this.toDate).subscribe(
       (report) => {
-        
         console.log(report);
         if (report != null && Array.isArray(report) && report.length > 0) {
-          // Thực hiện các hành động khi report không null và có phần tử trong mảng
-          
-          this.IncomeReports = report;
-          this.exportedData = report;
+          // Thêm dữ liệu mới vào mảng chartDate và chartRevenue
+          this.chartDate.splice(0, this.chartDate.length);
+          this.chartRevenue.splice(0, this.chartRevenue.length);   
+          this.IncomeReports = report;   
           for (let b of this.IncomeReports) {
             b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            this.chartDate.push(b.date);
+            this.chartRevenue.push(b.revenue);
           };
           Toast.fire({
             icon: 'success',
             title: "Data changed successfully"
           })
+          this.drawChart();
         } else {
           this.getDefaultIncomeReport();
           Toast.fire({
