@@ -50,6 +50,7 @@ export class IncomeReportComponent implements OnInit {
   tfoot: any[] = [];
   chartDate: any[] = [];
   chartRevenue: any[] = [];
+  chartOrder: any[] = [];
   lineChart: any;
 
 
@@ -292,6 +293,7 @@ export class IncomeReportComponent implements OnInit {
             b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
             this.chartDate.push(b.date);
             this.chartRevenue.push(b.revenue);
+            this.chartOrder.push(b.orders);
           };
           this.drawChart();
         }   
@@ -348,20 +350,67 @@ export class IncomeReportComponent implements OnInit {
       type: 'bar',
       data: {
         labels: this.chartDate,
-        datasets: [{
-          label: 'Revenue',
-          data: this.chartRevenue,
-          borderColor: '#FD3D57',
-          backgroundColor:'#FD3D57',
-          tension: 0.1,
-          fill: false
-        }]
+        datasets: [
+          // Dataset cho bar chart
+          {
+            label: 'Order Times',
+            data: this.chartOrder,
+            
+            borderColor: "#36A2EB",
+            tension: 0.1,
+            fill: false,
+            type: 'line', // Chỉ định loại dữ liệu là line chart
+            yAxisID: 'y1',
+          },
+          // Dataset cho line chart
+          {
+            label: 'Revenue',
+            data: this.chartRevenue,
+            borderColor: "#36A2EB",
+            fill: 0.1,
+            backgroundColor: "#FD3D57",
+            yAxisID: 'y',
+          }
+        ]
       },
       options: {
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          
+          yAxes: [
+            {
+              id: 'y',
+              type: 'linear',
+              position: 'left',
+              ticks: {
+                beginAtZero: true,
+              },
+              gridLines: {
+                display: true, // Hiển thị lưới trên trục y
+                drawOnChartArea: false, // Không vẽ lưới trên biểu đồ để tránh overlap
+              },  
+              scaleLabel: {
+                display: true,
+                labelString: 'Revenue of each day', // Đặt tiêu đề cho trục y
+              },
+            },
+            {
+              id: 'y1',
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                beginAtZero: true,
+              },
+              gridLines: {
+                display: true,
+                drawOnChartArea: false,
+              }, 
+              scaleLabel: {
+                display: true,
+                labelString: 'Orders Time Of Each Day', // Đặt tiêu đề cho trục y
+              },
+            },
+          ],
+          
         }
       }
     });
@@ -381,6 +430,7 @@ export class IncomeReportComponent implements OnInit {
             b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
             this.chartDate.push(b.date);
             this.chartRevenue.push(b.revenue);
+            this.chartOrder.push(b.orders);
           };
           Toast.fire({
             icon: 'success',
