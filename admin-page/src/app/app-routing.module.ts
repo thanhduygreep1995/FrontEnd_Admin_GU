@@ -15,6 +15,7 @@ import { BrandEditionComponent } from './brand-edition/brand-edition.component';
 import { OriginEditionComponent } from './origin-edition/origin-edition.component';
 import { OriginTableComponent } from './origin-table/origin-table.component';
 import { IncomeReportComponent } from './income-report/income-report.component';
+import { CustomerReportComponent } from './customer-report/customer-report.component';
 
 const routes: Routes = [
   { path: '', component: OrderTableComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'origin-edition', component: OriginEditionComponent },
   { path: 'origin-table', component: OriginTableComponent },
   { path: 'income-report', component:IncomeReportComponent },
+  { path: 'customer-report', component:CustomerReportComponent },
 ];
 
 @NgModule({
