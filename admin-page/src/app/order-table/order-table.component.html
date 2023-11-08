@@ -32,7 +32,7 @@
                         <table datatable [dtOptions]="dtOptions" *ngIf="orders && orders.length > 0" class="table table-bordered table-striped row-border hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th hidden>Id</th>
                                     <th>No</th>
                                     <th>Email</th>
                                     <th>Phone</th>
@@ -47,7 +47,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let o of orders">
-                                    <td>{{ o.id }}</td>
+                                    <td hidden>{{ o.id }}</td>
                                     <td>{{ o.index }}</td>
                                     <td>{{ o.email }}</td>
                                     <td>{{ o.phone }}</td>
@@ -56,7 +56,7 @@
                                     <td>{{ o.status }}</td>
                                     <td>{{ o.paymentMethod }}</td>
                                     <td>{{ o.discountPrice }}</td>
-                                    <td>{{ o.customer.firstName +' '+ o.customer.lastName}}</td>
+                                    <td>{{ o.customer.firstName+' '+ o.customer.lastName}}</td>
                                     <td>
                                         <button class="btn btn-info" data-toggle="modal" data-target="#updateModal" (click)="onUpdate(o.id)">
                                     Update
@@ -76,9 +76,16 @@
                                     </div>
                                     <div class="modal-body">
                                         <form [formGroup]="orderForm">
-                                            <input formControlName="id" type="number" class="form-control mb-2" name="id" id="id" [(ngModel)]=" selectedOrderId " />
+                                            <!-- <input formControlName="id" type="number" class="form-control mb-2" name="id" id="id" [(ngModel)]=" selectedOrderId " />
+                                            <input formControlName="email" type="text" class="form-control mb-2" name="email" id="email" placeholder="Enter email" />
+                                            <input formControlName="phone" type="text" class="form-control mb-2" name="phone" id="phone" placeholder="Enter phone" />
+                                            <input formControlName="orderDate" type="text" class="form-control mb-2" name="orderDate" id="orderDate" placeholder="Enter orderDate" />
+                                            <input formControlName="note" type="text" class="form-control mb-2" name="note" id="note" placeholder="Enter note" />
+                                            <input formControlName="paymentMethod" type="text" class="form-control mb-2" name="paymentMethod" id="paymentMethod" placeholder="Enter paymentMethod" />
+                                            <input formControlName="discountPrice" type="text" class="form-control mb-2" name="discountPrice" id="discountPrice" placeholder="Enter discountPrice" />
+                                            <input formControlName="customer" type="number" class="form-control mb-2" name="customer" id="customer" [(ngModel)]="selectedOrderId" placeholder="Enter Customer" /> -->
                                             <label for="orderStatus " class="form-label ">Status</label>
-                                            <select formControlName="status " class="form-control select2 " style="width: 100% ">
+                                            <select formControlName="status" class="form-control select2 " style="width: 100% " [ngModel]="selectedStatus">
                                             <option value="PENDING ">PENDING</option>
                                             <option value="PROCESSING ">PROCESSING</option>
                                             <option value="DELIVERED ">DELIVERED</option>

@@ -86,9 +86,9 @@ export class ProductEditionComponent implements OnInit {
     ) 
   {
     this.productForm = this.formBuilder.group({
-      selectedBrand: [null, Validators.required], // Tên control phải khớp với formControlName trong template
-      selectedOrigin    : [null, Validators.required],
-      selectedCategory: [null, Validators.required], // Tên control phải khớp với formControlName trong template
+      selectedBrand: ['', Validators.required], // Tên control phải khớp với formControlName trong template
+      selectedOrigin    : ['', Validators.required],
+      selectedCategory: ['', Validators.required], // Tên control phải khớp với formControlName trong template
       id: ['', Validators.required],
       name: ['', Validators.required],
       model: ['', Validators.required],

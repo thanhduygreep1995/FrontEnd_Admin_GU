@@ -70,7 +70,8 @@ export class OrderTableComponent implements OnInit {
   isSpinning: boolean = false;
   progressTimerOut: number = 1200;
   customers!: any[];
-  selectedOrderId!: number;
+  selectedOrderId!: any;
+  selectedStatus!: 'PENDING';
   constructor(
     private formBuilder: FormBuilder,
     private oS: OrderService,
@@ -86,10 +87,12 @@ export class OrderTableComponent implements OnInit {
       phone: [''],
       orderDate: [''],
       note: [''],
-      status: [''],
+      status: [],
       paymentMethod: [''],
       discountPrice: [''],
-      customer: [''],
+      customer: this.formBuilder.group({
+        id: [""],
+      }),
     });
   }
 
@@ -167,9 +170,14 @@ export class OrderTableComponent implements OnInit {
   
   defaultStatus() {
     // selected status Active
-    this.orderForm.patchValue({
-      // status: {['PENDING'],['PROCESSING'],['DELIVERED'],['CANCELLED']}
-    });
+  // const selectedStatus = 'PROCESSING'; // You can set this based on some condition or user input
+  // if (this.selectedStatus === 'PROCESSING' || this.selectedStatus === 'PENDING' || this.selectedStatus === 'DELIVERED' || this.selectedStatus === 'CANCELLED') {
+    // this.orderForm.patchValue({
+    //   status: this.selectedStatus
+    // });
+  // } else {
+  //   // Handle the case where the selectedStatus is not one of the four options
+  // }
   }
   onUpdate(id: number): void {
     this.selectedOrderId = id;
@@ -191,14 +199,21 @@ export class OrderTableComponent implements OnInit {
   fnUpdateOrder() {
     if (this.selectedOrderId) { // Kiểm tra xem selectedOrderId có tồn tại
       const orderinfo = {
-        status: this.orderForm.value.status
-      };
+        // email: this.orderForm.value.email,
+        // phone: this.orderForm.value.phone,
+        // orderDate: this.orderForm.value.orderDate,
+        // note: this.orderForm.value.note,
+        // paymentMethod: this.orderForm.value.paymentMethod,
+        // discountPrice: this.orderForm.value.discountPrice,
+        // customerId: this.orderForm.value.customerId,
+        status: this.orderForm.value.status 
+      }; 
       this.isSpinning = true;
       this.oS.updateOrderstatus(this.selectedOrderId, orderinfo).subscribe(
         (response) => {
           console.log('Successfully updated Order!');
           this.refreshTable(); // Tải lại dữ liệu sau khi cập nhật thành công
-  
+          window.location.reload();
           setTimeout(() => {
             this.isSpinning = false;
             this.orderForm.reset();
