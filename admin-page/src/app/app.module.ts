@@ -35,6 +35,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { CustomerReportComponent } from './customer-report/customer-report.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { CommonModule } from '@angular/common';
     BrandTableComponent,
     OriginEditionComponent,
     OriginTableComponent,
-    IncomeReportComponent
+    IncomeReportComponent,
+    CustomerReportComponent
   ],
 
   imports: [
