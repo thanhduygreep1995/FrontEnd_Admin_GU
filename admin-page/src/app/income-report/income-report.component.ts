@@ -133,6 +133,7 @@ export class IncomeReportComponent implements OnInit {
                 console.log('To Date:', this.toDate);
                 // Chuyển đổi hàm API thành Observable
                 this.chartDate = [];
+                this.IncomeReports = [];
                 this.chartRevenue = [];
                 this.getIncomeReportByDate();
               }
@@ -144,6 +145,7 @@ export class IncomeReportComponent implements OnInit {
           className: 'btn-default',
           action: (e: any, dt: any, node: any, config: any) =>{
             this.chartDate = [];
+            this.IncomeReports = [];
             this.chartRevenue = [];
             this.getDefaultIncomeReport();
             Toast.fire({

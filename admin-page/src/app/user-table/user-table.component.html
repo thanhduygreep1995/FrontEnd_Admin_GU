@@ -36,7 +36,7 @@
                             <!-- class="table table-bordered table-striped" -->
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th hidden>Id</th>
                                     <th>No</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
@@ -51,7 +51,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let c of customers ">
-                                    <td>{{ c.id }}</td>
+                                    <td hidden>{{ c.id }}</td>
                                     <td>{{ c.index }}</td>
                                     <td>{{ c.firstName }}</td>
                                     <td>{{ c.lastName }}</td>
@@ -61,7 +61,11 @@
                                     <td>{{ c.createDate }}</td>
                                     <td>{{ c.status }}</td>
                                     <td>{{ c.role.name }}</td>
-                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#updateModal">
+                                            Edit
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
 

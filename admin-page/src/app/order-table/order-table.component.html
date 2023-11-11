@@ -34,6 +34,7 @@
                                 <tr>
                                     <th hidden>Id</th>
                                     <th>No</th>
+                                    <th>Customer</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Order Date</th>
@@ -41,7 +42,6 @@
                                     <th>Status</th>
                                     <th>Payment Method</th>
                                     <th>discountPrice</th>
-                                    <th>Customer</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -49,6 +49,7 @@
                                 <tr *ngFor="let o of orders">
                                     <td hidden>{{ o.id }}</td>
                                     <td>{{ o.index }}</td>
+                                    <td>{{ o.customer.firstName+' '+ o.customer.lastName}}</td>
                                     <td>{{ o.email }}</td>
                                     <td>{{ o.phone }}</td>
                                     <td>{{ o.orderDate }}</td>
@@ -56,11 +57,16 @@
                                     <td>{{ o.status }}</td>
                                     <td>{{ o.paymentMethod }}</td>
                                     <td>{{ o.discountPrice }}</td>
-                                    <td>{{ o.customer.firstName+' '+ o.customer.lastName}}</td>
                                     <td>
                                         <button class="btn btn-info" data-toggle="modal" data-target="#updateModal" (click)="onUpdate(o.id)">
                                     Update
                                     </button>
+                                        <!-- <button class="btn btn-warning" (click)="onDetail(o.id)">
+                                        Detail
+                                        </button> -->
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#DetailModal" (click)="onUpdate(o.id)">
+                                            Details
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -96,6 +102,45 @@
                                     <div class="modal-footer ">
                                         <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
                                         <button type="button " class="btn btn-primary " (click)="fnUpdateOrder() ">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="DetailModalLabel">Detail Order</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table datatable [dtOptions]="dtOp" *ngIf="orders && orders.length > 0" class="table table-bordered table-striped row-border hover">
+                                            <thead>
+                                                <tr>
+                                                    <th hidden>Id</th>
+                                                    <th>No</th>
+                                                    <th>Product</th>
+                                                    <th>Quantity</th>
+                                                    <th>Totail Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let o of orderdetails; let i = index">
+                                                    <td hidden>{{ o.id }}</td>
+                                                    <td>{{ i+1}}</td>
+                                                    <td>{{ o.product.name }}</td>
+                                                    <td>{{ o.quantity }}</td>
+                                                    <td>{{ o.totalPrice }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+
                                     </div>
                                 </div>
                             </div>

@@ -9,6 +9,8 @@ import { OrderService } from '../service/order/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../service/customer/customer.service';
 import { ButtonService } from '../service/button/buttonservice';
+import { OrderDetailService } from '../service/orderdetail/orderdetail/orderdetail.service';
+import { ProductService } from '../service/product/product.service';
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -29,7 +31,9 @@ interface orderResponse {
   status: any;
   paymentMethod: any;
   discountPrice: any;
-  customer_id: any;  
+  customer_id: any;
+  product_id:any;
+  orderdetail_id:any;  
 }
 declare var require: any;
 const jszip: any = require('jszip');
@@ -61,23 +65,31 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export class OrderTableComponent implements OnInit {
   // Must be declared as "any", not as "DataTables.Settings"
+  getid: any;
   id: any;
   orders: any;
   orderForm: any;
   dtOptions: any = {};
+  dtOp:any = {};
   customer: any;
+  product: any;
+  orderdetail: any;
   data: any[] = []; // Mảng dữ liệu cho DataTables
   isSpinning: boolean = false;
   progressTimerOut: number = 1200;
   customers!: any[];
   selectedOrderId!: any;
   selectedStatus!: 'PENDING';
+  orderdetails: any;
   constructor(
     private formBuilder: FormBuilder,
     private oS: OrderService,
+    private DS: OrderDetailService,
+    private oD: OrderDetailService,
     private route: ActivatedRoute,
     private router: Router,
     private Cs: CustomerService,
+    private pS: ProductService,
     public buttonService: ButtonService
   ) 
   {
@@ -115,7 +127,30 @@ export class OrderTableComponent implements OnInit {
 
     this.defaultStatus();
     this.refreshTable();
-    this.dtOptions = {
+    this.dtOptions = this.getDTOptions();
+    
+    this.oS.getOrder().subscribe((data) => {
+      console.log(data);
+      this.orders = data.map((order, index) =>({...order, index: index + 1}));
+    });
+    this.Cs.getCustomer().subscribe((data) => {
+      this.customer = data;
+    });
+    this.pS.getAllProduct().subscribe((data) => {
+      this.product = data;
+    });
+
+    this.orders.array.forEach((element: any) => {
+      this.oD.getOrderDetailById(this.selectedOrderId).subscribe((data) => {
+        this.orderdetail = data;
+      });
+    });
+
+
+  }
+  getDTOptions2(): any {
+    let dataTables: any = {};
+    return dataTables =  {
       pagingType: 'full_numbers',
       pageLength: 10,
       dom: 'Bfrtip', // Hiển thị các nút: buttons, filter, length change, ... (Xem thêm tài liệu DataTables để biết thêm thông tin)
@@ -156,17 +191,51 @@ export class OrderTableComponent implements OnInit {
         },
       ],
     };
-
-    this.oS.getOrder().subscribe((data) => {
-      console.log(data);
-      this.orders = data.map((order, index) =>({...order, index: index + 1}));
-    });
-    this.Cs.getCustomer().subscribe((data) => {
-      this.customer = data;
-    });
-    
   }
+  getDTOptions(): any {
+    let dataTables: any = {};
+    return dataTables =  {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      dom: 'Bfrtip', // Hiển thị các nút: buttons, filter, length change, ... (Xem thêm tài liệu DataTables để biết thêm thông tin)
+      buttons: [
+        {
+          extend: 'colvis',
+          className: 'btn-primary',
+          columns: ':not(:last-child)',
+        },
 
+        {
+          extend: 'copy',
+          title: 'Admin - Order',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
+        {
+          extend: 'print',
+          title: 'Admin - Order',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
+        {
+          extend: 'excel',
+          title: 'Admin - Order',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
+        {
+          extend: 'csvHtml5',
+          title: 'Admin - Order',
+          exportOptions: {
+            columns: ':not(:last-child)', // Ẩn cột cuối cùng
+          },
+        },
+      ],
+    };
+  }
   
   defaultStatus() {
     // selected status Active
@@ -181,7 +250,16 @@ export class OrderTableComponent implements OnInit {
   }
   onUpdate(id: number): void {
     this.selectedOrderId = id;
+    this.dtOp = this.getDTOptions();
+    this.DS.getOrderDetailByOrderId(id).subscribe((data) => {
+      this.orderdetails = data;
+    })
   }
+  onDetail(id: number): void {
+    this.router.navigate(['/orders-detail-table', id]);
+    console.log('id:', id);
+  }
+
 
   refreshTable() {
     // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới

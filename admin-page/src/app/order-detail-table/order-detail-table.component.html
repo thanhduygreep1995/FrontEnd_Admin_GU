@@ -31,22 +31,24 @@
                         <table datatable [dtOptions]="dtOptions" *ngIf="orderdetails && orderdetails.length > 0" class="table table-bordered table-striped row-border hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th hidden>Id</th>
                                     <th>No</th>
-                                    <th>Quantity</th>
-                                    <th>Total Price</th>
-                                    <th>Order Note</th>
                                     <th>Product Name</th>
+                                    <th>Customer</th>
+                                    <th>Quantity</th>
+                                    <th>Order Note</th>
+                                    <th>Total Price</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let d of orderdetails">
-                                    <td>{{ d.id }}</td>
+                                    <td hidden>{{d.id}}</td>
                                     <td>{{ d.index }}</td>
-                                    <td>{{ d.quantity }}</td>
-                                    <td>{{ d.totalPrice }}</td>
-                                    <td>{{ d.order.note }}</td>
                                     <td>{{ d.product.name }}</td>
+                                    <td>{{ d.order.customer.firstName+" "+d.order.customer.lastName }}</td>
+                                    <td>{{ d.quantity }}</td>
+                                    <td>{{ d.order.id }}</td>
+                                    <td>{{ d.totalPrice }}</td>
                                 </tr>
                             </tbody>
                         </table>

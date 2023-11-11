@@ -19,4 +19,8 @@ export class OrderDetailService {
   getOrderDetailById(id: any) {
     return this.http.get(this.baseUrl + '/' + id);
   }
+  getOrderDetailByOrderId(id: any) {
+    return this.http.get(this.baseUrl + '/getorderdetailbyorderid/' + id);
+  }
+
 }

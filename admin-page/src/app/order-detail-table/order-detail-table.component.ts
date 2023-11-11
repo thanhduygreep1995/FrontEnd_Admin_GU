@@ -151,11 +151,15 @@ ngOnInit(): void {
   });
   this.oS.getOrder().subscribe((data) => {
     console.log(data);
-    this.orders = data;
+    this.order = data;
   });
   this.pS.getAllProduct().subscribe((data) => {
     this.product = data;
   });
+
+  this.DS.getOrderDetailByOrderId(this.id).subscribe((data) => {
+    this.orderdetails = data;
+  })
   
 }
 
