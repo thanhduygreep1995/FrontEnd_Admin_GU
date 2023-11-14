@@ -45,9 +45,6 @@
                                     <th>Status</th>
                                     <th>Payment Method</th>
                                     <th>Discount Price</th>
-                                    <th hidden>Product Name</th>
-                                    <th hidden>Quantity</th>
-                                    <th hidden>Total Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -62,10 +59,7 @@
                                     <td>{{ o.note }}</td>
                                     <td>{{ o.status }}</td>
                                     <td>{{ o.paymentMethod }}</td>
-                                    <td>{{ o.discountPrice }}</td>
-                                    <td hidden>{{ o.orderdetail.product.name }}</td>
-                                    <td hidden>{{ o.orderdetail.quantity }}</td>
-                                    <td hidden>{{ o.orderdetail.totalPrice }}</td>
+                                    <td>{{ o.discountPrice+" "| currency:",":"":"6.0"}} VNĐ</td>
                                     <td>
                                         <button class="btn btn-info" data-toggle="modal" data-target="#updateModal" (click)="onUpdate(o.id)">
                                     Update
@@ -101,7 +95,6 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer ">
-                                        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
                                         <button type="button " class="btn btn-primary " (click)="fnUpdateOrder() ">Update</button>
                                     </div>
                                 </div>
@@ -124,7 +117,7 @@
                                                     <th>No</th>
                                                     <th>Product</th>
                                                     <th>Quantity</th>
-                                                    <th>Totail Price</th>
+                                                    <th>Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -133,14 +126,20 @@
                                                     <td>{{ i+1}}</td>
                                                     <td>{{ o.product.name }}</td>
                                                     <td>{{ o.quantity }}</td>
-                                                    <td>{{ o.totalPrice }}</td>
+                                                    <td>{{ o.totalPrice + " "| currency:",":"":"6.0"}} VNĐ</td>
                                                 </tr>
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        Totail Price
+                                                    </td>
+                                                    <td>
+                                                        {{getTotalPrice()| currency:".":"":"6.0"}} VNĐ
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
-
-                                    </div>
-                                    <div class="modal-footer ">
-                                        <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
 
                                     </div>
                                 </div>

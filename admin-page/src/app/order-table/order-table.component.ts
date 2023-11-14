@@ -82,6 +82,7 @@ export class OrderTableComponent implements OnInit {
   selectedOrderId!: any;
   selectedStatus!: 'PENDING';
   orderdetails: any;
+  ttp: number = 0;
   constructor(
     private formBuilder: FormBuilder,
     private oS: OrderService,
@@ -317,6 +318,13 @@ export class OrderTableComponent implements OnInit {
     } else {
       console.error('Không có id hợp lệ để cập nhật đơn hàng.');
     }
+  }
+  getTotalPrice(): any {
+    let TotalPrice = 0;
+    for (let o of this.orderdetails) {
+      TotalPrice += o.totalPrice;
+    };
+    return TotalPrice;
   }
   
   
