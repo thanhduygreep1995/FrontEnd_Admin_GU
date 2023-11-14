@@ -150,7 +150,7 @@ export class OrderTableComponent implements OnInit {
   getOrder(): any {
     this.oS.getOrder().subscribe((orders) => {    
         console.log(orders);
-        if (orders != null && Array.isArray(orders) && orders.length > 0) {
+        if (orders != null && orders.length > 0) {
           this.orders =  orders;
           // Thêm dữ liệu mới vào mảng chartDate và chartRevenue
           for (let o of this.orders) {

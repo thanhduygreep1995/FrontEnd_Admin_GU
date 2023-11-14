@@ -35,7 +35,7 @@
                         <table datatable [dtOptions]="dtOptions" *ngIf="orders && orders.length > 0" class="table table-bordered table-striped row-border hover">
                             <thead>
                                 <tr>
-                                    <th hidden>Id</th>
+                                    <!-- <th hidden>Id</th> -->
                                     <th>No</th>
                                     <th>Customer</th>
                                     <th>Email</th>
@@ -44,13 +44,16 @@
                                     <th>Note</th>
                                     <th>Status</th>
                                     <th>Payment Method</th>
-                                    <th>discountPrice</th>
+                                    <th>Discount Price</th>
+                                    <th hidden>Product Name</th>
+                                    <th hidden>Quantity</th>
+                                    <th hidden>Total Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let o of orders ; let i = index ">
-                                    <td hidden>{{ o.id }}</td>
+                                    <!-- <td hidden>{{ o.id }}</td> -->
                                     <td>{{ i + 1 }}</td>
                                     <td>{{ o.customer.firstName+' '+ o.customer.lastName}}</td>
                                     <td>{{ o.email }}</td>
@@ -60,6 +63,9 @@
                                     <td>{{ o.status }}</td>
                                     <td>{{ o.paymentMethod }}</td>
                                     <td>{{ o.discountPrice }}</td>
+                                    <td hidden>{{ o.orderdetail.product.name }}</td>
+                                    <td hidden>{{ o.orderdetail.quantity }}</td>
+                                    <td hidden>{{ o.orderdetail.totalPrice }}</td>
                                     <td>
                                         <button class="btn btn-info" data-toggle="modal" data-target="#updateModal" (click)="onUpdate(o.id)">
                                     Update

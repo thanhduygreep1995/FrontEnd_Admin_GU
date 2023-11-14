@@ -37,7 +37,8 @@
                         <table datatable *ngIf="specs && specs.length > 0" [dtOptions]="dtOptions" class="table table-bordered table-striped row-border hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th hidden>Id</th>
+                                    <th>No</th>
                                     <th>processor</th>
                                     <th>graphicsCard</th>
                                     <th>ram</th>
@@ -49,8 +50,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let s of specs">
-                                    <td>{{ s.id }}</td>
+                                <tr *ngFor="let s of specs; let i = index">
+                                    <td hidden>{{ s.id }}</td>
+                                    <td>{{ i + 1 }}</td>
                                     <td>{{ s.processor }}</td>
                                     <td>{{ s.graphicsCard }}</td>
                                     <td>{{ s.ram }}</td>
