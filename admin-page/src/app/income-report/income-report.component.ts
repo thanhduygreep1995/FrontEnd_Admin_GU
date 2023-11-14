@@ -292,7 +292,7 @@ export class IncomeReportComponent implements OnInit {
           this.chartRevenue.splice(0, this.chartRevenue.length);
           this.IncomeReports = report;
           for (let b of this.IncomeReports) {
-            b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             this.chartDate.push(b.date);
             this.chartRevenue.push(b.revenue);
             this.chartOrder.push(b.orders);
@@ -429,7 +429,7 @@ export class IncomeReportComponent implements OnInit {
           this.chartRevenue.splice(0, this.chartRevenue.length);   
           this.IncomeReports = report;   
           for (let b of this.IncomeReports) {
-            b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            b.date =  moment.default(b.date, 'YYYY-MM-DD').format('DD/MM/YYYY');
             this.chartDate.push(b.date);
             this.chartRevenue.push(b.revenue);
             this.chartOrder.push(b.orders);

@@ -11,6 +11,7 @@ import { CustomerService } from '../service/customer/customer.service';
 import { ButtonService } from '../service/button/buttonservice';
 import { OrderDetailService } from '../service/orderdetail/orderdetail/orderdetail.service';
 import { ProductService } from '../service/product/product.service';
+import * as moment from 'moment';
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -129,10 +130,7 @@ export class OrderTableComponent implements OnInit {
     this.refreshTable();
     this.dtOptions = this.getDTOptions();
     
-    this.oS.getOrder().subscribe((data) => {
-      console.log(data);
-      this.orders = data.map((order, index) =>({...order, index: index + 1}));
-    });
+    this.getOrder();
     this.Cs.getCustomer().subscribe((data) => {
       this.customer = data;
     });
@@ -147,6 +145,21 @@ export class OrderTableComponent implements OnInit {
     });
 
 
+  }
+
+  getOrder(): any {
+    this.oS.getOrder().subscribe((orders) => {    
+        console.log(orders);
+        if (orders != null && Array.isArray(orders) && orders.length > 0) {
+          this.orders =  orders;
+          // Thêm dữ liệu mới vào mảng chartDate và chartRevenue
+          for (let o of this.orders) {
+            o.orderDate =  moment.default(o.orderDate, 'YYYY-MM-DD').format('DD/MM/YYYY');
+          };
+        }   
+    },(error) => {
+      console.error(error);
+    });
   }
   getDTOptions2(): any {
     let dataTables: any = {};
@@ -277,13 +290,6 @@ export class OrderTableComponent implements OnInit {
   fnUpdateOrder() {
     if (this.selectedOrderId) { // Kiểm tra xem selectedOrderId có tồn tại
       const orderinfo = {
-        // email: this.orderForm.value.email,
-        // phone: this.orderForm.value.phone,
-        // orderDate: this.orderForm.value.orderDate,
-        // note: this.orderForm.value.note,
-        // paymentMethod: this.orderForm.value.paymentMethod,
-        // discountPrice: this.orderForm.value.discountPrice,
-        // customerId: this.orderForm.value.customerId,
         status: this.orderForm.value.status 
       }; 
       this.isSpinning = true;
@@ -302,7 +308,7 @@ export class OrderTableComponent implements OnInit {
               showConfirmButton: false,
               timer: 2000
             })
-          }, this.progressTimerOut)
+          }, this.progressTimerOut),window.location.reload();
         },
         (error) => {
           console.error('Failed to update Order:', error);

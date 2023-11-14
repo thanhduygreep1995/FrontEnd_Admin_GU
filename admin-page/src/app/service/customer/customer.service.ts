@@ -17,4 +17,9 @@ export class CustomerService {
   getCustomerById(id: any) {
     return this.http.get(this.baseUrl + '/' + id);
   }
+
+  updateCustomerstatus(id: any, customer: any): Observable<any> {
+    const url = `${this.baseUrl}/status/${id}`;
+    return this.http.put(url, customer, { responseType: 'text' });
+  }
 }

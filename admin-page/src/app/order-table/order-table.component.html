@@ -1,7 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" *ngIf="!isSpinning" [@fadeIn]="!isSpinning">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -17,9 +17,12 @@
     </div>
     <!-- /.container-fluid -->
 </section>
-
+<div *ngIf="isSpinning" [@fadeInOut]="isSpinning" class="half-circle-spinner">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+</div>
 <!-- Main content -->
-<section class="content">
+<section class="content" *ngIf="!isSpinning" [@fadeIn]="!isSpinning">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -46,9 +49,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let o of orders">
+                                <tr *ngFor="let o of orders ; let i = index ">
                                     <td hidden>{{ o.id }}</td>
-                                    <td>{{ o.index }}</td>
+                                    <td>{{ i + 1 }}</td>
                                     <td>{{ o.customer.firstName+' '+ o.customer.lastName}}</td>
                                     <td>{{ o.email }}</td>
                                     <td>{{ o.phone }}</td>
@@ -82,14 +85,6 @@
                                     </div>
                                     <div class="modal-body">
                                         <form [formGroup]="orderForm">
-                                            <!-- <input formControlName="id" type="number" class="form-control mb-2" name="id" id="id" [(ngModel)]=" selectedOrderId " />
-                                            <input formControlName="email" type="text" class="form-control mb-2" name="email" id="email" placeholder="Enter email" />
-                                            <input formControlName="phone" type="text" class="form-control mb-2" name="phone" id="phone" placeholder="Enter phone" />
-                                            <input formControlName="orderDate" type="text" class="form-control mb-2" name="orderDate" id="orderDate" placeholder="Enter orderDate" />
-                                            <input formControlName="note" type="text" class="form-control mb-2" name="note" id="note" placeholder="Enter note" />
-                                            <input formControlName="paymentMethod" type="text" class="form-control mb-2" name="paymentMethod" id="paymentMethod" placeholder="Enter paymentMethod" />
-                                            <input formControlName="discountPrice" type="text" class="form-control mb-2" name="discountPrice" id="discountPrice" placeholder="Enter discountPrice" />
-                                            <input formControlName="customer" type="number" class="form-control mb-2" name="customer" id="customer" [(ngModel)]="selectedOrderId" placeholder="Enter Customer" /> -->
                                             <label for="orderStatus " class="form-label ">Status</label>
                                             <select formControlName="status" class="form-control select2 " style="width: 100% " [ngModel]="selectedStatus">
                                             <option value="PENDING ">PENDING</option>

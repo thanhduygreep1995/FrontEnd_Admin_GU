@@ -306,8 +306,8 @@ export class CustomerReportComponent implements OnInit {
           // this.chartRevenue.splice(0, this.chartRevenue.length);
           this.CustomerReports = report;
           for (let b of this.CustomerReports) {
-            b.birth_date =  moment.default(b.birth_date, 'YYYY-MM-DD').format('DD-MM-YYYY');
-            b.day_created =  moment.default(b.day_created, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            b.birth_date =  moment.default(b.birth_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            b.day_created =  moment.default(b.day_created, 'YYYY-MM-DD').format('DD/MM/YYYY');
             if (b.revenue == 0) {
               this.countNoneBuyings++;
             }else{

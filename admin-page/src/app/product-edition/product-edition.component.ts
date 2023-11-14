@@ -254,7 +254,7 @@ fnUpdateProduct() {
           showConfirmButton: false,
           timer: 2000
         })
-      }, this.progressTimerOut)
+      }, this.progressTimerOut),window.location.reload();
 
     },
     (error) => {
