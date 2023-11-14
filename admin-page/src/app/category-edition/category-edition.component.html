@@ -1,65 +1,48 @@
 <!-- Content Wrapper. Contains page content -->
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1>Category Edition</h1>
-      </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Category Edition</li>
-        </ol>
-      </div>
+<section class="content-header" *ngIf="!isSpinning" [@fadeIn]="!isSpinning">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Category Edition</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Category Edition</li>
+                </ol>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </section>
-
+<div *ngIf="isSpinning" [@fadeInOut]="isSpinning" class="half-circle-spinner">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+</div>
 <!-- Main content -->
-<section class="content">
-  <div class="container">
-    <div class="row d-flex justify-content-center">
-      <div class="col-10">
-        <!-- style="max-width: 540px;" -->
-        <form class="card" [formGroup]="infoCategory" (ngSubmit)="onSubmit()">
-          <div class="row">
-            <div class="col-12">
-              <div class="card-body">
-                <div class="mb-1">
-                  <label for="id" class="form-label">Id</label>
-                  <input
-                    readonly
-                    formControlName="id"
-                    type="text"
-                    class="form-control mb-2"
-                    name="id"
-                    id="id"
-                    placeholder="Enter Category Id"
-                  />
-                  <label for="name" class="form-label">Name</label>
-                  <input
-                    formControlName="name"
-                    type="text"
-                    class="form-control mb-2"
-                    name="name"
-                    id="name"
-                    placeholder="Category Name"
-                  />
-                  <div
-                    *ngIf="
+<section class="content" *ngIf="!isSpinning" [@fadeInOut]="!isSpinning">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10">
+                <!-- style="max-width: 540px;" -->
+                <form class="card" [formGroup]="infoCategory" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="mb-1">
+                                    <input hidden formControlName="id" type="text" class="form-control mb-2" name="id" id="id" placeholder="Enter Category Id" />
+                                    <label for="name" class="form-label">Name</label>
+                                    <input formControlName="name" type="text" class="form-control mb-2" name="name" id="name" placeholder="Category Name" />
+                                    <div *ngIf="
                       infoCategory.controls['name'].invalid &&
                       infoCategory.controls['name'].touched
-                    "
-                    class="text-danger"
-                  >
-                    Category Name is required.
-                  </div>
+                    " class="text-danger">
+                                        Category Name is required.
+                                    </div>
 
-                  <label for="description" class="form-label"
-                    >Description</label
+                                    <label for="description" class="form-label">Description</label
                   >
                   <input
                     formControlName="description"
@@ -80,54 +63,32 @@
                   </div>
 
                   <label for="categoryStatus" class="form-label">Status</label>
-                  <select
-                    formControlName="status"
-                    class="form-control select2"
-                    style="width: 100%"
-                  >
+                                    <select formControlName="status" class="form-control select2" style="width: 100%">
                     <option value="ACTIVE">ACTIVE</option>
                     <option value="INACTIVE">INACTIVE</option>
                   </select>
-                </div>
-              </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mx-2 mb-2">
+                        <div class="col-12 d-flex flex-wrap justify-content-end">
+                            <button (click)="fnAddCategory()" [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2">
+                                Save
+                            </button>
+                            <button *ngIf="buttonService.getShowButton4()" (click)="fnUpdateCategory()" [disabled]="ButtonUpdate" type="button" class="btn btn-primary mx-2">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-          <hr />
-          <div class="row mx-2 mb-2">
-            <div class="col-12 d-flex flex-wrap justify-content-end">
-              <button
-                (click)="fnAddCategory()"
-                [disabled]="ButtonSave"
-                type="button"
-                class="btn btn-primary mx-2"
-              >
-                Save
-              </button>
-              <button
-                (click)="fnUpdateCategory()"
-                [disabled]="ButtonUpdate"
-                type="button"
-                class="btn btn-primary mx-2"
-              >
-                Update
-              </button>
-              <button
-                (click)="fnDeleteCategory()"
-                [disabled]="ButtonDelete"
-                type="button"
-                class="btn btn-primary mx-2"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!-- /.col -->
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 <!-- </div> -->

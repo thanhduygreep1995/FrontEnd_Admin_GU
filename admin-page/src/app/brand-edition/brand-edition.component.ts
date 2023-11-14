@@ -1,16 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BrandService } from '../service/brand/brand.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ButtonService } from '../service/button/buttonservice';
 
 interface BrandResponse {
   id: any;
   name: any;
 }
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-danger mx-3',
+    cancelButton: 'btn btn-success',
+  },
+  buttonsStyling: false,
+})
+
 @Component({
   selector: 'app-brand-edition',
   templateUrl: './brand-edition.component.html',
   styleUrls: ['./brand-edition.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('in', style({ opacity: 0 })),
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate(300)
+      ]),
+      state('out', style({ opacity: 0 })),
+      transition('* => void', [
+        animate(300, style({ opacity: 0 }))
+      ])
+    ]),
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })), // Ẩn khi khởi tạo
+      transition('void => *', animate('300ms')), // Hiển thị trong 200ms khi được thêm vào DOM
+    ]),
+  ]
 })
 export class BrandEditionComponent implements OnInit {
   id: any;
@@ -18,11 +47,16 @@ export class BrandEditionComponent implements OnInit {
 
   ButtonSave: boolean = true;
   ButtonUpdate: boolean = true;
+  isSpinning: boolean = false;
+  progressTimerOut: number = 1200;
+  brands: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private bS: BrandService,
-    private route: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute,
+    public buttonService: ButtonService
   ) {
     this.infoBrand = this.formBuilder.group({
       id: ['', Validators.required],
@@ -52,20 +86,40 @@ export class BrandEditionComponent implements OnInit {
         // Xử lý trường hợp không tìm thấy `id`, ví dụ chuyển hướng người dùng đến trang khác hoặc hiển thị thông báo lỗi
       }
     });
+    this.refreshTable();
   }
 
   fnAddBrand() {
     const brandInfo = {
       name: this.infoBrand.value.name,
     };
-
+    this.isSpinning = true;
     this.bS.createBrand(brandInfo).subscribe(
       (response) => {
-        console.log('Successfully Create Brand!');
-        this.infoBrand.reset();
-        alert('Successfully');
+        console.log('Successfully Create Brand!');  
+        this.router.navigate(['/brand-table']);
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Successfully Create Brand!');
+          this.infoBrand.reset();
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully Create Brand!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }, this.progressTimerOut);
       },
       (error) => {
+        setTimeout(() => {
+          this.isSpinning = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Your work has not been saved',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }, this.progressTimerOut);
         console.error('Failed to Create Brand:', error);
       }
     );
@@ -75,26 +129,47 @@ export class BrandEditionComponent implements OnInit {
     const brandInfo = {
       name: this.infoBrand.value.name,
     };
-
+    this.isSpinning = true;
     this.bS.updateBrand(this.id, brandInfo).subscribe(
       (response) => {
         console.log('Successfully updated Brand!');
-        alert('Successfully updated Brand!');
+        setTimeout(() => {
+          this.isSpinning = false;
+          console.log('Successfully updated brand!');
+          window.location.reload();
+          this.infoBrand.reset();
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully updated brand!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }, this.progressTimerOut);
       },
       (error) => {
+        setTimeout(() => {
+          this.isSpinning = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Your work has not been updated',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }, this.progressTimerOut);
         console.error('Failed to update Brand:', error);
       }
     );
   }
 
-  fnDeleteBrand(id: any) {
-    this.bS.deleteBrand(id).subscribe(
-      () => {
-        console.log('Danh mục đã được xóa thành công');
-        alert('Done');
+  refreshTable() {
+    // Gọi API hoặc thực hiện các thao tác khác để lấy lại dữ liệu mới
+    this.bS.getAllBrands().subscribe(
+      (newData) => {
+        this.brands = newData;
+        console.log('Dữ liệu mới đã được cập nhật:', this.brands);
       },
       (error) => {
-        console.error('Đã xảy ra lỗi khi xóa danh mục:', error);
+        console.error('Lỗi khi lấy dữ liệu mới:', error);
       }
     );
   }

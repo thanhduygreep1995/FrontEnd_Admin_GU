@@ -1,7 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
 <!-- <div class="content-wrapper"> -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" *ngIf="!isSpinning" [@fadeIn]="!isSpinning">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -17,9 +17,12 @@
     </div>
     <!-- /.container-fluid -->
 </section>
-
+<div *ngIf="isSpinning" [@fadeInOut]="isSpinning" class="half-circle-spinner">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+</div>
 <!-- Main content -->
-<section class="content">
+<section class="content" *ngIf="!isSpinning" [@fadeIn]="!isSpinning">
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-10">
@@ -150,13 +153,10 @@
                         <div class="row mx-2 mb-2">
                             <div class="col-12 d-flex flex-wrap justify-content-end">
                                 <button (click)="fnAddProduct()" [disabled]="ButtonSave" type="button" class="btn btn-primary mx-2">
-                                      Save
+                                      Add
                                   </button>
-                                <button (click)="fnUpdateProduct()" type=" button " class="btn btn-primary mx-2 ">
+                                <button *ngIf="buttonService.getShowButton2()" (click)="fnUpdateProduct()" type=" button " class="btn btn-primary mx-2 ">
                                   Update
-                              </button>
-                                <button [disabled]="ButtonDelete " type="button " class="btn btn-primary mx-2 ">
-                                  Delete
                               </button>
                             </div>
                         </div>

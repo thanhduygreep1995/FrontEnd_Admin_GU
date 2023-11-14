@@ -25,6 +25,18 @@ import { BrandEditionComponent } from './brand-edition/brand-edition.component';
 import { BrandTableComponent } from './brand-table/brand-table.component';
 import { OriginEditionComponent } from './origin-edition/origin-edition.component';
 import { OriginTableComponent } from './origin-table/origin-table.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import 'datatables.net-buttons/js/buttons.colVis.js';
+import 'datatables.net-buttons/js/buttons.html5.js';
+import 'datatables.net-buttons/js/buttons.print.js';
+import { ButtonService } from './service/button/buttonservice';
+import { IncomeReportComponent } from './income-report/income-report.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
+import { CustomerReportComponent } from './customer-report/customer-report.component';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +60,10 @@ import { OriginTableComponent } from './origin-table/origin-table.component';
     BrandTableComponent,
     OriginEditionComponent,
     OriginTableComponent,
+    IncomeReportComponent,
+    CustomerReportComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -56,8 +71,13 @@ import { OriginTableComponent } from './origin-table/origin-table.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [ButtonService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
