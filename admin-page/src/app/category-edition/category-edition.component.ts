@@ -78,7 +78,7 @@ export class CategoryEditionComponent implements OnInit {
       this.ButtonDelete = this.infoCategory.controls['id'].invalid;
     });
     this.infoCategory.valueChanges.subscribe(() => {
-      this.ButtonUpdate = this.infoCategory.invalid;
+      this.ButtonUpdate = this.infoCategory.controls['name'].invalid;
     });
   }
 
