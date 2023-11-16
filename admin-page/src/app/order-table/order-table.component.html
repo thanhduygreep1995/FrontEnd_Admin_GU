@@ -41,6 +41,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Order Date</th>
+                                    <th>Address</th>
                                     <th>Note</th>
                                     <th>Status</th>
                                     <th>Payment Method</th>
@@ -56,6 +57,7 @@
                                     <td>{{ o.email }}</td>
                                     <td>{{ o.phone }}</td>
                                     <td>{{ o.orderDate }}</td>
+                                    <td>{{ o.address.streetNumber+','+o.address.street+','+o.address.district+','+o.address.city.city }}</td>
                                     <td>{{ o.note }}</td>
                                     <td>{{ o.status }}</td>
                                     <td>{{ o.paymentMethod }}</td>
@@ -100,23 +102,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="DetailModalLabel">Detail Order</h5>
+                        <div class="modal " id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog-scrollable" role="document">
+                                <div class="modal-content ">
+                                    <div class="modal-header ">
+                                        <h5 class="modal-title " id="DetailModalLabel ">Detail Order</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
+                                            <span aria-hidden="true ">&times;</span>
+                                          </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <table datatable [dtOptions]="dtOp" *ngIf="orders && orders.length > 0" class="table table-bordered table-striped row-border hover">
+                                    <div class="modal-body ">
+                                        <table datatable [dtOptions]="dtOp " *ngIf="orders && orders.length> 0" class="table table-bordered table-striped row-border hover">
                                             <thead>
                                                 <tr>
                                                     <th hidden>Id</th>
                                                     <th>No</th>
                                                     <th>Product</th>
                                                     <th>Quantity</th>
+                                                    <th>Address</th>
+                                                    <th>Customer</th>
+                                                    <th>Phone</th>
+                                                    <th>Email</th>
                                                     <th>Price</th>
                                                 </tr>
                                             </thead>
@@ -126,12 +132,16 @@
                                                     <td>{{ i+1}}</td>
                                                     <td>{{ o.product.name }}</td>
                                                     <td>{{ o.quantity }}</td>
+                                                    <td>{{ o.order.address.streetNumber+','+o.order.address.street+','+o.order.address.district+','+o.order.address.city.city }}</td>
+                                                    <td>{{ o.order.customer.firstName+' '+ o.order.customer.lastName}}</td>
+                                                    <td>{{ o.order.phone }}</td>
+                                                    <td>{{ o.order.email }}</td>
                                                     <td>{{ o.totalPrice + " "| currency:",":"":"6.0"}} VNĐ</td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="3">
+                                                    <td colspan="7">
                                                         Totail Price
                                                     </td>
                                                     <td>
@@ -140,11 +150,12 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
-
                                     </div>
+
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
