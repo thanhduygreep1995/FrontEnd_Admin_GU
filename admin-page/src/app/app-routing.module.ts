@@ -16,6 +16,8 @@ import { OriginEditionComponent } from './origin-edition/origin-edition.componen
 import { OriginTableComponent } from './origin-table/origin-table.component';
 import { IncomeReportComponent } from './income-report/income-report.component';
 import { CustomerReportComponent } from './customer-report/customer-report.component';
+import { ImageProductComponent } from './image-product/image-product.component';
+import { ImageListComponent } from './image-list/image-list.component';
 
 const routes: Routes = [
   { path: '', component: OrderTableComponent },
@@ -41,6 +43,8 @@ const routes: Routes = [
   { path: 'origin-table', component: OriginTableComponent },
   { path: 'income-report', component:IncomeReportComponent },
   { path: 'customer-report', component:CustomerReportComponent },
+  { path: 'image-product', component: ImageProductComponent },
+  { path: 'image-list', component: ImageListComponent },
 ];
 
 @NgModule({

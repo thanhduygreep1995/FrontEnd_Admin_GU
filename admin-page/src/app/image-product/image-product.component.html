@@ -1,0 +1,11 @@
+<label for="thumbImage" class="form-label">Thumbnail Image</label>
+<div class="input-group mb-3">
+    <input formControlName="thumbImage" type="file" (change)="onFileChange($event)" multiple class="" name="thumbImage" id="thumbImage">
+    <img *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" width="300" height="200">
+</div>
+<label for="productId" class="form-label">Product ID</label>
+<input [(ngModel)]="productId" type="number" class="form-control" id="productId" name="productId">
+
+<label for="imageStatus" class="form-label">Image Status</label>
+<input [(ngModel)]="imageStatus" type="text" class="form-control" id="imageStatus" name="imageStatus">
+<button (click)="uploadImage()">Upload</button>

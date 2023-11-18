@@ -37,6 +37,8 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { CustomerReportComponent } from './customer-report/customer-report.component';
 
+import { ImageProductComponent } from './image-product/image-product.component';
+import { ImageListComponent } from './image-list/image-list.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { CustomerReportComponent } from './customer-report/customer-report.compo
     OriginEditionComponent,
     OriginTableComponent,
     IncomeReportComponent,
-    CustomerReportComponent
+    CustomerReportComponent,
+    ImageProductComponent,
+    ImageListComponent,
   ],
 
   imports: [
