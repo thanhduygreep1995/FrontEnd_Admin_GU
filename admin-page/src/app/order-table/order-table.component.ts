@@ -4,7 +4,7 @@ import 'datatables.net-buttons/js/dataTables.buttons.js';
 import 'datatables.net-buttons/js/buttons.html5.js';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { OrderService } from '../service/order/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../service/customer/customer.service';
@@ -70,6 +70,7 @@ export class OrderTableComponent implements OnInit {
   id: any;
   orders: any;
   orderForm: any;
+  orderDetailForm: any;
   dtOptions: any = {};
   dtOp:any = {};
   customer: any;
@@ -108,6 +109,22 @@ export class OrderTableComponent implements OnInit {
         id: [""],
       }),
     });
+    this.orderDetailForm = this.formBuilder.group({
+      id: [''],
+      quantity: ['', Validators.required],
+      phone: [''],
+      email: [''],
+      totalPrice: [''],
+      customer: this.formBuilder.group({
+        id: [""],
+      }),
+      product: this.formBuilder.group({
+        id: [""],
+      }),
+      address: this.formBuilder.group({
+        id: [""],
+      }),
+    });
   }
 
   ngOnInit(): void {
@@ -130,7 +147,7 @@ export class OrderTableComponent implements OnInit {
     this.defaultStatus();
     this.refreshTable();
     this.dtOptions = this.getDTOptions();
-    
+    this.dtOp = this.getDTOptions2();
     this.getOrder();
     this.Cs.getCustomer().subscribe((data) => {
       this.customer = data;
@@ -177,28 +194,28 @@ export class OrderTableComponent implements OnInit {
 
         {
           extend: 'copy',
-          title: 'Admin - Order',
+          title: 'Admin - Order Detail',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'print',
-          title: 'Admin - Order',
+          title: 'Admin - Order Detail',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'excel',
-          title: 'Admin - Order',
+          title: 'Admin - Order Detail',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
         },
         {
           extend: 'csvHtml5',
-          title: 'Admin - Order',
+          title: 'Admin - Order Detail',
           exportOptions: {
             columns: ':not(:last-child)', // Ẩn cột cuối cùng
           },
@@ -287,7 +304,6 @@ export class OrderTableComponent implements OnInit {
       }
     );
   }
-
   fnUpdateOrder() {
     if (this.selectedOrderId) { // Kiểm tra xem selectedOrderId có tồn tại
       const orderinfo = {
@@ -297,6 +313,37 @@ export class OrderTableComponent implements OnInit {
       this.oS.updateOrderstatus(this.selectedOrderId, orderinfo).subscribe(
         (response) => {
           console.log('Successfully updated Order!');
+          this.refreshTable(); // Tải lại dữ liệu sau khi cập nhật thành công
+          window.location.reload();
+          setTimeout(() => {
+            this.isSpinning = false;
+            this.orderForm.reset();
+            this.defaultStatus();
+            Swal.fire({
+              icon: 'success',
+              title: 'Successfully updated Order!',
+              showConfirmButton: false,
+              timer: 2000
+            })
+          }, this.progressTimerOut),window.location.reload();
+        },
+        (error) => {
+          console.error('Failed to update Order:', error);
+        }
+      );
+    } else {
+      console.error('Không có id hợp lệ để cập nhật đơn hàng.');
+    }
+  }
+  fnUpdateQuantityOrderDetail() {
+    if (this.selectedOrderId) { // Kiểm tra xem selectedOrderId có tồn tại
+      const orderdetailinfo = {
+        quantity: this.orderDetailForm.value.quantity 
+      }; 
+      this.isSpinning = true;
+      this.oD.updateQuantityOrderDetail(this.selectedOrderId, orderdetailinfo).subscribe(
+        (response) => {
+          console.log('Successfully updated Quantity Order Detail!');
           this.refreshTable(); // Tải lại dữ liệu sau khi cập nhật thành công
           window.location.reload();
           setTimeout(() => {

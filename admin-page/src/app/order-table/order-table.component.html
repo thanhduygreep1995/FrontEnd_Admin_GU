@@ -106,13 +106,13 @@
                             <div class="modal-dialog-scrollable" role="document">
                                 <div class="modal-content ">
                                     <div class="modal-header ">
-                                        <h5 class="modal-title " id="DetailModalLabel ">Detail Order</h5>
+                                        <h5 class="modal-title " id="DetailModalLabel ">Order Detail</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true ">&times;</span>
                                           </button>
                                     </div>
                                     <div class="modal-body ">
-                                        <table datatable [dtOptions]="dtOp " *ngIf="orders && orders.length> 0" class="table table-bordered table-striped row-border hover">
+                                        <table datatable [dtOptions]="dtOp" *ngIf="orderdetails && orderdetails.length> 0" class="table table-bordered table-striped row-border hover">
                                             <thead>
                                                 <tr>
                                                     <th hidden>Id</th>
@@ -124,19 +124,25 @@
                                                     <th>Phone</th>
                                                     <th>Email</th>
                                                     <th>Price</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let o of orderdetails; let i = index">
-                                                    <td hidden>{{ o.id }}</td>
+                                                <tr *ngFor="let od of orderdetails; let i = index">
+                                                    <td hidden>{{ od.id }}</td>
                                                     <td>{{ i+1}}</td>
-                                                    <td>{{ o.product.name }}</td>
-                                                    <td>{{ o.quantity }}</td>
-                                                    <td>{{ o.order.address.streetNumber+','+o.order.address.street+','+o.order.address.district+','+o.order.address.city.city }}</td>
-                                                    <td>{{ o.order.customer.firstName+' '+ o.order.customer.lastName}}</td>
-                                                    <td>{{ o.order.phone }}</td>
-                                                    <td>{{ o.order.email }}</td>
-                                                    <td>{{ o.totalPrice + " "| currency:",":"":"6.0"}} VNĐ</td>
+                                                    <td>{{ od.product.name }}</td>
+                                                    <td>{{ od.quantity }}</td>
+                                                    <td>{{ od.order.address.streetNumber+','+od.order.address.street+','+od.order.address.district+','+od.order.address.city.city }}</td>
+                                                    <td>{{ od.order.customer.firstName+' '+ od.order.customer.lastName}}</td>
+                                                    <td>{{ od.order.phone }}</td>
+                                                    <td>{{ od.order.email }}</td>
+                                                    <td>{{ od.totalPrice + " "| currency:",":"":"6.0"}} VNĐ</td>
+                                                    <td>
+                                                        <button class="btn btn-info" data-toggle="modal" data-target="#updateModal1" (click)="onUpdate(od.id)">
+                                                            Update
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
@@ -155,6 +161,33 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="updateModal1" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update Quantity Order Dteail</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="orderDetailForm">
+                                            <label for="orderDetailQuantity" class="form-label ">Quantity</label>
+                                            <input formControlName="quantity" type="number" class="form-control mb-2" name="quantity" id="quantity" ngModel min="1" placeholder="Enter Product Quantity" />
+                                            <div *ngIf="orderDetailForm.controls['quantity'].invalid && orderDetailForm.controls['quantity'].touched" class="text-danger">
+                                                Quantity is required.
+                                            </div>
+                                            <div *ngIf="orderDetailForm.controls['quantity'].invalid && orderDetailForm.controls['quantity'].errors.min" class="text-danger">
+                                                Quantity min 1
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button " class="btn btn-primary " [disabled]="!orderDetailForm.valid" (click)="fnUpdateQuantityOrderDetail() ">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- /.card-body -->
@@ -169,5 +202,7 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<!-- </div> -->
+<!-- /.content-wrapper -->
 <!-- </div> -->
 <!-- /.content-wrapper -->

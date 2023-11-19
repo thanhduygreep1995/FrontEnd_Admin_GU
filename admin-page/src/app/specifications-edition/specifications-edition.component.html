@@ -46,13 +46,13 @@
                                     </div>
 
                                     <label for="ram" class="form-label">Ram</label>
-                                    <input formControlName="ram" type="text" class="form-control mb-2" name="ram" id="ram" placeholder="Enter your Ram">
+                                    <input formControlName="ram" type="text" class="form-control mb-2" name="ram" id="ram" placeholder="Enter your Ram, Ex: 12GB">
                                     <div *ngIf="specForm.controls['ram'].invalid &&
                                     specForm.controls['ram'].touched" class="text-danger"> Ram is required.
                                     </div>
 
                                     <label for="storage" class="form-label">Storage</label>
-                                    <input formControlName="storage" type="text" class="form-control" name="storage" id="storage" placeholder="Enter Storage">
+                                    <input formControlName="storage" type="text" class="form-control" name="storage" id="storage" placeholder="Enter Storage,Ex 128GB">
                                     <div *ngIf="specForm.controls['storage'].invalid &&
                                     specForm.controls['storage'].touched" class="text-danger"> Storage is required.
                                     </div>
@@ -70,7 +70,7 @@
                                     </div>
 
                                     <label for="camera" class="form-label">Camera</label>
-                                    <input formControlName="camera" type="text" class="form-control mb-2" name="camera" id="camera" placeholder="Enter your Camera">
+                                    <input formControlName="camera" type="text" class="form-control mb-2" name="camera" id="camera" placeholder="Enter your Camera, Ex: 8MPX">
                                     <div *ngIf="specForm.controls['camera'].invalid &&
                                     specForm.controls['camera'].touched" class="text-danger"> Camera is required.
                                     </div>

@@ -22,5 +22,8 @@ export class OrderDetailService {
   getOrderDetailByOrderId(id: any) {
     return this.http.get(this.baseUrl + '/getorderdetailbyorderid/' + id);
   }
-
+  updateQuantityOrderDetail(id: number, order: any): Observable<any> {
+    const url = `${this.baseUrl}/quantity/${id}`;
+    return this.http.put(url, order, { responseType: 'text' });
+  }
 }
