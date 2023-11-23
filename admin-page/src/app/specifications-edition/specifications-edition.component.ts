@@ -83,7 +83,10 @@ export class SpecificationsEditionComponent implements OnInit {
       this.ButtonSave = nameControl || descriptionControl;
     });
     this.specForm.valueChanges.subscribe(() => {
-      this.ButtonUpdate = this.specForm.invalid;
+      const nameControl = this.specForm.controls['processor'].invalid;
+      const descriptionControl =
+        this.specForm.controls['graphicsCard'].invalid;
+      this.ButtonUpdate = nameControl || descriptionControl;
     });
   }
 
